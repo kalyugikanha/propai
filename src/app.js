@@ -53,8 +53,9 @@ app.use((req, res, next) => {
 });
 
 // ── Static: Widget Files ──────────────────────────────────────────────────────
-// Serves the chat widget JS and CSS at /widget/propai-widget.js
-app.use('/widget', express.static(path.join(__dirname, '../frontend/widget')));
+// Serves the chat widget JS at /widget/propai-widget.js
+// Files live in backend/public/widget/ so Railway can serve them
+app.use('/widget', express.static(path.join(__dirname, '../public/widget')));
 
 // ── Health Check (no rate limit) ──────────────────────────────────────────────
 app.get('/health', (req, res) => {

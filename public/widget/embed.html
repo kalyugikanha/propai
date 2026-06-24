@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PropAI Widget — WordPress Embed Snippet</title>
+  <style>
+    body { font-family: monospace; background: #0f172a; color: #e2e8f0; padding: 2rem; line-height: 1.6; }
+    h1 { color: #a78bfa; }
+    h2 { color: #7dd3fc; margin-top: 2rem; }
+    pre { background: #1e293b; padding: 1.5rem; border-radius: 8px; overflow-x: auto; border: 1px solid #334155; }
+    code { color: #86efac; }
+    .note { background: #1e3a5f; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 4px; margin: 1rem 0; color: #bfdbfe; }
+  </style>
+</head>
+<body>
+
+<h1>🏠 PropAI Widget — WordPress Embed</h1>
+<p>Copy the snippet below and paste it into your WordPress site. The widget will automatically appear on every page.</p>
+
+<!-- ============================================================
+     HOW TO ADD THIS TO WORDPRESS
+     ============================================================
+     Option A (Recommended): Appearance → Theme Editor → footer.php
+       Paste before </body>
+
+     Option B: Appearance → Widgets → Custom HTML widget
+       Paste the snippet in the widget
+
+     Option C: A plugin like "Insert Headers and Footers"
+       Paste in the Footer section
+     ============================================================ -->
+
+<h2>Step 1 — Update your backend URL</h2>
+<div class="note">
+  Replace <code>https://YOUR-BACKEND.railway.app</code> with your actual Railway deployment URL.<br>
+  Also update <code>agencyName</code> and <code>agentName</code> to match your brand.
+</div>
+
+<h2>Step 2 — Copy this snippet into WordPress</h2>
+<pre><code>&lt;!-- PropAI Property Assistant Widget --&gt;
+&lt;script&gt;
+  window.PropAiConfig = {
+    apiBase:     'https://YOUR-BACKEND.railway.app',
+    agencyName:  'PropAI Jaipur',
+    agentName:   'Priya',
+    agentAvatar: '🏠',
+    primaryColor: '#7c3aed',
+    accentColor:  '#1d4ed8',
+    position:    'right'
+  };
+&lt;/script&gt;
+&lt;script src="https://YOUR-BACKEND.railway.app/widget/propai-widget.js" defer&gt;&lt;/script&gt;
+&lt;!-- End PropAI Widget --&gt;</code></pre>
+
+<h2>Configuration Options</h2>
+<pre><code>window.PropAiConfig = {
+  apiBase:      'https://...',   // REQUIRED — your Railway backend URL
+  agencyName:   'Your Agency',  // Shown in widget header
+  agentName:    'Priya',        // AI assistant name
+  agentAvatar:  '🏠',           // Emoji avatar
+  primaryColor: '#7c3aed',      // Primary gradient color (hex)
+  accentColor:  '#1d4ed8',      // Accent gradient color (hex)
+  position:     'right',        // 'right' or 'left' side of screen
+};</code></pre>
+
+<h2>Test Locally</h2>
+<div class="note">
+  During development, set <code>apiBase: 'http://localhost:3000'</code> and open this file in a browser.
+  The widget will appear at the bottom right of this page!
+</div>
+
+<!-- Live test: loads the widget from localhost -->
+<script>
+  window.PropAiConfig = {
+    apiBase:      'http://localhost:3000',
+    agencyName:   'PropAI Jaipur',
+    agentName:    'Priya',
+    agentAvatar:  '🏠',
+    primaryColor: '#7c3aed',
+    accentColor:  '#1d4ed8',
+    position:     'right',
+  };
+</script>
+<script src="http://localhost:3000/widget/propai-widget.js" defer></script>
+
+</body>
+</html>
