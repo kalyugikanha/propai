@@ -90,8 +90,10 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
     );
   }
 
-  // ── Step 3: Location filter (partial, case-insensitive) ───────────────────
-  if (location) {
+  // ── Step 3: Location filter — skip if 'any area' or similar ────────────────
+  const ANY_AREA_KEYWORDS = ['any', 'anywhere', 'all', 'jaipur', 'any area', 'any area in jaipur', 'anywhere in jaipur'];
+  const isAnyArea = !location || ANY_AREA_KEYWORDS.includes(location.toLowerCase().trim());
+  if (!isAnyArea) {
     const loc = location.toLowerCase();
     results = results.filter(
       (p) => (p[COL.LOCATION] || '').toLowerCase().includes(loc)
@@ -100,9 +102,15 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
 
   // ── Step 4: Budget range filter ───────────────────────────────────────────
   if (budgetAmount) {
-    results = results.filter((p) =>
-      isWithinRange(budgetAmount, p[COL.MIN_BUDGET], p[COL.MAX_BUDGET])
-    );
+    results = results.filter((p) => {
+      const rawMin = p[COL.MIN_BUDGET];
+      const rawMax = p[COL.MAX_BUDGET];
+      // Try parsing as lakh/crore string first, fall back to parseInt
+      const min = parseBudget(rawMin) || parseInt(rawMin) || 0;
+      const max = parseBudget(rawMax) || parseInt(rawMax) || Infinity;
+      // Allow 20% flexibility on both sides
+      return budgetAmount >= min * 0.8 && budgetAmount <= max * 1.2;
+    });
   }
 
   // ── Step 5: Score and rank ────────────────────────────────────────────────

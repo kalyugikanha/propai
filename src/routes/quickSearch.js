@@ -164,4 +164,145 @@ router.get('/hot-deals', async (req, res, next) => {
   }
 });
 
+// ── POST /api/refine-search ───────────────────────────────────────────────────
+// User wants to change budget/area/type after seeing initial results
+router.post('/refine-search', async (req, res, next) => {
+  try {
+    const { message, currentCriteria, fullName } = req.body;
+
+    if (!message || !currentCriteria) {
+      return res.status(400).json({ success: false, error: 'message and currentCriteria required' });
+    }
+
+    // Use Gemini to extract updated criteria from user message
+    const extractPrompt = `
+User wants to refine their property search.
+Current search criteria: ${JSON.stringify(currentCriteria)}
+User said: "${message}"
+
+Extract any updates from the user message. Return ONLY valid JSON:
+{
+  "propertyType": "<same or updated>",
+  "budget": "<same or updated>",
+  "area": "<same or updated>",
+  "showMore": <true if user wants more results, false otherwise>
+}
+If a field is not mentioned, keep the current value.
+JSON ONLY:`;
+
+    const { GoogleGenerativeAI } = require('@google/generative-ai');
+    const config = require('../config/env');
+    const genAI = new GoogleGenerativeAI(config.geminiApiKey);
+    const gModel = genAI.getGenerativeModel({ model: config.geminiModel });
+    const aiResult = await gModel.generateContent(extractPrompt);
+    const aiText = aiResult.response.text().trim();
+
+    let updatedCriteria = { ...currentCriteria };
+    try {
+      const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) updatedCriteria = { ...currentCriteria, ...JSON.parse(jsonMatch[0]) };
+    } catch (e) { /* keep current */ }
+
+    // Search with updated criteria
+    const { searchProperties, formatProperty } = require('../services/propertyService');
+    const matchedProperties = await searchProperties({
+      propertyType: updatedCriteria.propertyType,
+      location: updatedCriteria.area,
+      budget: updatedCriteria.budget,
+      forceRefresh: true,
+    });
+
+    const formattedProps = matchedProperties.map(formatProperty);
+
+    // Generate AI reply
+    const gemini = require('../services/geminiService');
+    let aiReply = '';
+    if (formattedProps.length > 0) {
+      aiReply = await gemini.generatePropertyRecommendation({
+        properties: matchedProperties,
+        session: {
+          name: fullName || 'there',
+          propertyType: updatedCriteria.propertyType,
+          location: updatedCriteria.area,
+          budget: { raw: updatedCriteria.budget },
+        },
+      });
+    } else {
+      aiReply = await gemini.generateNoResultsResponse({
+        name: fullName || 'there',
+        propertyType: updatedCriteria.propertyType,
+        location: updatedCriteria.area,
+        budget: { raw: updatedCriteria.budget },
+      });
+    }
+
+    return res.json({
+      success: true,
+      reply: aiReply,
+      properties: formattedProps,
+      total: formattedProps.length,
+      updatedCriteria,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// ── POST /api/hot-deal-interest ───────────────────────────────────────────────
+// User is interested in a Hot Deal property — capture lead + AI opening
+router.post('/hot-deal-interest', async (req, res, next) => {
+  try {
+    const { fullName, mobile, propertyId, propertyName, propertyLocation, propertyBudget } = req.body;
+
+    if (!fullName || !mobile || !propertyName) {
+      return res.status(400).json({ success: false, error: 'fullName, mobile, propertyName required' });
+    }
+
+    const cleanedMobile = mobile.replace(/[\s\-()]/g, '');
+    const { isValidIndianMobile, formatDateIN, generateSessionId } = require('../utils/helpers');
+    if (!isValidIndianMobile(cleanedMobile)) {
+      return res.status(400).json({ success: false, error: 'Valid 10-digit Indian mobile required' });
+    }
+
+    // Save lead to Google Sheets
+    const { appendLead } = require('../services/sheetsService');
+    const date = formatDateIN(new Date());
+    const leadRow = [
+      date,
+      fullName,
+      cleanedMobile,
+      '',
+      'Hot Deal Inquiry',
+      propertyLocation || '',
+      propertyBudget || '',
+      propertyName,
+      'Hot Deal Lead',
+      `Hot Deal interest — ${propertyName}`,
+    ];
+    appendLead(leadRow).catch((err) => logger.error('Hot deal lead save failed:', err.message));
+
+    // Generate AI opening message
+    const config = require('../config/env');
+    const { GoogleGenerativeAI } = require('@google/generative-ai');
+    const genAI = new GoogleGenerativeAI(config.geminiApiKey);
+    const gModel = genAI.getGenerativeModel({ model: config.geminiModel });
+
+    const aiPrompt = `You are Priya, a warm AI property advisor for JaipurPropIQ Jaipur.
+${fullName} is interested in: ${propertyName} at ${propertyLocation} (${propertyBudget}).
+Write a SHORT excited 2-sentence welcome message + ask ONE follow-up question about their preferred timeline or budget. No markdown. 40 words max.`;
+
+    const aiResult = await gModel.generateContent(aiPrompt);
+    const aiReply = aiResult.response.text().trim();
+
+    return res.json({
+      success: true,
+      sessionId: generateSessionId(),
+      reply: aiReply,
+      message: 'Lead saved! Our expert will call you within 24 hours.',
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

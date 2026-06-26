@@ -129,36 +129,38 @@ const generatePropertyRecommendation = async ({ properties, session }) => {
   const propertySummary = properties
     .map(
       (p, i) =>
-        `${i + 1}. ${p['Project Name'] || p.name} — ${p['Location'] || p.location}, ${p['Size (Sqft)'] || p.size} sqft. ${p['Description'] || p.description}`
+        `${i + 1}. ${p['Project Name'] || p.name} at ${p['Location'] || p.location} — Budget: ₹${p['Min Budget'] || p.minBudget}–₹${p['Max Budget'] || p.maxBudget}, Size: ${p['Size (Sqft)'] || p.size}. ${p['Description'] || p.description}`
     )
     .join('\n');
 
   const budgetStr = session.budget?.raw || 'as mentioned';
+  const name = session.name || 'there';
 
   const prompt = `
 ${getSystemPrompt()}
 
 ---
 
-TASK: Write a property recommendation message for a visitor named ${session.name || 'the visitor'}.
+TASK: Write a warm, exciting property recommendation in Hinglish (mix of Hindi and English) for ${name}.
 
 THEIR REQUIREMENTS:
 - Property Type: ${session.propertyType}
 - Preferred Location: ${session.location}
 - Budget: ${budgetStr}
 
-TOP MATCHING PROPERTIES:
+MATCHED PROPERTIES:
 ${propertySummary}
 
 ---
 
 RESPONSE RULES:
-- Address ${session.name || 'the visitor'} by first name
-- Open with excitement that you found great matches
-- Naturally mention the property names and locations (no bullet points or markdown)
-- Keep it under 80 words
-- End by asking: "Would you like our Investment Manager to contact you with more details?"
-- Do NOT use asterisks, markdown, or list formatting
+- Start with "${name} ji" 
+- Sound genuinely excited about the matches
+- Mention specific property names, locations, and budget ranges naturally
+- Use warm Hinglish tone (mix Hindi words like "bahut acchi", "perfect match", "bilkul sahi")
+- Mention key highlights (location, size, price)
+- End with: "Kya aap chahenge ki hamare Investment Manager aapko personally call karein aur site visit arrange karein?"
+- Under 100 words, NO markdown, NO bullet points, NO asterisks
 
 YOUR RESPONSE:
 `.trim();
@@ -222,28 +224,48 @@ JSON ONLY:
  * @returns {Promise<string>}
  */
 const generateNoResultsResponse = async (session) => {
+  const name = session.name || 'ji';
   const prompt = `
 ${getSystemPrompt()}
 
 ---
 
-TASK: No matching properties were found for ${session.name || 'the visitor'}.
+TASK: No matching properties found for ${name}.
 
 THEIR REQUIREMENTS:
 - Property Type: ${session.propertyType}
 - Location: ${session.location}
 - Budget: ${session.budget?.raw || 'as mentioned'}
 
-Write an empathetic, helpful response that:
-- Apologizes genuinely (1 sentence)
-- Explains our Investment Manager has access to exclusive off-market properties
-- Asks if they would like our Investment Manager to contact them personally
-- Is under 60 words
-- Does not use markdown
+Write an empathetic Hinglish response that:
+- Addresses them as "${name} ji"
+- Genuinely apologizes (1 sentence)
+- Suggests 2 alternatives: (1) slightly different area nearby, (2) adjust budget slightly
+- Says our Investment Manager has access to exclusive off-market properties not listed yet
+- Asks: "Kya budget thoda flexible hai, ya koi aur area try karein?"
+- Under 80 words, NO markdown
 
 YOUR RESPONSE:
 `.trim();
 
+  return callGemini(prompt);
+};
+
+/**
+ * Generate an excited opening message for a Hot Deal property inquiry.
+ * @param {object} params
+ * @param {string} params.propertyName
+ * @param {string} params.propertyLocation
+ * @param {string} params.userName
+ * @returns {Promise<string>}
+ */
+const generateHotDealOpeningMessage = async ({ propertyName, propertyLocation, userName }) => {
+  const prompt = `
+You are Priya, a warm AI property advisor at JaipurPropIQ Jaipur.
+${userName} showed interest in: ${propertyName} at ${propertyLocation}.
+Write a SHORT 2-sentence excited welcome + ask ONE question about visit timeline or specific requirements.
+Hinglish tone. No markdown. Max 50 words.
+`.trim();
   return callGemini(prompt);
 };
 
@@ -252,4 +274,5 @@ module.exports = {
   generatePropertyRecommendation,
   parseBudgetWithAI,
   generateNoResultsResponse,
+  generateHotDealOpeningMessage,
 };

@@ -19,6 +19,7 @@ const propertiesRoutes = require('./routes/properties');
 const leadsRoutes = require('./routes/leads');
 const sessionRoutes = require('./routes/session');
 const quickSearchRoutes = require('./routes/quickSearch');
+const otpRoutes = require('./routes/otp');
 
 const app = express();
 
@@ -99,6 +100,7 @@ app.use('/api', propertiesRoutes);
 app.use('/api', leadsRoutes);
 app.use('/api', sessionRoutes);
 app.use('/api', quickSearchRoutes);
+app.use('/api', otpRoutes);
 
 // ── 404 Handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
