@@ -152,7 +152,7 @@ const appendLead = async (row) => {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: config.googleSpreadsheetId,
-    range: `${LEADS_SHEET_NAME}!A:I`,
+    range: `${LEADS_SHEET_NAME}!A:J`,  // J covers up to Email column (landing page)
     valueInputOption: 'USER_ENTERED',
     insertDataOption: 'INSERT_ROWS',
     requestBody: {

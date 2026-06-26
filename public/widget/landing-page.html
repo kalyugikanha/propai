@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Your Dream Property in Jaipur | JaipurPropIQ</title>
+  <meta name="description" content="Jaipur's smartest AI property advisor. Tell us your budget and we'll match you with the best apartments, villas, plots & commercial spaces instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:      #8B1C1C;
+      --primary-dark: #6B1414;
+      --primary-light:#B22222;
+      --accent:       #C0392B;
+      --gold:         #D4A843;
+      --gold-light:   #F5C842;
+      --bg:           #FDF8F5;
+      --surface:      #FFFFFF;
+      --text-dark:    #1A1A1A;
+      --text-mid:     #4A4A4A;
+      --text-muted:   #888888;
+      --border:       #E8DDD8;
+      --success:      #16A34A;
+      --radius-sm:    8px;
+      --radius-md:    14px;
+      --radius-lg:    20px;
+      --shadow-sm:    0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md:    0 8px 32px rgba(139,28,28,0.12);
+      --shadow-lg:    0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page Wrapper ──────────────────────────────────────────────────────── */
+    #propiq-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px 40px;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────────────── */
+    #propiq-header {
+      background: var(--primary);
+      margin: 0 -16px;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .propiq-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .propiq-logo-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: white;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .propiq-logo-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: white;
+      line-height: 1;
+    }
+
+    .propiq-logo-text p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
+    }
+
+    .propiq-live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+
+    .propiq-live-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ADE80;
+      border-radius: 50%;
+      animation: propiq-blink 2s infinite;
+    }
+
+    @keyframes propiq-blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 4px #4ADE80; }
+      50%       { opacity: 0.5; box-shadow: none; }
+    }
+
+    /* ── Main 2-column layout ─────────────────────────────────────────────── */
+    #propiq-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 28px;
+      align-items: start;
+    }
+
+    /* ── LEFT PANEL ────────────────────────────────────────────────────────── */
+    #propiq-left {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .propiq-hero-text h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .propiq-hero-text h2 span {
+      color: var(--gold);
+    }
+
+    .propiq-hero-text p {
+      margin-top: 10px;
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    /* Image Slideshow */
+    .propiq-slideshow {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 280px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .propiq-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .propiq-slide.active { opacity: 1; }
+
+    .propiq-slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(139,28,28,0.75) 100%
+      );
+    }
+
+    .propiq-slide-caption {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      right: 18px;
+      color: white;
+    }
+
+    .propiq-slide-caption .slide-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: #1A1A1A;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+
+    .propiq-slide-caption h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .propiq-slide-caption p {
+      font-size: 13px;
+      opacity: 0.88;
+      margin-top: 3px;
+    }
+
+    /* Slide dots */
+    .propiq-slide-dots {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      display: flex;
+      gap: 5px;
+      z-index: 2;
+    }
+
+    .propiq-slide-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .propiq-slide-dot.active { background: white; }
+
+    /* Trust Badges */
+    .propiq-trust-badges {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .propiq-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .propiq-badge-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .propiq-badge-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .propiq-badge-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .propiq-badge-text span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── RIGHT PANEL — Form ────────────────────────────────────────────────── */
+    #propiq-right {
+      position: sticky;
+      top: 16px;
+    }
+
+    .propiq-form-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid rgba(139,28,28,0.1);
+    }
+
+    .propiq-form-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      padding: 20px 24px;
+    }
+
+    .propiq-form-header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .propiq-form-header-icon {
+      font-size: 22px;
+    }
+
+    .propiq-form-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .propiq-form-header p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+      margin-top: 4px;
+    }
+
+    .propiq-form-body {
+      padding: 22px 24px 18px;
+    }
+
+    .propiq-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .propiq-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .propiq-form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .propiq-form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .propiq-input, .propiq-select {
+      height: 44px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0 14px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: #FAFAFA;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .propiq-input:focus, .propiq-select:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(139,28,28,0.1);
+    }
+
+    .propiq-input::placeholder { color: #AAAAAA; }
+
+    .propiq-select-wrapper {
+      position: relative;
+    }
+
+    .propiq-select-wrapper::after {
+      content: '▾';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* Find My Property Button */
+    #propiq-search-btn {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 6px 24px rgba(139,28,28,0.35);
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #propiq-search-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    #propiq-search-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(139,28,28,0.45); }
+    #propiq-search-btn:hover::before { opacity: 1; }
+    #propiq-search-btn:active { transform: translateY(0); }
+    #propiq-search-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+    .btn-icon { font-size: 20px; }
+
+    .propiq-form-footer {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .propiq-form-footer span { color: var(--primary); font-weight: 600; }
+
+    /* ── Results Section ───────────────────────────────────────────────────── */
+    #propiq-results {
+      display: none;
+      margin-top: 16px;
+      animation: propiq-fadein 0.4s ease;
+    }
+
+    @keyframes propiq-fadein {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .propiq-results-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .propiq-results-header h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .propiq-count-badge {
+      background: var(--primary);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    .propiq-ai-reply {
+      background: linear-gradient(135deg, #FDF0F0, #FFF5F5);
+      border: 1px solid rgba(139,28,28,0.15);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-mid);
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .propiq-ai-reply::before {
+      content: '🤖';
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .propiq-property-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 340px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .propiq-property-cards::-webkit-scrollbar { width: 4px; }
+    .propiq-property-cards::-webkit-scrollbar-thumb { background: #DDD; border-radius: 4px; }
+
+    .propiq-prop-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      transition: transform 0.18s, box-shadow 0.18s;
+      animation: propiq-fadein 0.3s ease;
+    }
+
+    .propiq-prop-card:hover {
+      transform: translateX(3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .propiq-prop-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .propiq-prop-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .propiq-prop-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #DCFCE7;
+      color: #16A34A;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      flex-shrink: 0;
+    }
+
+    .propiq-prop-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .propiq-prop-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .propiq-prop-budget {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 8px;
+    }
+
+    .propiq-prop-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .propiq-no-results {
+      text-align: center;
+      padding: 24px 16px;
+      background: #FFF9F9;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(139,28,28,0.2);
+    }
+
+    .propiq-no-results .emoji { font-size: 36px; margin-bottom: 8px; }
+
+    .propiq-no-results p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+    /* CTA after results */
+    .propiq-cta-bar {
+      background: linear-gradient(135deg, #FFF5F5, #FDF0EC);
+      border: 1px solid rgba(139,28,28,0.12);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-mid);
+    }
+
+    .propiq-cta-bar strong { color: var(--primary); display: block; font-size: 14px; margin-bottom: 2px; }
+
+    /* ── HOT DEALS SECTION ────────────────────────────────────────────────── */
+    #propiq-hot-deals {
+      margin-top: 36px;
+    }
+
+    .propiq-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .propiq-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .propiq-section-title h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .propiq-fire-badge {
+      background: linear-gradient(135deg, #FF6B35, #FF3D00);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      animation: propiq-pulse 2s infinite;
+    }
+
+    @keyframes propiq-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,53,0.5); }
+      50%       { box-shadow: 0 0 0 8px rgba(255,107,53,0); }
+    }
+
+    #propiq-hot-deals-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #propiq-hot-deals-toggle:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    #propiq-hot-deals-content {
+      display: none;
+      animation: propiq-fadein 0.4s ease;
+    }
+
+    #propiq-hot-deals-content.open { display: block; }
+
+    .propiq-deals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .propiq-deal-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .propiq-deal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .propiq-deal-card-img {
+      height: 140px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .propiq-deal-card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.4) 100%);
+    }
+
+    .propiq-deal-hot-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: linear-gradient(135deg, #FF6B35, #FF3D00);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 1;
+    }
+
+    .propiq-deal-card-body {
+      padding: 14px;
+    }
+
+    .propiq-deal-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .propiq-deal-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .propiq-deal-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .propiq-deal-budget {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .propiq-deal-budget small {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+      font-family: 'Inter', sans-serif;
+      margin-left: 4px;
+    }
+
+    /* ── Loading Spinner ───────────────────────────────────────────────────── */
+    .propiq-spinner {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 24px;
+    }
+
+    .propiq-spinner.show { display: flex; }
+
+    .propiq-spin-ring {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(139,28,28,0.15);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: propiq-spin 0.75s linear infinite;
+    }
+
+    @keyframes propiq-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .propiq-spinner p {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ── Error Message ─────────────────────────────────────────────────────── */
+    .propiq-error {
+      display: none;
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #DC2626;
+      margin-top: 10px;
+    }
+
+    .propiq-error.show { display: block; }
+
+    /* ── Divider ───────────────────────────────────────────────────────────── */
+    .propiq-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 32px 0;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────────────────── */
+    #propiq-footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    #propiq-footer span { color: var(--primary); font-weight: 600; }
+
+    /* ── Responsive ────────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #propiq-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      #propiq-right { position: static; }
+
+      .propiq-hero-text h2 { font-size: 24px; }
+
+      .propiq-form-row { grid-template-columns: 1fr; }
+
+      .propiq-deals-grid { grid-template-columns: 1fr; }
+
+      .propiq-trust-badges { grid-template-columns: repeat(2, 1fr); }
+
+      #propiq-header { padding: 12px 16px; }
+
+      .propiq-logo-text h1 { font-size: 15px; }
+    }
+
+    @media (max-width: 480px) {
+      .propiq-trust-badges { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="propiq-page">
+
+  <!-- ── HEADER ─────────────────────────────────────────────────────────────── -->
+  <header id="propiq-header">
+    <div class="propiq-logo">
+      <div class="propiq-logo-icon">JP<br>IQ</div>
+      <div class="propiq-logo-text">
+        <h1>JaipurPropIQ</h1>
+        <p>Jaipur's Smartest Property Advisor</p>
+      </div>
+    </div>
+    <div class="propiq-live-badge">
+      <div class="propiq-live-dot"></div>
+      Live
+    </div>
+  </header>
+
+  <!-- ── MAIN 2-COL ─────────────────────────────────────────────────────────── -->
+  <main id="propiq-main">
+
+    <!-- LEFT PANEL -->
+    <section id="propiq-left">
+
+      <div class="propiq-hero-text">
+        <h2>Your Dream Property<br><span>Awaits You</span> in Jaipur 🏠</h2>
+        <p>Tell us your budget — we'll match you with the best apartments, villas, plots &amp; commercial spaces across Jaipur <strong>instantly</strong>.</p>
+      </div>
+
+      <!-- Image Slideshow -->
+      <div class="propiq-slideshow" id="propiqSlideshow">
+        <div class="propiq-slide active" style="background: linear-gradient(135deg, #8B1C1C 0%, #C0392B 50%, #D4A843 100%);">
+          <div class="propiq-slide-overlay"></div>
+          <div class="propiq-slide-caption">
+            <span class="slide-tag">🏡 Villa</span>
+            <h3>Luxury Villas in Jagatpura</h3>
+            <p>Starting from ₹80 Lakhs · Gated Community</p>
+          </div>
+        </div>
+        <div class="propiq-slide" style="background: linear-gradient(135deg, #1A3A6B 0%, #2563EB 50%, #7C3AED 100%);">
+          <div class="propiq-slide-overlay"></div>
+          <div class="propiq-slide-caption">
+            <span class="slide-tag">🏢 Apartment</span>
+            <h3>Premium Flats in Vaishali Nagar</h3>
+            <p>2BHK & 3BHK · Starting ₹45 Lakhs</p>
+          </div>
+        </div>
+        <div class="propiq-slide" style="background: linear-gradient(135deg, #14532D 0%, #16A34A 50%, #84CC16 100%);">
+          <div class="propiq-slide-overlay"></div>
+          <div class="propiq-slide-caption">
+            <span class="slide-tag">📐 Plot</span>
+            <h3>RERA Approved Plots · Ajmer Road</h3>
+            <p>100–500 Sq Yd · Clear Title · Loan Available</p>
+          </div>
+        </div>
+        <div class="propiq-slide" style="background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 50%, #EC4899 100%);">
+          <div class="propiq-slide-overlay"></div>
+          <div class="propiq-slide-caption">
+            <span class="slide-tag">🏬 Commercial</span>
+            <h3>Commercial Spaces · Tonk Road</h3>
+            <p>Office & Retail · High ROI Locations</p>
+          </div>
+        </div>
+        <div class="propiq-slide-dots" id="propiqDots"></div>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="propiq-trust-badges">
+        <div class="propiq-badge-item">
+          <div class="propiq-badge-icon">🛡️</div>
+          <div class="propiq-badge-text">
+            <strong>RERA Registered</strong>
+            <span>100% Verified Projects</span>
+          </div>
+        </div>
+        <div class="propiq-badge-item">
+          <div class="propiq-badge-icon">🏗️</div>
+          <div class="propiq-badge-text">
+            <strong>300+ Projects</strong>
+            <span>Across All of Jaipur</span>
+          </div>
+        </div>
+        <div class="propiq-badge-item">
+          <div class="propiq-badge-icon">⚡</div>
+          <div class="propiq-badge-text">
+            <strong>24hr Callback</strong>
+            <span>Expert Advisor Assigned</span>
+          </div>
+        </div>
+        <div class="propiq-badge-item">
+          <div class="propiq-badge-icon">🤝</div>
+          <div class="propiq-badge-text">
+            <strong>Free Advisory</strong>
+            <span>No Hidden Charges</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL — Form -->
+    <section id="propiq-right">
+      <div class="propiq-form-card">
+        <div class="propiq-form-header">
+          <div class="propiq-form-header-top">
+            <span class="propiq-form-header-icon">🎯</span>
+            <h2>Find My Perfect Property</h2>
+          </div>
+          <p>Quick start — fill details below &amp; get AI-matched results instantly</p>
+        </div>
+
+        <div class="propiq-form-body">
+          <form id="propiqForm" novalidate>
+            <div class="propiq-form-row">
+              <div class="propiq-form-group">
+                <label for="propiq-name">Full Name *</label>
+                <input
+                  type="text"
+                  id="propiq-name"
+                  class="propiq-input"
+                  placeholder="Rahul Sharma"
+                  autocomplete="name"
+                  maxlength="100"
+                  required
+                />
+              </div>
+              <div class="propiq-form-group">
+                <label for="propiq-mobile">Mobile Number *</label>
+                <input
+                  type="tel"
+                  id="propiq-mobile"
+                  class="propiq-input"
+                  placeholder="9876543210"
+                  autocomplete="tel"
+                  maxlength="10"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="propiq-form-row">
+              <div class="propiq-form-group full">
+                <label for="propiq-email">Email ID</label>
+                <input
+                  type="email"
+                  id="propiq-email"
+                  class="propiq-input"
+                  placeholder="rahul@example.com"
+                  autocomplete="email"
+                  maxlength="100"
+                />
+              </div>
+            </div>
+
+            <div class="propiq-form-row">
+              <div class="propiq-form-group">
+                <label for="propiq-type">Property Type *</label>
+                <div class="propiq-select-wrapper">
+                  <select id="propiq-type" class="propiq-select" required>
+                    <option value="" disabled selected>Select type</option>
+                    <option value="Villa">🏡 Villa</option>
+                    <option value="Apartment">🏢 Apartment</option>
+                    <option value="Plot">📐 Plot</option>
+                    <option value="Commercial">🏬 Commercial</option>
+                  </select>
+                </div>
+              </div>
+              <div class="propiq-form-group">
+                <label for="propiq-budget">Your Budget *</label>
+                <div class="propiq-select-wrapper">
+                  <select id="propiq-budget" class="propiq-select" required>
+                    <option value="" disabled selected>Select budget</option>
+                    <option value="20 Lakhs">Under ₹20 Lakhs</option>
+                    <option value="50 Lakhs">₹20L – ₹50 Lakhs</option>
+                    <option value="75 Lakhs">₹50L – ₹75 Lakhs</option>
+                    <option value="1 Crore">₹75L – ₹1 Crore</option>
+                    <option value="2 Crore">₹1Cr – ₹2 Crore</option>
+                    <option value="5 Crore">₹2Cr – ₹5 Crore</option>
+                    <option value="5 Crore+">Above ₹5 Crore</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="propiq-form-row">
+              <div class="propiq-form-group full">
+                <label for="propiq-area">Preferred Area *</label>
+                <div class="propiq-select-wrapper">
+                  <select id="propiq-area" class="propiq-select" required>
+                    <option value="" disabled selected>Select area in Jaipur</option>
+                    <option value="Jagatpura">Jagatpura</option>
+                    <option value="Vaishali Nagar">Vaishali Nagar</option>
+                    <option value="Ajmer Road">Ajmer Road</option>
+                    <option value="Tonk Road">Tonk Road</option>
+                    <option value="Malviya Nagar">Malviya Nagar</option>
+                    <option value="C-Scheme">C-Scheme</option>
+                    <option value="Mansarovar">Mansarovar</option>
+                    <option value="Pratap Nagar">Pratap Nagar</option>
+                    <option value="Sitapura">Sitapura</option>
+                    <option value="Sanganer">Sanganer</option>
+                    <option value="Kalwar Road">Kalwar Road</option>
+                    <option value="Sirsi Road">Sirsi Road</option>
+                    <option value="Jhotwara">Jhotwara</option>
+                    <option value="Murlipura">Murlipura</option>
+                    <option value="Gopalpura">Gopalpura</option>
+                    <option value="Vidyadhar Nagar">Vidyadhar Nagar</option>
+                    <option value="Nirman Nagar">Nirman Nagar</option>
+                    <option value="Any Area">Any Area in Jaipur</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="propiq-form-error" class="propiq-error" role="alert"></div>
+
+            <button type="submit" id="propiq-search-btn">
+              <span class="btn-icon">✨</span>
+              Find My Property
+            </button>
+
+            <p class="propiq-form-footer">
+              Free advisory · No spam ·
+              Expert callback within 24 hours<br>
+              Powered by <span>GrowInsight Solutions LLP</span>
+            </p>
+          </form>
+
+          <!-- Spinner -->
+          <div id="propiq-spinner" class="propiq-spinner">
+            <div class="propiq-spin-ring"></div>
+            <p>🔍 AI matching your perfect properties…</p>
+          </div>
+
+          <!-- Results -->
+          <div id="propiq-results">
+            <div class="propiq-results-header">
+              <h3>Matched Properties</h3>
+              <span class="propiq-count-badge" id="propiq-result-count">0</span>
+            </div>
+            <div id="propiq-ai-reply" class="propiq-ai-reply"></div>
+            <div id="propiq-property-cards" class="propiq-property-cards"></div>
+            <div class="propiq-cta-bar">
+              <strong>📞 Our Investment Manager will call you within 24 hours!</strong>
+              Free advisory · RERA Registered · Jaipur Specialist
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="propiq-divider"></div>
+
+  <!-- ── HOT DEALS SECTION ──────────────────────────────────────────────────── -->
+  <section id="propiq-hot-deals">
+    <div class="propiq-section-header">
+      <div class="propiq-section-title">
+        <h2>🔥 Hot Deals</h2>
+        <span class="propiq-fire-badge">Limited Time</span>
+      </div>
+      <button id="propiq-hot-deals-toggle" onclick="toggleHotDeals()">
+        <span id="propiq-deals-btn-text">View Hot Deals</span>
+        <span id="propiq-deals-btn-arrow">▾</span>
+      </button>
+    </div>
+
+    <div id="propiq-hot-deals-content">
+      <div id="propiq-deals-spinner" class="propiq-spinner">
+        <div class="propiq-spin-ring"></div>
+        <p>Loading hot deals…</p>
+      </div>
+      <div id="propiq-deals-grid" class="propiq-deals-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+  <footer id="propiq-footer">
+    Powered by <span>GrowInsight Solutions LLP</span> · RERA Registered · Jaipur
+  </footer>
+
+</div><!-- /propiq-page -->
+
+<!-- ── SCRIPT ──────────────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  'use strict';
+
+  // ── CONFIG — Auto-detects backend URL ────────────────────────────────────
+  // Priority: 1) PropIQConfig (set by WordPress iframe parent)
+  //           2) Same-origin (when file is served directly by backend)
+  //           3) Fallback to Railway URL (update this after deploying)
+  const API_BASE = (function () {
+    if (window.PropIQConfig?.apiBase) return window.PropIQConfig.apiBase;
+    // If this page is served from the backend itself (not from a local file or WordPress)
+    const origin = window.location.origin;
+    if (origin && origin !== 'null' && !origin.includes('localhost') && !origin.includes('growinsight.co.in')) {
+      return origin; // Running on Railway — same-origin API calls
+    }
+    return 'http://localhost:3000'; // Local dev fallback
+  })();
+
+  // ── Slideshow ─────────────────────────────────────────────────────────────
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.propiq-slide');
+  const dotsContainer = document.getElementById('propiqDots');
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'propiq-slide-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goToSlide(n) {
+    slides[currentSlide].classList.remove('active');
+    dotsContainer.children[currentSlide].classList.remove('active');
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dotsContainer.children[currentSlide].classList.add('active');
+  }
+
+  setInterval(() => goToSlide(currentSlide + 1), 4000);
+
+  // ── Form Submit ───────────────────────────────────────────────────────────
+  const form       = document.getElementById('propiqForm');
+  const searchBtn  = document.getElementById('propiq-search-btn');
+  const spinner    = document.getElementById('propiq-spinner');
+  const resultsDiv = document.getElementById('propiq-results');
+  const errorDiv   = document.getElementById('propiq-form-error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await handleSearch();
+  });
+
+  async function handleSearch() {
+    // Clear previous state
+    errorDiv.textContent = '';
+    errorDiv.classList.remove('show');
+    resultsDiv.style.display = 'none';
+
+    // Gather values
+    const fullName    = document.getElementById('propiq-name').value.trim();
+    const mobile      = document.getElementById('propiq-mobile').value.trim();
+    const email       = document.getElementById('propiq-email').value.trim();
+    const propertyType= document.getElementById('propiq-type').value;
+    const budget      = document.getElementById('propiq-budget').value;
+    const area        = document.getElementById('propiq-area').value;
+
+    // Client-side validation
+    if (!fullName || fullName.length < 2) {
+      return showError('Please enter your full name (at least 2 characters).');
+    }
+    if (!mobile || !/^[6-9]\d{9}$/.test(mobile.replace(/\s/g, ''))) {
+      return showError('Please enter a valid 10-digit mobile number starting with 6-9.');
+    }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return showError('Please enter a valid email address.');
+    }
+    if (!propertyType) return showError('Please select a property type.');
+    if (!budget)       return showError('Please select your budget range.');
+    if (!area)         return showError('Please select your preferred area.');
+
+    // Show spinner, disable button
+    form.style.display = 'none';
+    spinner.classList.add('show');
+    searchBtn.disabled = true;
+
+    try {
+      const res = await fetch(`${API_BASE}/api/quick-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName, mobile, email, propertyType, budget, area }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+
+      renderResults(data);
+
+    } catch (err) {
+      form.style.display = 'block';
+      showError(err.message || 'Connection error. Please check your internet and try again.');
+    } finally {
+      spinner.classList.remove('show');
+      searchBtn.disabled = false;
+    }
+  }
+
+  function showError(msg) {
+    form.style.display = 'block';
+    spinner.classList.remove('show');
+    errorDiv.textContent = '⚠️ ' + msg;
+    errorDiv.classList.add('show');
+    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function renderResults(data) {
+    const { reply, properties } = data;
+
+    // AI reply
+    document.getElementById('propiq-ai-reply').textContent = reply || '';
+
+    // Count badge
+    document.getElementById('propiq-result-count').textContent = (properties || []).length;
+
+    // Property cards
+    const cardsContainer = document.getElementById('propiq-property-cards');
+    cardsContainer.innerHTML = '';
+
+    if (!properties || properties.length === 0) {
+      cardsContainer.innerHTML = `
+        <div class="propiq-no-results">
+          <div class="emoji">🔍</div>
+          <p>${escHtml(reply || 'No exact matches found. Our advisor will help you find the best options.')}</p>
+        </div>`;
+      document.getElementById('propiq-ai-reply').style.display = 'none';
+    } else {
+      document.getElementById('propiq-ai-reply').style.display = 'block';
+      properties.forEach(p => {
+        const budgetStr = formatBudgetDisplay(p.minBudget, p.maxBudget);
+        cardsContainer.innerHTML += `
+          <div class="propiq-prop-card">
+            <div class="propiq-prop-card-top">
+              <div class="propiq-prop-name">${escHtml(p.name || 'Property')}</div>
+              <div class="propiq-prop-status">✅ ${escHtml(p.status || 'Active')}</div>
+            </div>
+            <div class="propiq-prop-meta">
+              ${p.location ? `<span>📍 ${escHtml(p.location)}</span>` : ''}
+              ${p.type     ? `<span>🏷️ ${escHtml(p.type)}</span>` : ''}
+              ${p.size     ? `<span>📐 ${escHtml(p.size)}</span>` : ''}
+            </div>
+            ${budgetStr ? `<div class="propiq-prop-budget">💰 ${budgetStr}</div>` : ''}
+            ${p.description ? `<div class="propiq-prop-desc">${escHtml(p.description)}</div>` : ''}
+          </div>`;
+      });
+    }
+
+    // Show results, hide form
+    resultsDiv.style.display = 'block';
+    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function formatBudgetDisplay(min, max) {
+    if (!min && !max) return '';
+    if (min && max) return `₹${formatLakhCrore(min)} – ₹${formatLakhCrore(max)}`;
+    if (min) return `From ₹${formatLakhCrore(min)}`;
+    if (max) return `Up to ₹${formatLakhCrore(max)}`;
+    return '';
+  }
+
+  function formatLakhCrore(num) {
+    const n = parseInt(num, 10);
+    if (!n) return num;
+    if (n >= 10000000) return (n / 10000000).toFixed(n % 10000000 === 0 ? 0 : 1) + ' Cr';
+    if (n >= 100000)   return (n / 100000).toFixed(n % 100000 === 0 ? 0 : 1) + ' L';
+    return n.toLocaleString('en-IN');
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // ── Hot Deals ─────────────────────────────────────────────────────────────
+  let hotDealsLoaded = false;
+  let hotDealsOpen   = false;
+
+  window.toggleHotDeals = async function () {
+    const content   = document.getElementById('propiq-hot-deals-content');
+    const btnText   = document.getElementById('propiq-deals-btn-text');
+    const btnArrow  = document.getElementById('propiq-deals-btn-arrow');
+
+    hotDealsOpen = !hotDealsOpen;
+
+    if (hotDealsOpen) {
+      content.classList.add('open');
+      btnText.textContent  = 'Hide Hot Deals';
+      btnArrow.textContent = '▴';
+
+      if (!hotDealsLoaded) {
+        await loadHotDeals();
+        hotDealsLoaded = true;
+      }
+    } else {
+      content.classList.remove('open');
+      btnText.textContent  = 'View Hot Deals';
+      btnArrow.textContent = '▾';
+    }
+  };
+
+  async function loadHotDeals() {
+    const dealsSpinner = document.getElementById('propiq-deals-spinner');
+    const dealsGrid    = document.getElementById('propiq-deals-grid');
+
+    dealsSpinner.classList.add('show');
+    dealsGrid.innerHTML = '';
+
+    try {
+      const res  = await fetch(`${API_BASE}/api/hot-deals`);
+      const data = await res.json();
+
+      dealsSpinner.classList.remove('show');
+
+      if (!data.success || !data.properties || data.properties.length === 0) {
+        dealsGrid.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:32px;color:#888;">
+            🔍 No hot deals available right now. Check back soon!
+          </div>`;
+        return;
+      }
+
+      const DEAL_ICONS = ['🏡', '🏢', '📐', '🏬', '🌟', '🏗️'];
+
+      data.properties.forEach((p, i) => {
+        const budgetStr = formatBudgetDisplay(p.minBudget, p.maxBudget);
+        const icon      = DEAL_ICONS[i % DEAL_ICONS.length];
+        dealsGrid.innerHTML += `
+          <div class="propiq-deal-card">
+            <div class="propiq-deal-card-img">
+              <span class="propiq-deal-hot-tag">🔥 Hot Deal</span>
+              <span style="position:relative;z-index:1;">${icon}</span>
+            </div>
+            <div class="propiq-deal-card-body">
+              <div class="propiq-deal-name">${escHtml(p.name || 'Property')}</div>
+              <div class="propiq-deal-meta">
+                ${p.location ? `<span>📍 ${escHtml(p.location)}</span>` : ''}
+                ${p.type     ? `<span>🏷️ ${escHtml(p.type)}</span>` : ''}
+                ${p.size     ? `<span>📐 ${escHtml(p.size)}</span>` : ''}
+              </div>
+              ${budgetStr
+                ? `<div class="propiq-deal-budget">${budgetStr}<small>· Limited offer</small></div>`
+                : ''}
+              ${p.description ? `<div class="propiq-prop-desc" style="font-size:12px;color:#888;margin-top:6px;">${escHtml(p.description)}</div>` : ''}
+            </div>
+          </div>`;
+      });
+
+    } catch (err) {
+      dealsSpinner.classList.remove('show');
+      dealsGrid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:32px;color:#DC2626;">
+          ⚠️ Could not load hot deals. Please try again later.
+        </div>`;
+    }
+  }
+
+  // Same formatBudgetDisplay & formatLakhCrore available via closure above
+
+})();
+</script>
+
+</body>
+</html>

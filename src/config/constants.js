@@ -59,10 +59,12 @@ const PROPERTIES_SHEET_NAME = 'Properties';
 const LEADS_SHEET_NAME = 'Leads';
 
 // Leads sheet column order (must match the sheet's header row)
+// Note: Email column (J) added for landing page form leads
 const LEADS_COLUMNS = [
   'Date',
   'Name',
   'Mobile Number',
+  'Email',
   'Property Type',
   'Preferred Location',
   'Budget',
@@ -84,7 +86,8 @@ const PROPERTY_COLUMNS = {
   DESCRIPTION: 'Description',
 };
 
-const PROPERTY_STATUS_ACTIVE = 'Active';
+const PROPERTY_STATUS_ACTIVE   = 'Active';
+const PROPERTY_STATUS_HOT_DEAL = 'Hot Deal';
 
 // Session / cache TTLs
 const SESSION_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
@@ -104,6 +107,7 @@ module.exports = {
   LEADS_COLUMNS,
   PROPERTY_COLUMNS,
   PROPERTY_STATUS_ACTIVE,
+  PROPERTY_STATUS_HOT_DEAL,
   SESSION_TTL_MS,
   SHEETS_CACHE_TTL_MS,
   TOP_PROPERTIES_LIMIT,

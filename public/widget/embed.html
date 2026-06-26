@@ -15,21 +15,69 @@
 </head>
 <body>
 
-<h1>🏠 PropAI Widget — WordPress Embed</h1>
-<p>Copy the snippet below and paste it into your WordPress site. The widget will automatically appear on every page.</p>
+<h1>🏠 PropAI — WordPress Embed Guide</h1>
+<p>Two ways to add PropAI to your WordPress site: a <strong>full landing page</strong> with property showcase + AI form, or the <strong>floating chat widget</strong> that appears on every page.</p>
 
 <!-- ============================================================
-     HOW TO ADD THIS TO WORDPRESS
-     ============================================================
-     Option A (Recommended): Appearance → Theme Editor → footer.php
-       Paste before </body>
-
-     Option B: Appearance → Widgets → Custom HTML widget
-       Paste the snippet in the widget
-
-     Option C: A plugin like "Insert Headers and Footers"
-       Paste in the Footer section
+     SECTION 1: LANDING PAGE EMBED
      ============================================================ -->
+
+<h2 style="color:#f97316; border-bottom:2px solid #f97316; padding-bottom:0.4rem;">🏡 Option 1 — Full Landing Page (Recommended for Property Leads)</h2>
+<p>The landing page features a <strong>property image slideshow</strong> on the left and a <strong>6-field AI search form</strong> on the right. Visitors fill details once and get instant property matches + Hot Deals.</p>
+
+<h2>Step 1 — Host the landing page</h2>
+<div class="note">
+  The <code>landing-page.html</code> file must be accessible from a URL. Two options:
+  <ul>
+    <li><strong>A (Recommended)</strong>: Serve it via your backend. The backend already serves static files from <code>frontend/widget/</code> — so it's available at <code>https://YOUR-BACKEND.railway.app/widget/landing-page.html</code></li>
+    <li><strong>B</strong>: Host it on any static file server / CDN and use that URL below.</li>
+  </ul>
+</div>
+
+<h2>Step 2 — Create a Full-Width WordPress Page</h2>
+<div class="note">
+  In WordPress admin: <strong>Pages → Add New</strong> → set the page template to <strong>"Full Width"</strong> (or "No Sidebar").
+  Then add an HTML block (Elementor HTML widget / WPBakery Raw HTML / Gutenberg Custom HTML) and paste one of the snippets below.
+</div>
+
+<h2>Option A — Elementor / WPBakery HTML Widget (iframe embed)</h2>
+<pre><code>&lt;!-- PropAI Landing Page — paste into Elementor HTML widget or WPBakery Raw HTML --&gt;
+&lt;style&gt;
+  #propai-landing-frame {
+    width: 100%;
+    min-height: 95vh;
+    border: none;
+    border-radius: 0;
+    display: block;
+  }
+&lt;/style&gt;
+&lt;iframe
+  id="propai-landing-frame"
+  src="https://YOUR-BACKEND.railway.app/widget/landing-page.html"
+  allow="clipboard-write"
+  loading="lazy"
+  title="JaipurPropIQ — AI Property Search"
+&gt;&lt;/iframe&gt;</code></pre>
+
+<h2>Option B — Gutenberg Custom HTML Block (inline embed)</h2>
+<div class="note">
+  Alternatively, in a Gutenberg page paste the full HTML content of <code>landing-page.html</code> directly into a <strong>Custom HTML</strong> block (no iframe needed). This gives better SEO but requires backend URL to be set inside the file first.
+</div>
+<pre><code>&lt;!-- 1. Open landing-page.html and find the line: --&gt;
+const API_BASE = 'http://localhost:3000';
+
+&lt;!-- 2. Change it to your live backend URL: --&gt;
+const API_BASE = 'https://YOUR-BACKEND.railway.app';
+
+&lt;!-- 3. Then copy-paste the entire file content into a Gutenberg Custom HTML block. --&gt;</code></pre>
+
+
+
+
+<h2 style="color:#a78bfa; border-bottom:2px solid #a78bfa; padding-bottom:0.4rem;">💬 Option 2 — Floating Chat Widget (All Pages)</h2>
+<p>The floating chat widget appears on <strong>every page</strong> of your WordPress site as a button at the bottom-right corner. It runs the AI property assistant through a step-by-step conversation flow.</p>
+
+
 
 <h2>Step 1 — Update your backend URL</h2>
 <div class="note">

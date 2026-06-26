@@ -18,6 +18,7 @@ const chatRoutes = require('./routes/chat');
 const propertiesRoutes = require('./routes/properties');
 const leadsRoutes = require('./routes/leads');
 const sessionRoutes = require('./routes/session');
+const quickSearchRoutes = require('./routes/quickSearch');
 
 const app = express();
 
@@ -25,8 +26,31 @@ const app = express();
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' }, // Allow widget JS to load from any site
+    // Allow landing-page.html to be embedded in an iframe on growinsight.co.in
+    frameguard: false, // Disable default DENY — we set it manually below
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        connectSrc: [
+          "'self'",
+          'https://growinsight.co.in',
+          'https://www.growinsight.co.in',
+        ],
+        // Allow page to be framed ONLY from growinsight.co.in (and self for local dev)
+        frameAncestors: [
+          "'self'",
+          'https://growinsight.co.in',
+          'https://www.growinsight.co.in',
+        ],
+      },
+    },
   })
 );
+
 
 // ── CORS ──────────────────────────────────────────────────────────────────────
 const allowedOrigins = config.corsOrigin === '*'
@@ -74,6 +98,7 @@ app.use('/api', chatRoutes);
 app.use('/api', propertiesRoutes);
 app.use('/api', leadsRoutes);
 app.use('/api', sessionRoutes);
+app.use('/api', quickSearchRoutes);
 
 // ── 404 Handler ───────────────────────────────────────────────────────────────
 app.use((req, res) => {
