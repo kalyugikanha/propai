@@ -237,6 +237,7 @@
   let propiqCurrentCriteria = null;
   let propiqFullName = '';
   let propiqMobile = '';
+  let propiqChatHistory = [];
 
   async function handlePropIQSearch() {
     const API_BASE = 'https://propai-production-d1cd.up.railway.app';
@@ -287,6 +288,11 @@
       document.getElementById('propiq-ai-reply').textContent = data.reply || '';
       document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
       
+      propiqChatHistory = [];
+      if (data.reply) {
+        propiqChatHistory.push({ role: 'ai', content: data.reply });
+      }
+
       const cards = document.getElementById('propiq-property-cards');
       cards.innerHTML = '';
       if (!data.properties || data.properties.length === 0) {
@@ -404,6 +410,8 @@
     const oldReply = replyBox.textContent;
     replyBox.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(139,28,28,0.2);border-top-color:#8B1C1C;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is reviewing your request (this takes a few seconds)...</div>';
 
+    propiqChatHistory.push({ role: 'user', content: msg });
+
     try {
       const res = await fetch(`${API_BASE}/api/refine-search`, {
         method: 'POST',
@@ -411,7 +419,8 @@
         body: JSON.stringify({
           message: msg,
           currentCriteria: propiqCurrentCriteria,
-          fullName: propiqFullName
+          fullName: propiqFullName,
+          chatHistory: propiqChatHistory
         })
       });
       const data = await res.json();
@@ -425,6 +434,10 @@
       replyBox.textContent = data.reply || '';
       document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
       
+      if (data.reply) {
+        propiqChatHistory.push({ role: 'ai', content: data.reply });
+      }
+
       const cards = document.getElementById('propiq-property-cards');
       cards.innerHTML = '';
       if (!data.properties || data.properties.length === 0) {
@@ -441,6 +454,7 @@
 
       input.value = '';
     } catch (err) {
+      propiqChatHistory.pop(); // Remove user message if failed
       replyBox.textContent = oldReply; // restore old reply
       alert('⚠️ ' + err.message);
     } finally {

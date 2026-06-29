@@ -168,7 +168,7 @@ router.get('/hot-deals', async (req, res, next) => {
 // User wants to change budget/area/type after seeing initial results
 router.post('/refine-search', async (req, res, next) => {
   try {
-    const { message, currentCriteria, fullName } = req.body;
+    const { message, currentCriteria, fullName, chatHistory = [] } = req.body;
 
     if (!message || !currentCriteria) {
       return res.status(400).json({ success: false, error: 'message and currentCriteria required' });
@@ -226,6 +226,8 @@ JSON ONLY:`;
           location: updatedCriteria.area,
           budget: { raw: updatedCriteria.budget },
         },
+        userMessage: message,
+        chatHistory: chatHistory
       });
     } else {
       aiReply = await gemini.generateNoResultsResponse({
@@ -233,7 +235,7 @@ JSON ONLY:`;
         propertyType: updatedCriteria.propertyType,
         location: updatedCriteria.area,
         budget: { raw: updatedCriteria.budget },
-      });
+      }, message, chatHistory);
     }
 
     return res.json({

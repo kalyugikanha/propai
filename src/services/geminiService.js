@@ -124,7 +124,7 @@ YOUR RESPONSE:
  * @param {object} params.session       - current session (name, propertyType, location, budget)
  * @returns {Promise<string>}
  */
-const generatePropertyRecommendation = async ({ properties, session }) => {
+const generatePropertyRecommendation = async ({ properties, session, userMessage = '', chatHistory = [] }) => {
   const propertySummary = properties
     .map(
       (p, i) =>
@@ -135,12 +135,18 @@ const generatePropertyRecommendation = async ({ properties, session }) => {
   const budgetStr = session.budget?.raw || 'as mentioned';
   const name = session.name || 'there';
 
+  const historyStr = chatHistory.length > 0 
+    ? `\nPREVIOUS CHAT HISTORY:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'You'}: ${m.content}`).join('\n')}\n`
+    : '';
+
   const prompt = `
 ${getSystemPrompt()}
 
 ---
 
-TASK: Write a warm, exciting property recommendation in English for ${name}.
+TASK: Write a warm, natural response to the user's latest message in English. Address the user as "${name}".
+${historyStr}
+USER'S LATEST MESSAGE: "${userMessage || 'Show me properties'}"
 
 THEIR REQUIREMENTS:
 - Property Type: ${session.propertyType}
@@ -153,13 +159,11 @@ ${propertySummary}
 ---
 
 RESPONSE RULES:
-- Address the user as "${name}" 
-- Sound genuinely excited about the matches
-- Mention specific property names, locations, and budget ranges naturally
-- Use warm, professional English tone
-- Mention key highlights (location, size, price)
-- End with: "Would you like our Investment Manager to personally call you and arrange a site visit?"
-- Under 100 words, NO markdown, NO bullet points, NO asterisks
+- Address the user as "${name}"
+- If the user is asking to be called or contacted (e.g. "call me", "call", "contact"), politely say that our Investment Manager will call them shortly on their registered mobile number. Do NOT ask for their number again.
+- If the user is asking a question about the properties, answer it based on the MATCHED PROPERTIES.
+- If the user is just saying hi or changing criteria, sound genuinely excited about the matches and mention key highlights.
+- Keep the response conversational, under 80 words, NO markdown, NO bullet points, NO asterisks.
 
 YOUR RESPONSE:
 `.trim();
@@ -222,14 +226,20 @@ JSON ONLY:
  * @param {object} session
  * @returns {Promise<string>}
  */
-const generateNoResultsResponse = async (session) => {
+const generateNoResultsResponse = async (session, userMessage = '', chatHistory = []) => {
   const name = session.name || 'ji';
+  const historyStr = chatHistory.length > 0 
+    ? `\nPREVIOUS CHAT HISTORY:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'You'}: ${m.content}`).join('\n')}\n`
+    : '';
+
   const prompt = `
 ${getSystemPrompt()}
 
 ---
 
-TASK: No matching properties found for ${name}.
+TASK: Write a warm response to the user. No matching properties were found for their exact criteria.
+${historyStr}
+USER'S LATEST MESSAGE: "${userMessage || 'Show me properties'}"
 
 THEIR REQUIREMENTS:
 - Property Type: ${session.propertyType}
@@ -238,11 +248,9 @@ THEIR REQUIREMENTS:
 
 Write an empathetic English response that:
 - Addresses them as "${name}"
-- Genuinely apologizes (1 sentence)
-- Suggests 2 alternatives: (1) slightly different area nearby, (2) adjust budget slightly
-- Says our Investment Manager has access to exclusive off-market properties not listed yet
-- Asks: "Is your budget slightly flexible, or would you like to try another area?"
-- Keep the response short, conversational, and complete. DO NOT use markdown.
+- If the user says "call me" or "contact", assure them our Investment Manager will call them shortly.
+- If not asking for a call, genuinely apologize (1 sentence), suggest exploring a slightly different area or budget, and say our Investment Manager has access to exclusive off-market properties.
+- Keep the response conversational, under 80 words, DO NOT use markdown.
 
 YOUR RESPONSE:
 `.trim();
