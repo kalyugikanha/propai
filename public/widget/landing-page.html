@@ -70,6 +70,8 @@
 
   /* Form */
   .propiq-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .propiq-full-row { grid-column: 1 / -1; }
+  
   .propiq-input, .propiq-select {
     width: 100%; height: 44px; border: 1px solid #d1ccc5; border-radius: 6px; padding: 0 14px; font-size: 14px; font-family: 'Inter', sans-serif; color: #1a1a1a; background: #fdfaf7; outline: none; transition: border-color 0.2s;
   }
@@ -133,22 +135,24 @@
       
       <form id="propiqForm" onsubmit="event.preventDefault(); handlePropIQSearch();">
         <div class="propiq-row">
-          <input type="text" id="propiq-name" class="propiq-input" placeholder="Your name" required />
-          <input type="tel" id="propiq-mobile" class="propiq-input" placeholder="Mobile number" maxlength="10" required />
+          <input type="text" id="propiq-name" class="propiq-input" placeholder="Your name *" required />
+          <input type="tel" id="propiq-mobile" class="propiq-input" placeholder="Mobile number *" maxlength="10" required />
         </div>
         
-        <input type="email" id="propiq-email" class="propiq-input" style="display: none;" />
+        <div class="propiq-row">
+          <input type="email" id="propiq-email" class="propiq-input propiq-full-row" placeholder="Email ID" style="grid-column: 1 / -1;" />
+        </div>
         
         <div class="propiq-row">
           <select id="propiq-type" class="propiq-select" required>
-            <option value="" disabled selected>Property type</option>
+            <option value="" disabled selected>Property type *</option>
             <option value="Villa">Villa</option>
             <option value="Apartment">Apartment</option>
             <option value="Plot">Plot</option>
             <option value="Commercial">Commercial</option>
           </select>
           <select id="propiq-budget" class="propiq-select" required>
-            <option value="" disabled selected>Your budget</option>
+            <option value="" disabled selected>Your budget *</option>
             <option value="20 Lakhs">Under ₹20 Lakhs</option>
             <option value="50 Lakhs">₹20L – ₹50 Lakhs</option>
             <option value="75 Lakhs">₹50L – ₹75 Lakhs</option>
@@ -159,9 +163,20 @@
           </select>
         </div>
 
-        <select id="propiq-area" class="propiq-select" required style="display: none;">
-          <option value="Any Area" selected>Any Area</option>
-        </select>
+        <div class="propiq-row">
+          <select id="propiq-area" class="propiq-select propiq-full-row" required style="grid-column: 1 / -1;">
+            <option value="" disabled selected>Preferred Area in Jaipur *</option>
+            <option value="Jagatpura">Jagatpura</option>
+            <option value="Mansarovar">Mansarovar</option>
+            <option value="Vaishali Nagar">Vaishali Nagar</option>
+            <option value="Malviya Nagar">Malviya Nagar</option>
+            <option value="Tonk Road">Tonk Road</option>
+            <option value="Ajmer Road">Ajmer Road</option>
+            <option value="Sirsi Road">Sirsi Road</option>
+            <option value="Kalwar Road">Kalwar Road</option>
+            <option value="Any Area">Any Area in Jaipur</option>
+          </select>
+        </div>
 
         <div id="propiq-form-error" style="display: none; color: #DC2626; font-size: 13px; margin-bottom: 12px; font-weight: 500;"></div>
 
