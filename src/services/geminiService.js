@@ -160,7 +160,7 @@ ${propertySummary}
 
 RESPONSE RULES:
 - Address the user as "${name}"
-- If the user is asking to be called or contacted (e.g. "call me", "call", "contact"), politely say that our Investment Manager will call them shortly on their registered mobile number. Do NOT ask for their number again.
+- CRITICAL: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to being called, you MUST prioritize this and say: "Absolutely! I've noted your request. Our expert Investment Manager will call you shortly on your registered mobile number."
 - If the user is asking a question about the properties, answer it based on the MATCHED PROPERTIES.
 - If the user is just saying hi or changing criteria, sound genuinely excited about the matches and mention key highlights.
 - Keep the response conversational, under 80 words, NO markdown, NO bullet points, NO asterisks.
@@ -248,7 +248,7 @@ THEIR REQUIREMENTS:
 
 Write an empathetic English response that:
 - Addresses them as "${name}"
-- If the user says "call me" or "contact", assure them our Investment Manager will call them shortly.
+- CRITICAL: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to being called, you MUST prioritize this and ONLY say: "Absolutely! I've noted your request. Our expert Investment Manager will call you shortly on your registered mobile number."
 - If not asking for a call, genuinely apologize (1 sentence), suggest exploring a slightly different area or budget, and say our Investment Manager has access to exclusive off-market properties.
 - Keep the response conversational, under 80 words, DO NOT use markdown.
 
