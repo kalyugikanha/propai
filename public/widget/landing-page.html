@@ -877,252 +877,139 @@
 
 <div id="propiq-page">
 
-  <!-- ── HEADER ─────────────────────────────────────────────────────────────── -->
-  <header id="propiq-header">
-    <div class="propiq-logo">
-      <div class="propiq-logo-icon">JP<br>IQ</div>
-      <div class="propiq-logo-text">
-        <h1>JaipurPropIQ</h1>
-        <p>Jaipur's Smartest Property Advisor</p>
+  
+  <!-- ── MAIN WIDGET ─────────────────────────────────────────────────────────── -->
+  <main id="propiq-main-widget" style="max-width: 500px; margin: 40px auto; background: #fdfaf7; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #eaeaea;">
+    <!-- HEADER -->
+    <header id="propiq-header" style="background: #8B1C1C; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-radius: 16px 16px 0 0;">
+      <div class="propiq-logo" style="display: flex; align-items: center; gap: 12px;">
+        <div class="propiq-logo-icon" style="background: white; color: #8B1C1C; font-weight: 900; font-size: 14px; line-height: 1.1; padding: 6px 8px; border-radius: 8px; text-align: center;">JP<br>IQ</div>
+        <div class="propiq-logo-text">
+          <h1 style="font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; color: white; margin: 0;">JaipurPropIQ</h1>
+          <p style="font-size: 12px; color: rgba(255,255,255,0.8); margin: 0;">Jaipur's Smartest Property Advisor</p>
+        </div>
       </div>
-    </div>
-    <div class="propiq-live-badge">
-      <div class="propiq-live-dot"></div>
-      Live
-    </div>
-  </header>
-
-  <!-- ── MAIN 2-COL ─────────────────────────────────────────────────────────── -->
-  <main id="propiq-main">
-
-    <!-- LEFT PANEL -->
-    <section id="propiq-left">
-
-      <div class="propiq-hero-text">
-        <h2>Your Dream Property<br><span>Awaits You</span> in Jaipur 🏠</h2>
-        <p>Tell us your budget — we'll match you with the best apartments, villas, plots &amp; commercial spaces across Jaipur <strong>instantly</strong>.</p>
+      <div class="propiq-live-badge" style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">
+        <div class="propiq-live-dot" style="width: 8px; height: 8px; background: #4ADE80; border-radius: 50%; box-shadow: 0 0 8px #4ADE80;"></div>
+        <span style="color: white; font-size: 12px; font-weight: 600;">Live</span>
       </div>
+    </header>
 
-      <!-- Image Slideshow -->
-      <div class="propiq-slideshow" id="propiqSlideshow">
-        <div class="propiq-slide active" style="background: linear-gradient(135deg, #8B1C1C 0%, #C0392B 50%, #D4A843 100%);">
-          <div class="propiq-slide-overlay"></div>
-          <div class="propiq-slide-caption">
-            <span class="slide-tag">🏡 Villa</span>
-            <h3>Luxury Villas in Jagatpura</h3>
-            <p>Starting from ₹80 Lakhs · Gated Community</p>
-          </div>
+    <div style="padding: 24px;">
+      <!-- Headline -->
+      <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+        <div style="width: 48px; height: 48px; background: #f9eaea; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #8B1C1C; flex-shrink: 0;">🏢</div>
+        <div>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 700; color: #1a1a1a; margin: 0 0 8px;">Find your perfect property in Jaipur</h2>
+          <p style="font-size: 14px; color: #555; margin: 0; line-height: 1.5;">Tell me your budget — I'll match you with the best apartments, villas, plots & commercial spaces across Jaipur instantly.</p>
         </div>
-        <div class="propiq-slide" style="background: linear-gradient(135deg, #1A3A6B 0%, #2563EB 50%, #7C3AED 100%);">
-          <div class="propiq-slide-overlay"></div>
-          <div class="propiq-slide-caption">
-            <span class="slide-tag">🏢 Apartment</span>
-            <h3>Premium Flats in Vaishali Nagar</h3>
-            <p>2BHK & 3BHK · Starting ₹45 Lakhs</p>
-          </div>
-        </div>
-        <div class="propiq-slide" style="background: linear-gradient(135deg, #14532D 0%, #16A34A 50%, #84CC16 100%);">
-          <div class="propiq-slide-overlay"></div>
-          <div class="propiq-slide-caption">
-            <span class="slide-tag">📐 Plot</span>
-            <h3>RERA Approved Plots · Ajmer Road</h3>
-            <p>100–500 Sq Yd · Clear Title · Loan Available</p>
-          </div>
-        </div>
-        <div class="propiq-slide" style="background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 50%, #EC4899 100%);">
-          <div class="propiq-slide-overlay"></div>
-          <div class="propiq-slide-caption">
-            <span class="slide-tag">🏬 Commercial</span>
-            <h3>Commercial Spaces · Tonk Road</h3>
-            <p>Office & Retail · High ROI Locations</p>
-          </div>
-        </div>
-        <div class="propiq-slide-dots" id="propiqDots"></div>
       </div>
 
       <!-- Trust Badges -->
-      <div class="propiq-trust-badges">
-        <div class="propiq-badge-item">
-          <div class="propiq-badge-icon">🛡️</div>
-          <div class="propiq-badge-text">
-            <strong>RERA Registered</strong>
-            <span>100% Verified Projects</span>
-          </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; font-size: 12px; font-weight: 600; color: #8B1C1C;">
+        <span style="display: flex; align-items: center; gap: 4px; background: #f9eaea; padding: 4px 8px; border-radius: 6px;">🛡️ RERA Registered</span>
+        <span style="display: flex; align-items: center; gap: 4px; background: #f9eaea; padding: 4px 8px; border-radius: 6px;">🏗️ 300+ Projects</span>
+        <span style="display: flex; align-items: center; gap: 4px; background: #f9eaea; padding: 4px 8px; border-radius: 6px;">⏱️ 24hr Callback</span>
+        <span style="display: flex; align-items: center; gap: 4px; background: #f9eaea; padding: 4px 8px; border-radius: 6px;">📍 Jaipur Specialist</span>
+      </div>
+
+      <!-- Form Card -->
+      <div class="propiq-form-card" style="background: #f5ece4; padding: 20px; border-radius: 12px; border: 1px solid rgba(139,28,28,0.1);">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+          <span style="font-size: 18px;">👤</span>
+          <h3 style="font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: #1a1a1a; margin: 0;">Quick start — we'll find your match</h3>
         </div>
-        <div class="propiq-badge-item">
-          <div class="propiq-badge-icon">🏗️</div>
-          <div class="propiq-badge-text">
-            <strong>300+ Projects</strong>
-            <span>Across All of Jaipur</span>
+
+        <form id="propiqForm" novalidate>
+          <div class="propiq-form-row" style="display: flex; gap: 12px; margin-bottom: 12px;">
+            <div class="propiq-form-group" style="flex: 1;">
+              <label for="propiq-name" style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #333;">Your name *</label>
+              <input type="text" id="propiq-name" class="propiq-input" placeholder="Rahul Sharma" autocomplete="name" maxlength="100" required style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;" />
+            </div>
+            <div class="propiq-form-group" style="flex: 1;">
+              <label for="propiq-mobile" style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #333;">Mobile number *</label>
+              <input type="tel" id="propiq-mobile" class="propiq-input" placeholder="9876543210" autocomplete="tel" maxlength="10" required style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px;" />
+            </div>
           </div>
+
+          <!-- Hidden email to support code that might read it -->
+          <input type="email" id="propiq-email" class="propiq-input" placeholder="Email" autocomplete="email" maxlength="100" style="display: none;" />
+
+          <div class="propiq-form-row" style="display: flex; gap: 12px; margin-bottom: 12px;">
+            <div class="propiq-form-group" style="flex: 1;">
+              <label for="propiq-type" style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #333;">Property type *</label>
+              <select id="propiq-type" class="propiq-select" required style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; background: white;">
+                <option value="" disabled selected>Select type</option>
+                <option value="Villa">🏡 Villa</option>
+                <option value="Apartment">🏢 Apartment</option>
+                <option value="Plot">📐 Plot</option>
+                <option value="Commercial">🏬 Commercial</option>
+              </select>
+            </div>
+            <div class="propiq-form-group" style="flex: 1;">
+              <label for="propiq-budget" style="display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #333;">Your budget *</label>
+              <select id="propiq-budget" class="propiq-select" required style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; background: white;">
+                <option value="" disabled selected>Select budget</option>
+                <option value="20 Lakhs">Under ₹20 Lakhs</option>
+                <option value="50 Lakhs">₹20L – ₹50 Lakhs</option>
+                <option value="75 Lakhs">₹50L – ₹75 Lakhs</option>
+                <option value="1 Crore">₹75L – ₹1 Crore</option>
+                <option value="2 Crore">₹1Cr – ₹2 Crore</option>
+                <option value="5 Crore">₹2Cr – ₹5 Crore</option>
+                <option value="5 Crore+">Above ₹5 Crore</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Hidden area but required by backend -->
+          <div class="propiq-form-row" style="display: none;">
+            <div class="propiq-form-group full">
+              <label for="propiq-area">Preferred Area *</label>
+              <select id="propiq-area" class="propiq-select" required>
+                <option value="Any Area" selected>Any Area in Jaipur</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="propiq-form-error" class="propiq-error" role="alert" style="margin-bottom: 12px; color: #DC2626; font-size: 13px;"></div>
+
+          <button type="submit" id="propiq-search-btn" style="width: 100%; padding: 14px; background: transparent; border: 2px solid #8B1C1C; color: #8B1C1C; font-size: 16px; font-weight: 700; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: all 0.2s;">
+            <span class="btn-icon">✨</span>
+            Find my property now
+          </button>
+
+          <p class="propiq-form-footer" style="text-align: center; margin-top: 16px; font-size: 11px; color: #666; line-height: 1.5;">
+            Free advisory · No spam ·
+            Expert callback within 24 hours<br>
+          </p>
+        </form>
+
+        <!-- Spinner -->
+        <div id="propiq-spinner" class="propiq-spinner" style="display: none; text-align: center; padding: 20px;">
+          <div class="propiq-spin-ring" style="width: 30px; height: 30px; border: 3px solid rgba(139,28,28,0.2); border-top-color: #8B1C1C; border-radius: 50%; animation: propiqSpin 1s linear infinite; margin: 0 auto 10px;"></div>
+          <p style="color: #666; font-size: 13px;">🔍 AI matching your perfect properties…</p>
         </div>
-        <div class="propiq-badge-item">
-          <div class="propiq-badge-icon">⚡</div>
-          <div class="propiq-badge-text">
-            <strong>24hr Callback</strong>
-            <span>Expert Advisor Assigned</span>
+
+        <!-- Results -->
+        <div id="propiq-results" style="display: none;">
+          <div class="propiq-results-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 20px;">
+            <h3 style="margin: 0; font-size: 16px; font-family: 'Outfit', sans-serif;">Matched Properties</h3>
+            <span class="propiq-count-badge" id="propiq-result-count" style="background: #8B1C1C; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px;">0</span>
           </div>
-        </div>
-        <div class="propiq-badge-item">
-          <div class="propiq-badge-icon">🤝</div>
-          <div class="propiq-badge-text">
-            <strong>Free Advisory</strong>
-            <span>No Hidden Charges</span>
-          </div>
+          <div id="propiq-ai-reply" class="propiq-ai-reply" style="background: white; padding: 12px; border-radius: 8px; font-size: 13px; color: #333; margin-bottom: 16px; border: 1px solid #eaeaea;"></div>
+          <div id="propiq-property-cards" class="propiq-property-cards" style="display: flex; flex-direction: column; gap: 12px;"></div>
         </div>
       </div>
-    </section>
-
-    <!-- RIGHT PANEL — Form -->
-    <section id="propiq-right">
-      <div class="propiq-form-card">
-        <div class="propiq-form-header">
-          <div class="propiq-form-header-top">
-            <span class="propiq-form-header-icon">🎯</span>
-            <h2>Find My Perfect Property</h2>
-          </div>
-          <p>Quick start — fill details below &amp; get AI-matched results instantly</p>
-        </div>
-
-        <div class="propiq-form-body">
-          <form id="propiqForm" novalidate>
-            <div class="propiq-form-row">
-              <div class="propiq-form-group">
-                <label for="propiq-name">Full Name *</label>
-                <input
-                  type="text"
-                  id="propiq-name"
-                  class="propiq-input"
-                  placeholder="Rahul Sharma"
-                  autocomplete="name"
-                  maxlength="100"
-                  required
-                />
-              </div>
-              <div class="propiq-form-group">
-                <label for="propiq-mobile">Mobile Number *</label>
-                <input
-                  type="tel"
-                  id="propiq-mobile"
-                  class="propiq-input"
-                  placeholder="9876543210"
-                  autocomplete="tel"
-                  maxlength="10"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="propiq-form-row">
-              <div class="propiq-form-group full">
-                <label for="propiq-email">Email ID</label>
-                <input
-                  type="email"
-                  id="propiq-email"
-                  class="propiq-input"
-                  placeholder="rahul@example.com"
-                  autocomplete="email"
-                  maxlength="100"
-                />
-              </div>
-            </div>
-
-            <div class="propiq-form-row">
-              <div class="propiq-form-group">
-                <label for="propiq-type">Property Type *</label>
-                <div class="propiq-select-wrapper">
-                  <select id="propiq-type" class="propiq-select" required>
-                    <option value="" disabled selected>Select type</option>
-                    <option value="Villa">🏡 Villa</option>
-                    <option value="Apartment">🏢 Apartment</option>
-                    <option value="Plot">📐 Plot</option>
-                    <option value="Commercial">🏬 Commercial</option>
-                  </select>
-                </div>
-              </div>
-              <div class="propiq-form-group">
-                <label for="propiq-budget">Your Budget *</label>
-                <div class="propiq-select-wrapper">
-                  <select id="propiq-budget" class="propiq-select" required>
-                    <option value="" disabled selected>Select budget</option>
-                    <option value="20 Lakhs">Under ₹20 Lakhs</option>
-                    <option value="50 Lakhs">₹20L – ₹50 Lakhs</option>
-                    <option value="75 Lakhs">₹50L – ₹75 Lakhs</option>
-                    <option value="1 Crore">₹75L – ₹1 Crore</option>
-                    <option value="2 Crore">₹1Cr – ₹2 Crore</option>
-                    <option value="5 Crore">₹2Cr – ₹5 Crore</option>
-                    <option value="5 Crore+">Above ₹5 Crore</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="propiq-form-row">
-              <div class="propiq-form-group full">
-                <label for="propiq-area">Preferred Area *</label>
-                <div class="propiq-select-wrapper">
-                  <select id="propiq-area" class="propiq-select" required>
-                    <option value="" disabled selected>Select area in Jaipur</option>
-                    <option value="Jagatpura">Jagatpura</option>
-                    <option value="Vaishali Nagar">Vaishali Nagar</option>
-                    <option value="Ajmer Road">Ajmer Road</option>
-                    <option value="Tonk Road">Tonk Road</option>
-                    <option value="Malviya Nagar">Malviya Nagar</option>
-                    <option value="C-Scheme">C-Scheme</option>
-                    <option value="Mansarovar">Mansarovar</option>
-                    <option value="Pratap Nagar">Pratap Nagar</option>
-                    <option value="Sitapura">Sitapura</option>
-                    <option value="Sanganer">Sanganer</option>
-                    <option value="Kalwar Road">Kalwar Road</option>
-                    <option value="Sirsi Road">Sirsi Road</option>
-                    <option value="Jhotwara">Jhotwara</option>
-                    <option value="Murlipura">Murlipura</option>
-                    <option value="Gopalpura">Gopalpura</option>
-                    <option value="Vidyadhar Nagar">Vidyadhar Nagar</option>
-                    <option value="Nirman Nagar">Nirman Nagar</option>
-                    <option value="Any Area">Any Area in Jaipur</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div id="propiq-form-error" class="propiq-error" role="alert"></div>
-
-            <button type="submit" id="propiq-search-btn">
-              <span class="btn-icon">✨</span>
-              Find My Property
-            </button>
-
-            <p class="propiq-form-footer">
-              Free advisory · No spam ·
-              Expert callback within 24 hours<br>
-              Powered by <span>GrowInsight Solutions LLP</span>
-            </p>
-          </form>
-
-          <!-- Spinner -->
-          <div id="propiq-spinner" class="propiq-spinner">
-            <div class="propiq-spin-ring"></div>
-            <p>🔍 AI matching your perfect properties…</p>
-          </div>
-
-          <!-- Results -->
-          <div id="propiq-results">
-            <div class="propiq-results-header">
-              <h3>Matched Properties</h3>
-              <span class="propiq-count-badge" id="propiq-result-count">0</span>
-            </div>
-            <div id="propiq-ai-reply" class="propiq-ai-reply"></div>
-            <div id="propiq-property-cards" class="propiq-property-cards"></div>
-            <div class="propiq-cta-bar">
-              <strong>📞 Our Investment Manager will call you within 24 hours!</strong>
-              Free advisory · RERA Registered · Jaipur Specialist
-            </div>
-          </div>
-        </div>
+      
+      <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #777;">
+        Powered by <strong style="color: #8B1C1C;">GrowInsight Solutions LLP</strong> · RERA Registered · Jaipur
       </div>
-    </section>
+    </div>
   </main>
+  <style>
+    @keyframes propiqSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+
 
   <div class="propiq-divider"></div>
 

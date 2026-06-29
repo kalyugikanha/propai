@@ -141,7 +141,7 @@ ${getSystemPrompt()}
 
 ---
 
-TASK: Write a warm, exciting property recommendation in Hinglish (mix of Hindi and English) for ${name}.
+TASK: Write a warm, exciting property recommendation in English for ${name}.
 
 THEIR REQUIREMENTS:
 - Property Type: ${session.propertyType}
@@ -154,12 +154,12 @@ ${propertySummary}
 ---
 
 RESPONSE RULES:
-- Start with "${name} ji" 
+- Address the user as "${name}" 
 - Sound genuinely excited about the matches
 - Mention specific property names, locations, and budget ranges naturally
-- Use warm Hinglish tone (mix Hindi words like "bahut acchi", "perfect match", "bilkul sahi")
+- Use warm, professional English tone
 - Mention key highlights (location, size, price)
-- End with: "Kya aap chahenge ki hamare Investment Manager aapko personally call karein aur site visit arrange karein?"
+- End with: "Would you like our Investment Manager to personally call you and arrange a site visit?"
 - Under 100 words, NO markdown, NO bullet points, NO asterisks
 
 YOUR RESPONSE:
@@ -237,12 +237,12 @@ THEIR REQUIREMENTS:
 - Location: ${session.location}
 - Budget: ${session.budget?.raw || 'as mentioned'}
 
-Write an empathetic Hinglish response that:
-- Addresses them as "${name} ji"
+Write an empathetic English response that:
+- Addresses them as "${name}"
 - Genuinely apologizes (1 sentence)
 - Suggests 2 alternatives: (1) slightly different area nearby, (2) adjust budget slightly
 - Says our Investment Manager has access to exclusive off-market properties not listed yet
-- Asks: "Kya budget thoda flexible hai, ya koi aur area try karein?"
+- Asks: "Is your budget slightly flexible, or would you like to try another area?"
 - Under 80 words, NO markdown
 
 YOUR RESPONSE:
@@ -264,7 +264,7 @@ const generateHotDealOpeningMessage = async ({ propertyName, propertyLocation, u
 You are Priya, a warm AI property advisor at JaipurPropIQ Jaipur.
 ${userName} showed interest in: ${propertyName} at ${propertyLocation}.
 Write a SHORT 2-sentence excited welcome + ask ONE question about visit timeline or specific requirements.
-Hinglish tone. No markdown. Max 50 words.
+Professional English tone. No markdown. Max 50 words.
 `.trim();
   return callGemini(prompt);
 };
