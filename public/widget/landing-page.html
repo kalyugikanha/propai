@@ -200,7 +200,13 @@
           <span id="propiq-result-count" style="background: #8B1C1C; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">0</span>
         </div>
         <div id="propiq-ai-reply" class="propiq-ai-reply"></div>
-        <div id="propiq-property-cards" style="display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto;"></div>
+        <div id="propiq-property-cards" style="display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; margin-bottom: 16px;"></div>
+        
+        <!-- AI Chat Input Box for Refine Search -->
+        <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 12px; border-top: 1px solid #ddd; padding-top: 16px;">
+          <input type="text" id="propiq-chat-input" class="propiq-input" placeholder="Reply to AI (e.g. Try a 60 Lakhs budget instead)" required style="flex: 1;" />
+          <button type="submit" id="propiq-chat-btn" style="background: #8B1C1C; color: white; border: none; border-radius: 6px; padding: 0 16px; font-weight: 600; cursor: pointer;">Send</button>
+        </form>
       </div>
     </div>
     
@@ -226,6 +232,9 @@
 </div>
 
 <script>
+  let propiqCurrentCriteria = null;
+  let propiqFullName = '';
+
   async function handlePropIQSearch() {
     const API_BASE = 'https://propai-production-d1cd.up.railway.app';
     const errorDiv = document.getElementById('propiq-form-error');
@@ -235,8 +244,10 @@
 
     errorDiv.style.display = 'none';
     
+    propiqFullName = document.getElementById('propiq-name').value.trim();
+
     const payload = {
-      fullName: document.getElementById('propiq-name').value.trim(),
+      fullName: propiqFullName,
       mobile: document.getElementById('propiq-mobile').value.trim(),
       email: document.getElementById('propiq-email').value.trim(),
       propertyType: document.getElementById('propiq-type').value,
@@ -249,6 +260,12 @@
       errorDiv.style.display = 'block';
       return;
     }
+    
+    propiqCurrentCriteria = {
+      propertyType: payload.propertyType,
+      budget: payload.budget,
+      area: payload.area
+    };
 
     form.style.display = 'none';
     spinner.style.display = 'block';
@@ -355,6 +372,70 @@
         <div style="grid-column:1/-1;text-align:center;padding:16px;color:#DC2626;font-size:13px;">
           ⚠️ Could not load hot deals. Please try again later.
         </div>`;
+    }
+  }
+
+  async function handlePropIQChat() {
+    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
+    const input = document.getElementById('propiq-chat-input');
+    const btn = document.getElementById('propiq-chat-btn');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // Show loading state
+    input.disabled = true;
+    btn.disabled = true;
+    btn.textContent = '...';
+    
+    // We update the reply text temporarily to show it's thinking
+    const replyBox = document.getElementById('propiq-ai-reply');
+    const oldReply = replyBox.textContent;
+    replyBox.innerHTML = '<span style="color:#666;">Thinking...</span>';
+
+    try {
+      const res = await fetch(`${API_BASE}/api/refine-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: msg,
+          currentCriteria: propiqCurrentCriteria,
+          fullName: propiqFullName
+        })
+      });
+      const data = await res.json();
+      
+      if (!data.success) throw new Error(data.error || 'Failed to refine search.');
+      
+      // Update state
+      if (data.updatedCriteria) propiqCurrentCriteria = data.updatedCriteria;
+
+      // Render new response
+      replyBox.textContent = data.reply || '';
+      document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
+      
+      const cards = document.getElementById('propiq-property-cards');
+      cards.innerHTML = '';
+      if (!data.properties || data.properties.length === 0) {
+        cards.innerHTML = `<div style="text-align:center; padding: 16px; color: #666; font-size: 13px;">No exact matches found.</div>`;
+      } else {
+        data.properties.forEach(p => {
+          cards.innerHTML += `<div class="propiq-prop-card">
+            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${p.name || 'Property'}</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
+            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C;">${p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : ''}</div>
+          </div>`;
+        });
+      }
+
+      input.value = '';
+    } catch (err) {
+      replyBox.textContent = oldReply; // restore old reply
+      alert('⚠️ ' + err.message);
+    } finally {
+      input.disabled = false;
+      btn.disabled = false;
+      btn.textContent = 'Send';
+      input.focus();
     }
   }
 </script>
