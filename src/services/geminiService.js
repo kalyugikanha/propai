@@ -30,7 +30,6 @@ const getModel = () => {
       generationConfig: {
         temperature: 0.7,
         topP: 0.9,
-        maxOutputTokens: 512,
       },
     });
   }
@@ -243,7 +242,7 @@ Write an empathetic English response that:
 - Suggests 2 alternatives: (1) slightly different area nearby, (2) adjust budget slightly
 - Says our Investment Manager has access to exclusive off-market properties not listed yet
 - Asks: "Is your budget slightly flexible, or would you like to try another area?"
-- Under 80 words, NO markdown
+- Keep the response short, conversational, and complete. DO NOT use markdown.
 
 YOUR RESPONSE:
 `.trim();

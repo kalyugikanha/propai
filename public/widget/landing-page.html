@@ -5,7 +5,7 @@
   /* Base & Reset */
   #propiq-main-widget * { box-sizing: border-box; }
   #propiq-main-widget {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 40px auto;
     background: #f2efeb;
     border-radius: 12px;
@@ -204,6 +204,21 @@
       </div>
     </div>
     
+    <!-- Hot Deals -->
+    <div style="border-top: 1px solid #ddd; padding-top: 16px; margin-top: 24px;">
+      <button type="button" onclick="togglePropIQHotDeals()" style="width: 100%; background: transparent; border: 1px dashed #8B1C1C; color: #8B1C1C; padding: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;">
+        🔥 <span id="propiq-deals-btn-text">View Hot Deals in Jaipur</span> <span id="propiq-deals-btn-arrow">▾</span>
+      </button>
+
+      <div id="propiq-hot-deals-content" style="display: none; margin-top: 16px;">
+        <div id="propiq-deals-spinner" style="display: none; text-align: center; padding: 20px;">
+          <div style="width: 24px; height: 24px; border: 2.5px solid rgba(139,28,28,0.2); border-top-color: #8B1C1C; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
+          <p style="color: #666; font-size: 13px;">Loading exclusive deals...</p>
+        </div>
+        <div id="propiq-deals-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px;"></div>
+      </div>
+    </div>
+    
     <div class="propiq-main-footer">
       Powered by GrowInsight Solutions LLP · RERA Registered · Jaipur
     </div>
@@ -273,6 +288,73 @@
       form.style.display = 'block';
       errorDiv.textContent = '⚠️ ' + err.message;
       errorDiv.style.display = 'block';
+    }
+  }
+
+  let propiqHotDealsLoaded = false;
+  let propiqHotDealsOpen   = false;
+
+  async function togglePropIQHotDeals() {
+    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
+    const content   = document.getElementById('propiq-hot-deals-content');
+    const btnText   = document.getElementById('propiq-deals-btn-text');
+    const btnArrow  = document.getElementById('propiq-deals-btn-arrow');
+
+    propiqHotDealsOpen = !propiqHotDealsOpen;
+
+    if (propiqHotDealsOpen) {
+      content.style.display = 'block';
+      btnText.textContent  = 'Hide Hot Deals';
+      btnArrow.textContent = '▴';
+
+      if (!propiqHotDealsLoaded) {
+        await loadPropIQHotDeals(API_BASE);
+        propiqHotDealsLoaded = true;
+      }
+    } else {
+      content.style.display = 'none';
+      btnText.textContent  = 'View Hot Deals in Jaipur';
+      btnArrow.textContent = '▾';
+    }
+  }
+
+  async function loadPropIQHotDeals(API_BASE) {
+    const dealsSpinner = document.getElementById('propiq-deals-spinner');
+    const dealsGrid    = document.getElementById('propiq-deals-grid');
+
+    dealsSpinner.style.display = 'block';
+    dealsGrid.innerHTML = '';
+
+    try {
+      const res  = await fetch(`${API_BASE}/api/hot-deals`);
+      const data = await res.json();
+
+      dealsSpinner.style.display = 'none';
+
+      if (!data.success || !data.properties || data.properties.length === 0) {
+        dealsGrid.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:16px;color:#888;font-size:13px;">
+            🔍 No hot deals available right now. Check back soon!
+          </div>`;
+        return;
+      }
+
+      data.properties.forEach(p => {
+        dealsGrid.innerHTML += `
+          <div class="propiq-prop-card" style="position:relative; overflow:hidden;">
+            <div style="position:absolute; top:-1px; right:-1px; background:#DC2626; color:white; font-size:10px; font-weight:700; padding:4px 8px; border-bottom-left-radius:8px;">HOT DEAL</div>
+            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px; padding-right:60px;">${p.name || 'Property'}</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
+            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C;">${p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : ''}</div>
+          </div>`;
+      });
+
+    } catch (err) {
+      dealsSpinner.style.display = 'none';
+      dealsGrid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:16px;color:#DC2626;font-size:13px;">
+          ⚠️ Could not load hot deals. Please try again later.
+        </div>`;
     }
   }
 </script>
