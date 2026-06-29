@@ -203,9 +203,11 @@
         <div id="propiq-property-cards" style="display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; margin-bottom: 16px;"></div>
         
         <!-- AI Chat Input Box for Refine Search -->
-        <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 12px; border-top: 1px solid #ddd; padding-top: 16px;">
-          <input type="text" id="propiq-chat-input" class="propiq-input" placeholder="Reply to AI (e.g. Try a 60 Lakhs budget instead)" required style="flex: 1;" />
-          <button type="submit" id="propiq-chat-btn" style="background: #8B1C1C; color: white; border: none; border-radius: 6px; padding: 0 16px; font-weight: 600; cursor: pointer;">Send</button>
+        <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid #eaeaea; padding-top: 16px; align-items: center;">
+          <input type="text" id="propiq-chat-input" placeholder="Type your message to Priya..." required style="flex: 1; height: 48px; border: 1px solid #d1ccc5; border-radius: 24px; padding: 0 20px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; background: #fff;" />
+          <button type="submit" id="propiq-chat-btn" style="width: 48px; height: 48px; background: #8B1C1C; color: white; border: none; border-radius: 50%; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s;">
+            ➤
+          </button>
         </form>
       </div>
     </div>
@@ -234,6 +236,7 @@
 <script>
   let propiqCurrentCriteria = null;
   let propiqFullName = '';
+  let propiqMobile = '';
 
   async function handlePropIQSearch() {
     const API_BASE = 'https://propai-production-d1cd.up.railway.app';
@@ -245,10 +248,11 @@
     errorDiv.style.display = 'none';
     
     propiqFullName = document.getElementById('propiq-name').value.trim();
+    propiqMobile = document.getElementById('propiq-mobile').value.trim();
 
     const payload = {
       fullName: propiqFullName,
-      mobile: document.getElementById('propiq-mobile').value.trim(),
+      mobile: propiqMobile,
       email: document.getElementById('propiq-email').value.trim(),
       propertyType: document.getElementById('propiq-type').value,
       budget: document.getElementById('propiq-budget').value,
@@ -357,12 +361,20 @@
       }
 
       data.properties.forEach(p => {
+        const pId = p.id || p.name;
+        const escName = (p.name || 'Property').replace(/'/g, "\\'");
+        const escLoc = (p.location || '').replace(/'/g, "\\'");
+        const escBudg = (p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : '').replace(/'/g, "\\'");
+
         dealsGrid.innerHTML += `
           <div class="propiq-prop-card" style="position:relative; overflow:hidden;">
             <div style="position:absolute; top:-1px; right:-1px; background:#DC2626; color:white; font-size:10px; font-weight:700; padding:4px 8px; border-bottom-left-radius:8px;">HOT DEAL</div>
             <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px; padding-right:60px;">${p.name || 'Property'}</div>
             <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C;">${p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : ''}</div>
+            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C; margin-bottom: 12px;">${escBudg}</div>
+            <button type="button" id="propiq-hd-btn-${pId.replace(/[^a-zA-Z0-9]/g,'')}" onclick="handlePropIQHotDealInterest(this, '${pId}', '${escName}', '${escLoc}', '${escBudg}')" style="width: 100%; background: #1a1a1a; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;">
+              I'm interested
+            </button>
           </div>`;
       });
 
@@ -385,12 +397,12 @@
     // Show loading state
     input.disabled = true;
     btn.disabled = true;
-    btn.textContent = '...';
+    btn.style.opacity = '0.7';
     
     // We update the reply text temporarily to show it's thinking
     const replyBox = document.getElementById('propiq-ai-reply');
     const oldReply = replyBox.textContent;
-    replyBox.innerHTML = '<span style="color:#666;">Thinking...</span>';
+    replyBox.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(139,28,28,0.2);border-top-color:#8B1C1C;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is reviewing your request (this takes a few seconds)...</div>';
 
     try {
       const res = await fetch(`${API_BASE}/api/refine-search`, {
@@ -434,8 +446,60 @@
     } finally {
       input.disabled = false;
       btn.disabled = false;
-      btn.textContent = 'Send';
+      btn.style.opacity = '1';
       input.focus();
+    }
+  }
+
+  async function handlePropIQHotDealInterest(btnElement, pId, pName, pLoc, pBudg) {
+    if (!propiqFullName || !propiqMobile) {
+      alert("Please fill your Name and Mobile in the top form first so we can contact you!");
+      document.getElementById('propiq-name').focus();
+      return;
+    }
+
+    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
+    const originalText = btnElement.textContent;
+    btnElement.disabled = true;
+    btnElement.textContent = 'Sending...';
+    btnElement.style.opacity = '0.8';
+
+    try {
+      const res = await fetch(`${API_BASE}/api/hot-deal-interest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: propiqFullName,
+          mobile: propiqMobile,
+          propertyId: pId,
+          propertyName: pName,
+          propertyLocation: pLoc,
+          propertyBudget: pBudg
+        })
+      });
+      const data = await res.json();
+      
+      if (!data.success) throw new Error(data.error || 'Failed to submit interest.');
+      
+      btnElement.textContent = '✅ Interest Registered!';
+      btnElement.style.background = '#4ADE80';
+      btnElement.style.color = '#1a1a1a';
+      
+      setTimeout(() => {
+        // Show AI reply dynamically at the top!
+        const replyBox = document.getElementById('propiq-ai-reply');
+        if (replyBox) {
+          replyBox.textContent = data.reply || 'Our expert will call you shortly about this property.';
+        } else {
+          alert(data.reply || 'Our expert will call you shortly about this property.');
+        }
+      }, 1000);
+
+    } catch (err) {
+      alert('⚠️ ' + err.message);
+      btnElement.disabled = false;
+      btnElement.textContent = originalText;
+      btnElement.style.opacity = '1';
     }
   }
 </script>
