@@ -46,16 +46,14 @@ const LOCATION_QUICK_REPLY_LIMIT = 6;
 
 // Budget quick-reply options
 const BUDGET_QUICK_REPLIES = [
-  '20 Lakhs',
-  '50 Lakhs',
-  '75 Lakhs',
-  '1 Crore',
-  '2 Crore',
-  '5 Crore+',
+  'Below 1Cr',
+  '1Cr +',
+  '2 Cr +',
+  'Above 5 Cr',
 ];
 
 // Google Sheets tab names
-const PROPERTIES_SHEET_NAME = 'Properties';
+const PROPERTIES_SHEET_NAME = 'Property';
 const LEADS_SHEET_NAME = 'Leads';
 
 // Leads sheet column order (must match the sheet's header row)
@@ -77,13 +75,13 @@ const LEADS_COLUMNS = [
 const PROPERTY_COLUMNS = {
   PROJECT_ID: "Builder's Name",
   PROJECT_NAME: 'Project Name',
-  LOCATION: 'Brochure',  // Because the header "Brochure" has the location text
-  BROCHURE_LINK: 'Location', // Because the header "Location" has the PDF link/name
+  LOCATION: 'Project  Location', // Area like Jagatpura
+  BROCHURE_LINK: 'Folder', // Contains the PDF
   PROPERTY_TYPE: 'Flats/ Villas',
   BUDGET: "Budget's", // Replaces MIN/MAX budget
   SIZE_SQFT: 'AREA',
-  STATUS: 'Folder', // 'Folder' has 'yes'/'no' indicating active
-  DESCRIPTION: 'Project  Location', // Using Project Location as description for now if needed, or leave blank
+  STATUS: '', // Empty string header has 'yes'
+  DESCRIPTION: 'Location', // Full address
 };
 
 const PROPERTY_STATUS_ACTIVE   = 'yes';

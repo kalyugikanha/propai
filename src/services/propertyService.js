@@ -106,14 +106,35 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
   }
 
   // ── Step 4: Budget range filter ───────────────────────────────────────────
-  if (budgetAmount) {
+  if (budget) {
+    const budgetStr = String(budget).toLowerCase().trim();
     results = results.filter((p) => {
       const rawBudget = p[COL.BUDGET] || '';
       const parts = rawBudget.toLowerCase().split('to');
-      const min = parseBudget(parts[0]) || 0;
+      let min = parseBudget(parts[0]) || 0;
       const max = parseBudget(parts[1] || parts[0]) || Infinity;
-      // Allow 20% flexibility on both sides
-      return budgetAmount >= min * 0.8 && budgetAmount <= max * 1.2;
+      
+      // Handle cases like "1.4 to 2 cr" where 'cr' is only on the second part
+      if (min > 0 && min < 1000 && max > 100000) {
+        if (max >= 10000000) min *= 10000000;
+        else if (max >= 100000) min *= 100000;
+      }
+      
+      const flexMin = min * 0.8;
+      const flexMax = max === Infinity ? Infinity : max * 1.2;
+
+      if (budgetStr === 'below 1cr') {
+        return flexMin <= 10000000;
+      } else if (budgetStr === '1cr +') {
+        return flexMax >= 10000000;
+      } else if (budgetStr === '2 cr +') {
+        return flexMax >= 20000000;
+      } else if (budgetStr === 'above 5 cr') {
+        return flexMax >= 50000000;
+      } else if (budgetAmount) {
+        return budgetAmount >= flexMin && budgetAmount <= flexMax;
+      }
+      return true;
     });
   }
 
