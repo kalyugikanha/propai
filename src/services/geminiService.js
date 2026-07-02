@@ -160,9 +160,10 @@ ${propertySummary}
 
 RESPONSE RULES:
 - Address the user as "${name}"
-- CRITICAL: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to being called, you MUST prioritize this and say: "Absolutely! I've noted your request. Our expert Investment Manager will call you shortly on your registered mobile number."
-- If the user is asking a question about the properties, answer it based on the MATCHED PROPERTIES.
-- If the user is just saying hi or changing criteria, sound genuinely excited about the matches and mention key highlights.
+- CRITICAL SCRIPT 1: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to a call, you MUST reply EXACTLY: "Thanks for sharing details, our team will call you in next 24 hours."
+- CRITICAL SCRIPT 2: If the USER'S LATEST MESSAGE is asking for a visit, you MUST ask: "Kab visit karna hai? Please let me know your preferred date and time."
+- CRITICAL SCRIPT 3: If the USER'S LATEST MESSAGE provides BOTH a date and time for a visit, you MUST reply EXACTLY: "Thanks for booking your visit, our expert will connect you in next 24 hours. Thanks."
+- CRITICAL SCRIPT 4: If the user is just saying hi or if this is the first time showing the properties (and they haven't said call/visit yet), sound genuinely excited about the matches, mention key highlights, and you MUST end your message with EXACTLY: "If you liked that property then we can setup a call with expert or are you planning for a visit?"
 - Keep the response conversational, under 80 words, NO markdown, NO bullet points, NO asterisks.
 
 YOUR RESPONSE:
@@ -248,8 +249,10 @@ THEIR REQUIREMENTS:
 
 Write an empathetic English response that:
 - Addresses them as "${name}"
-- CRITICAL: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to being called, you MUST prioritize this and ONLY say: "Absolutely! I've noted your request. Our expert Investment Manager will call you shortly on your registered mobile number."
-- If not asking for a call, genuinely apologize (1 sentence), suggest exploring a slightly different area or budget, and say our Investment Manager has access to exclusive off-market properties.
+- CRITICAL SCRIPT 1: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to a call, you MUST reply EXACTLY: "Thanks for sharing details, our team will call you in next 24 hours."
+- CRITICAL SCRIPT 2: If the USER'S LATEST MESSAGE is asking for a visit, you MUST ask: "Kab visit karna hai? Please let me know your preferred date and time."
+- CRITICAL SCRIPT 3: If the USER'S LATEST MESSAGE provides BOTH a date and time for a visit, you MUST reply EXACTLY: "Thanks for booking your visit, our expert will connect you in next 24 hours. Thanks."
+- If they aren't asking for a call or visit, genuinely apologize (1 sentence) for no exact matches, suggest exploring a slightly different area or budget, and say our Investment Manager has access to exclusive off-market properties. End by asking: "Would you like us to setup a call with an expert to discuss?"
 - Keep the response conversational, under 80 words, DO NOT use markdown.
 
 YOUR RESPONSE:

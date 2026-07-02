@@ -88,10 +88,10 @@
   .propiq-card-footer { font-size: 11px; color: #666; text-align: center; margin-top: 16px; line-height: 1.5; }
   .propiq-main-footer { font-size: 11px; color: #777; text-align: center; margin-top: 10px; }
 
-  /* Results */
-  .propiq-results { display: none; margin-top: 20px; }
-  .propiq-ai-reply { background: white; padding: 14px; border-radius: 8px; font-size: 14px; color: #333; margin-bottom: 16px; line-height: 1.5; border: 1px solid #e2e2e2; }
-  .propiq-prop-card { background: white; border: 1px solid #e2e2e2; border-left: 4px solid #8B1C1C; border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+  .propiq-chat-box { max-height: 380px; overflow-y: auto; padding: 12px 4px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+  .propiq-chat-msg { max-width: 90%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+  .propiq-chat-ai { align-self: flex-start; background: #fff; color: #333; border: 1px solid #e2e2e2; border-bottom-left-radius: 4px; }
+  .propiq-chat-user { align-self: flex-end; background: #8B1C1C; color: white; border-bottom-right-radius: 4px; }
 
   @keyframes propiqSpin { 100% { transform: rotate(360deg); } }
   
@@ -195,12 +195,12 @@
       </div>
 
       <div id="propiq-results" class="propiq-results">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <h3 style="margin:0; font-size: 15px; color: #1a1a1a;">Matches Found</h3>
-          <span id="propiq-result-count" style="background: #8B1C1C; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">0</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 8px; margin-bottom: 8px;">
+          <h3 style="margin:0; font-size: 15px; color: #1a1a1a;">Chat with Priya</h3>
+          <span id="propiq-result-count" style="background: #8B1C1C; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; display: none;">0</span>
         </div>
-        <div id="propiq-ai-reply" class="propiq-ai-reply"></div>
-        <div id="propiq-property-cards" style="display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; margin-bottom: 16px;"></div>
+        
+        <div id="propiq-chat-box" class="propiq-chat-box"></div>
         
         <!-- AI Chat Input Box for Refine Search -->
         <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid #eaeaea; padding-top: 16px; align-items: center;">
@@ -238,6 +238,35 @@
   let propiqFullName = '';
   let propiqMobile = '';
   let propiqChatHistory = [];
+
+  function appendChatMsg(role, text, propertiesHTML = '') {
+    const chatBox = document.getElementById('propiq-chat-box');
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'propiq-chat-msg ' + (role === 'user' ? 'propiq-chat-user' : 'propiq-chat-ai');
+    
+    let html = `<div>${text.replace(/\n/g, '<br>')}</div>`;
+    if (propertiesHTML) {
+      html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 12px;">${propertiesHTML}</div>`;
+    }
+    msgDiv.innerHTML = html;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function showTyping() {
+    const chatBox = document.getElementById('propiq-chat-box');
+    const msgDiv = document.createElement('div');
+    msgDiv.id = 'propiq-typing';
+    msgDiv.className = 'propiq-chat-msg propiq-chat-ai';
+    msgDiv.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(139,28,28,0.2);border-top-color:#8B1C1C;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is typing...</div>';
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function hideTyping() {
+    const el = document.getElementById('propiq-typing');
+    if (el) el.remove();
+  }
 
   async function handlePropIQSearch() {
     const API_BASE = 'https://propai-production-d1cd.up.railway.app';
@@ -285,27 +314,35 @@
       
       if (!data.success) throw new Error(data.error || 'Failed to search.');
       
-      document.getElementById('propiq-ai-reply').textContent = data.reply || '';
       document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
+      document.getElementById('propiq-result-count').style.display = 'inline-block';
       
       propiqChatHistory = [];
       if (data.reply) {
         propiqChatHistory.push({ role: 'ai', content: data.reply });
       }
 
-      const cards = document.getElementById('propiq-property-cards');
-      cards.innerHTML = '';
+      document.getElementById('propiq-chat-box').innerHTML = ''; // Clear chat box
+      
+      let propsHTML = '';
       if (!data.properties || data.properties.length === 0) {
-        cards.innerHTML = `<div style="text-align:center; padding: 16px; color: #666; font-size: 13px;">No exact matches found.</div>`;
+        // No properties
       } else {
         data.properties.forEach(p => {
-          cards.innerHTML += `<div class="propiq-prop-card">
-            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${p.name || 'Property'}</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C;">${p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : ''}</div>
+          let btnHtml = '';
+          if (p.brochureLink) {
+            btnHtml = `<a href="${p.brochureLink}" target="_blank" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
+          }
+          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
+            <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
+            <div style="font-size: 11px; color: #666; margin-bottom: 4px;">${p.location || ''} · ${p.type || ''}</div>
+            <div style="font-size: 13px; font-weight: 700; color: #8B1C1C;">${p.budget || ''}</div>
+            ${btnHtml}
           </div>`;
         });
       }
+      
+      appendChatMsg('ai', data.reply || 'Here are some suggestions:', propsHTML);
       
       spinner.style.display = 'none';
       resultsDiv.style.display = 'block';
@@ -405,12 +442,12 @@
     btn.disabled = true;
     btn.style.opacity = '0.7';
     
-    // We update the reply text temporarily to show it's thinking
-    const replyBox = document.getElementById('propiq-ai-reply');
-    const oldReply = replyBox.textContent;
-    replyBox.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(139,28,28,0.2);border-top-color:#8B1C1C;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is reviewing your request (this takes a few seconds)...</div>';
-
+    // We append user message to chat
+    appendChatMsg('user', msg);
     propiqChatHistory.push({ role: 'user', content: msg });
+    
+    input.value = '';
+    showTyping();
 
     try {
       const res = await fetch(`${API_BASE}/api/refine-search`, {
@@ -430,33 +467,37 @@
       // Update state
       if (data.updatedCriteria) propiqCurrentCriteria = data.updatedCriteria;
 
-      // Render new response
-      replyBox.textContent = data.reply || '';
+      hideTyping();
       document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
       
       if (data.reply) {
         propiqChatHistory.push({ role: 'ai', content: data.reply });
       }
 
-      const cards = document.getElementById('propiq-property-cards');
-      cards.innerHTML = '';
+      let propsHTML = '';
       if (!data.properties || data.properties.length === 0) {
-        cards.innerHTML = `<div style="text-align:center; padding: 16px; color: #666; font-size: 13px;">No exact matches found.</div>`;
+        // No matches
       } else {
         data.properties.forEach(p => {
-          cards.innerHTML += `<div class="propiq-prop-card">
-            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${p.name || 'Property'}</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C;">${p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : ''}</div>
+          let btnHtml = '';
+          if (p.brochureLink) {
+            btnHtml = `<a href="${p.brochureLink}" target="_blank" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
+          }
+          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
+            <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
+            <div style="font-size: 11px; color: #666; margin-bottom: 4px;">${p.location || ''} · ${p.type || ''}</div>
+            <div style="font-size: 13px; font-weight: 700; color: #8B1C1C;">${p.budget || ''}</div>
+            ${btnHtml}
           </div>`;
         });
       }
 
-      input.value = '';
+      appendChatMsg('ai', data.reply || 'Here are some matches:', propsHTML);
+
     } catch (err) {
+      hideTyping();
       propiqChatHistory.pop(); // Remove user message if failed
-      replyBox.textContent = oldReply; // restore old reply
-      alert('⚠️ ' + err.message);
+      appendChatMsg('ai', '⚠️ ' + err.message);
     } finally {
       input.disabled = false;
       btn.disabled = false;

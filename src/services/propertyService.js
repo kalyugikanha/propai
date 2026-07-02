@@ -38,8 +38,10 @@ const scoreProperty = (property, { propertyType, location, budgetAmount }) => {
 
   // Budget proximity: bonus if user budget is near the center of [min, max]
   if (budgetAmount) {
-    const minB = parseInt(property[COL.MIN_BUDGET]) || 0;
-    const maxB = parseInt(property[COL.MAX_BUDGET]) || budgetAmount;
+    const rawBudget = property[COL.BUDGET] || '';
+    const parts = rawBudget.toLowerCase().split('to');
+    const minB = parseBudget(parts[0]) || 0;
+    const maxB = parseBudget(parts[1] || parts[0]) || budgetAmount;
     const center = (minB + maxB) / 2;
     const deviation = Math.abs(budgetAmount - center);
     const range = maxB - minB || 1;
@@ -51,9 +53,10 @@ const scoreProperty = (property, { propertyType, location, budgetAmount }) => {
   }
 
   // Exact property type match
-  const propType = (property[COL.PROPERTY_TYPE] || '').toLowerCase();
+  let propType = (property[COL.PROPERTY_TYPE] || '').toLowerCase();
+  if (propType.includes('flat')) propType = 'apartment';
   const searchType = (propertyType || '').toLowerCase();
-  if (searchType && propType === searchType) {
+  if (searchType && propType.includes(searchType)) {
     score += 1;
   }
 
@@ -85,9 +88,11 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
 
   // ── Step 2: Property type filter ──────────────────────────────────────────
   if (propertyType) {
-    results = results.filter(
-      (p) => (p[COL.PROPERTY_TYPE] || '').toLowerCase() === propertyType.toLowerCase()
-    );
+    results = results.filter((p) => {
+      let pType = (p[COL.PROPERTY_TYPE] || '').toLowerCase();
+      if (pType.includes('flat')) pType = 'apartment';
+      return pType.includes(propertyType.toLowerCase());
+    });
   }
 
   // ── Step 3: Location filter — skip if 'any area' or similar ────────────────
@@ -103,11 +108,10 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
   // ── Step 4: Budget range filter ───────────────────────────────────────────
   if (budgetAmount) {
     results = results.filter((p) => {
-      const rawMin = p[COL.MIN_BUDGET];
-      const rawMax = p[COL.MAX_BUDGET];
-      // Try parsing as lakh/crore string first, fall back to parseInt
-      const min = parseBudget(rawMin) || parseInt(rawMin) || 0;
-      const max = parseBudget(rawMax) || parseInt(rawMax) || Infinity;
+      const rawBudget = p[COL.BUDGET] || '';
+      const parts = rawBudget.toLowerCase().split('to');
+      const min = parseBudget(parts[0]) || 0;
+      const max = parseBudget(parts[1] || parts[0]) || Infinity;
       // Allow 20% flexibility on both sides
       return budgetAmount >= min * 0.8 && budgetAmount <= max * 1.2;
     });
@@ -139,16 +143,21 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
  * @param {object} p  - raw property row from Sheets
  * @returns {object}
  */
-const formatProperty = (p) => ({
-  id: p[COL.PROJECT_ID] || '',
-  name: p[COL.PROJECT_NAME] || '',
-  location: p[COL.LOCATION] || '',
-  type: p[COL.PROPERTY_TYPE] || '',
-  size: p[COL.SIZE_SQFT] ? `${p[COL.SIZE_SQFT]} sqft` : '',
-  minBudget: p[COL.MIN_BUDGET] || '',
-  maxBudget: p[COL.MAX_BUDGET] || '',
-  description: p[COL.DESCRIPTION] || '',
-  status: p[COL.STATUS] || '',
-});
+const formatProperty = (p) => {
+  let pType = p[COL.PROPERTY_TYPE] || '';
+  if (pType.toLowerCase().includes('flat')) pType = 'Apartment';
+
+  return {
+    id: p[COL.PROJECT_ID] || '',
+    name: p[COL.PROJECT_NAME] || '',
+    location: p[COL.LOCATION] || '',
+    type: pType,
+    size: p[COL.SIZE_SQFT] ? `${p[COL.SIZE_SQFT]} sqft` : '',
+    budget: p[COL.BUDGET] || '',
+    brochureLink: p[COL.BROCHURE_LINK] || '',
+    description: p[COL.DESCRIPTION] || '',
+    status: p[COL.STATUS] || '',
+  };
+};
 
 module.exports = { searchProperties, formatProperty };

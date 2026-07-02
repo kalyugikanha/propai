@@ -75,18 +75,18 @@ const LEADS_COLUMNS = [
 
 // Properties sheet required columns (used for fallback mapping)
 const PROPERTY_COLUMNS = {
-  PROJECT_ID: 'Project ID',
+  PROJECT_ID: "Builder's Name",
   PROJECT_NAME: 'Project Name',
-  LOCATION: 'Location',
-  PROPERTY_TYPE: 'Property Type',
-  MIN_BUDGET: 'Min Budget',
-  MAX_BUDGET: 'Max Budget',
-  SIZE_SQFT: 'Size (Sqft)',
-  STATUS: 'Status',
-  DESCRIPTION: 'Description',
+  LOCATION: 'Brochure',  // Because the header "Brochure" has the location text
+  BROCHURE_LINK: 'Location', // Because the header "Location" has the PDF link/name
+  PROPERTY_TYPE: 'Flats/ Villas',
+  BUDGET: "Budget's", // Replaces MIN/MAX budget
+  SIZE_SQFT: 'AREA',
+  STATUS: 'Folder', // 'Folder' has 'yes'/'no' indicating active
+  DESCRIPTION: 'Project  Location', // Using Project Location as description for now if needed, or leave blank
 };
 
-const PROPERTY_STATUS_ACTIVE   = 'Active';
+const PROPERTY_STATUS_ACTIVE   = 'yes';
 const PROPERTY_STATUS_HOT_DEAL = 'Hot Deal';
 
 // Session / cache TTLs
