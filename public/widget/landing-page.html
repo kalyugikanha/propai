@@ -328,7 +328,8 @@
         data.properties.forEach(p => {
           let btnHtml = '';
           if (p.brochureLink) {
-            btnHtml = `<a href="${p.brochureLink}" target="_blank" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
+            const escName = (p.name || 'Property').replace(/'/g, "\\'");
+            btnHtml = `<a href="${p.brochureLink}" target="_blank" onclick="handleBrochureDownload('${escName}')" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
           propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
@@ -478,7 +479,8 @@
         data.properties.forEach(p => {
           let btnHtml = '';
           if (p.brochureLink) {
-            btnHtml = `<a href="${p.brochureLink}" target="_blank" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
+            const escName = (p.name || 'Property').replace(/'/g, "\\'");
+            btnHtml = `<a href="${p.brochureLink}" target="_blank" onclick="handleBrochureDownload('${escName}')" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
           propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
@@ -553,5 +555,37 @@
       btnElement.textContent = originalText;
       btnElement.style.opacity = '1';
     }
+  }
+
+  function handleBrochureDownload(propertyName) {
+    // Send a hidden message to AI to trigger a response
+    const msg = `I downloaded the brochure for ${propertyName}.`;
+    
+    // We do not append this to UI, but we send it to backend to trigger the AI response
+    propiqChatHistory.push({ role: 'user', content: msg });
+    showTyping();
+
+    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
+    fetch(`${API_BASE}/api/refine-search`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: msg,
+        currentCriteria: propiqCurrentCriteria || {},
+        fullName: propiqFullName,
+        chatHistory: propiqChatHistory
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      hideTyping();
+      if (data.reply) {
+        propiqChatHistory.push({ role: 'ai', content: data.reply });
+        appendChatMsg('ai', data.reply);
+      }
+    })
+    .catch(err => {
+      hideTyping();
+    });
   }
 </script>

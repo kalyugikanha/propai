@@ -168,20 +168,23 @@ router.get('/hot-deals', async (req, res, next) => {
 // User wants to change budget/area/type after seeing initial results
 router.post('/refine-search', async (req, res, next) => {
   try {
-    const { message, currentCriteria, fullName, chatHistory = [] } = req.body;
+    const { message, fullName, chatHistory = [] } = req.body;
+    let { currentCriteria } = req.body;
 
-    if (!message || !currentCriteria) {
-      return res.status(400).json({ success: false, error: 'message and currentCriteria required' });
+    if (!message) {
+      return res.status(400).json({ success: false, error: 'message required' });
     }
+    currentCriteria = currentCriteria || {};
 
     // Use Gemini to extract updated criteria from user message
     const extractPrompt = `
-User wants to refine their property search.
+User wants to chat or refine their property search.
 Current search criteria: ${JSON.stringify(currentCriteria)}
 User said: "${message}"
 
-Extract any updates from the user message. Return ONLY valid JSON:
+Extract the intent and any updates from the user message. Return ONLY valid JSON:
 {
+  "intent": "search" | "chat", // "search" if user is looking for new properties or changing budget/area. "chat" if user is greeting, asking about a specific property (e.g. "I like JVJ"), or asking a general question.
   "propertyType": "<same or updated>",
   "budget": "<same or updated>",
   "area": "<same or updated>",
@@ -198,28 +201,57 @@ JSON ONLY:`;
     const aiText = aiResult.response.text().trim();
 
     let updatedCriteria = { ...currentCriteria };
+    let intent = "search";
     try {
       const jsonMatch = aiText.match(/\{[\s\S]*\}/);
-      if (jsonMatch) updatedCriteria = { ...currentCriteria, ...JSON.parse(jsonMatch[0]) };
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0]);
+        intent = parsed.intent || "search";
+        updatedCriteria = { ...currentCriteria, ...parsed };
+      }
     } catch (e) { /* keep current */ }
 
-    // Search with updated criteria
-    const { searchProperties, formatProperty } = require('../services/propertyService');
-    const matchedProperties = await searchProperties({
-      propertyType: updatedCriteria.propertyType,
-      location: updatedCriteria.area,
-      budget: updatedCriteria.budget,
-      forceRefresh: true,
-    });
-
-    const formattedProps = matchedProperties.map(formatProperty);
-
-    // Generate AI reply
     const gemini = require('../services/geminiService');
+    const { searchProperties, formatProperty } = require('../services/propertyService');
+    
+    let matchedProperties = [];
+    let formattedProps = [];
     let aiReply = '';
-    if (formattedProps.length > 0) {
-      aiReply = await gemini.generatePropertyRecommendation({
-        properties: matchedProperties,
+
+    if (intent === "search") {
+      // Search with updated criteria
+      matchedProperties = await searchProperties({
+        propertyType: updatedCriteria.propertyType,
+        location: updatedCriteria.area,
+        budget: updatedCriteria.budget,
+        forceRefresh: true,
+      });
+
+      formattedProps = matchedProperties.map(formatProperty);
+
+      if (formattedProps.length > 0) {
+        aiReply = await gemini.generatePropertyRecommendation({
+          properties: matchedProperties,
+          session: {
+            name: fullName || 'there',
+            propertyType: updatedCriteria.propertyType,
+            location: updatedCriteria.area,
+            budget: { raw: updatedCriteria.budget },
+          },
+          userMessage: message,
+          chatHistory: chatHistory
+        });
+      } else {
+        aiReply = await gemini.generateNoResultsResponse({
+          name: fullName || 'there',
+          propertyType: updatedCriteria.propertyType,
+          location: updatedCriteria.area,
+          budget: { raw: updatedCriteria.budget },
+        }, message, chatHistory);
+      }
+    } else {
+      // Intent is Chat - Answer directly without re-searching
+      aiReply = await gemini.generateChatResponse({
         session: {
           name: fullName || 'there',
           propertyType: updatedCriteria.propertyType,
@@ -229,13 +261,6 @@ JSON ONLY:`;
         userMessage: message,
         chatHistory: chatHistory
       });
-    } else {
-      aiReply = await gemini.generateNoResultsResponse({
-        name: fullName || 'there',
-        propertyType: updatedCriteria.propertyType,
-        location: updatedCriteria.area,
-        budget: { raw: updatedCriteria.budget },
-      }, message, chatHistory);
     }
 
     return res.json({
