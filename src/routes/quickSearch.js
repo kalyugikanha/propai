@@ -177,14 +177,18 @@ router.post('/refine-search', async (req, res, next) => {
     currentCriteria = currentCriteria || {};
 
     // Use Gemini to extract updated criteria from user message
+    const historyContext = chatHistory.slice(-4).map(m => `${m.role}: ${m.content}`).join('\n');
     const extractPrompt = `
 User wants to chat or refine their property search.
 Current search criteria: ${JSON.stringify(currentCriteria)}
+Recent Chat:
+${historyContext}
+
 User said: "${message}"
 
 Extract the intent and any updates from the user message. Return ONLY valid JSON:
 {
-  "intent": "search" | "chat", // IMPORTANT: ONLY use "search" if the user explicitly asks to find new properties, change budget, or change location. If the user asks about a specific property, says "hello", asks for a "visit", asks to "call", or asks for more info, intent MUST BE "chat"!
+  "intent": "search" | "chat", // IMPORTANT: "chat" if the user is replying to a previous question, clicking/asking about a specific property mentioned in the chat, saying hello, or asking to visit/call. ONLY use "search" if the user explicitly wants to search a DIFFERENT area, DIFFERENT budget, or DIFFERENT property type!
   "propertyType": "<same or updated>",
   "budget": "<same or updated>",
   "area": "<same or updated>",
