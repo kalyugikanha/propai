@@ -184,7 +184,7 @@ User said: "${message}"
 
 Extract the intent and any updates from the user message. Return ONLY valid JSON:
 {
-  "intent": "search" | "chat", // "search" if user is looking for new properties or changing budget/area. "chat" if user is greeting, asking about a specific property (e.g. "I like JVJ"), or asking a general question.
+  "intent": "search" | "chat", // IMPORTANT: ONLY use "search" if the user explicitly asks to find new properties, change budget, or change location. If the user asks about a specific property, says "hello", asks for a "visit", asks to "call", or asks for more info, intent MUST BE "chat"!
   "propertyType": "<same or updated>",
   "budget": "<same or updated>",
   "area": "<same or updated>",

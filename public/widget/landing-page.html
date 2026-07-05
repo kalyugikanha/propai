@@ -191,7 +191,7 @@
         <p style="color: #666; font-size: 13px;">AI is finding matches...</p>
       </div>
 
-      <div id="propiq-results" class="propiq-results">
+      <div id="propiq-results" class="propiq-results" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 8px; margin-bottom: 8px;">
           <h3 style="margin:0; font-size: 15px; color: #1a1a1a;">Chat with Priya</h3>
           <span id="propiq-result-count" style="background: #8B1C1C; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; display: none;">0</span>
@@ -329,7 +329,10 @@
           let btnHtml = '';
           if (p.brochureLink) {
             const escName = (p.name || 'Property').replace(/'/g, "\\'");
-            btnHtml = `<a href="${p.brochureLink}" target="_blank" onclick="handleBrochureDownload('${escName}')" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
+            const isUrl = String(p.brochureLink).toLowerCase().startsWith('http');
+            const href = isUrl ? p.brochureLink : '#';
+            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('Brochure link is missing in the database. Please contact support.'); return false;`;
+            btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
           propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
@@ -480,7 +483,10 @@
           let btnHtml = '';
           if (p.brochureLink) {
             const escName = (p.name || 'Property').replace(/'/g, "\\'");
-            btnHtml = `<a href="${p.brochureLink}" target="_blank" onclick="handleBrochureDownload('${escName}')" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
+            const isUrl = String(p.brochureLink).toLowerCase().startsWith('http');
+            const href = isUrl ? p.brochureLink : '#';
+            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('Brochure link is missing in the database. Please contact support.'); return false;`;
+            btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
           propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
