@@ -76,11 +76,11 @@ const PROPERTY_COLUMNS = {
   PROJECT_ID: "Builder's Name",
   PROJECT_NAME: 'Project Name',
   LOCATION: 'Project  Location', // Area like Jagatpura
-  BROCHURE_LINK: 'Folder', // Contains the PDF
+  BROCHURE_LINK: 'Brochure', // Contains the PDF
   PROPERTY_TYPE: 'Flats/ Villas',
   BUDGET: "Budget's", // Replaces MIN/MAX budget
   SIZE_SQFT: 'AREA',
-  STATUS: '', // Empty string header has 'yes'
+  STATUS: 'Status', // Use 'Status' column for 'yes' or 'Hot Deal'
   DESCRIPTION: 'Location', // Full address
 };
 

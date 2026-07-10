@@ -334,7 +334,7 @@
             let href = p.brochureLink;
             if (isUrl && !linkStr.startsWith('http')) href = 'https://' + href;
             if (!isUrl) href = '#';
-            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('Bhai, Google Sheet mein brochure ka actual link (URL) nahi hai. Kripya sheet mein Drive ka URL daaliye.'); return false;`;
+            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('The brochure link is missing in the Google Sheet. Please add a valid Drive URL.'); return false;`;
             btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
           propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
@@ -491,7 +491,7 @@
             let href = p.brochureLink;
             if (isUrl && !linkStr.startsWith('http')) href = 'https://' + href;
             if (!isUrl) href = '#';
-            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('Bhai, Google Sheet mein brochure ka actual link (URL) nahi hai. Kripya sheet mein Drive ka URL daaliye.'); return false;`;
+            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('The brochure link is missing in the Google Sheet. Please add a valid Drive URL.'); return false;`;
             btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
           propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">

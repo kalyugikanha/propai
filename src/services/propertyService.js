@@ -11,7 +11,7 @@
 
 const sheetsService = require('./sheetsService');
 const { parse: parseBudget, isWithinRange } = require('../utils/budgetParser');
-const { PROPERTY_STATUS_ACTIVE, PROPERTY_COLUMNS: COL } = require('../config/constants');
+const { PROPERTY_STATUS_ACTIVE, PROPERTY_STATUS_HOT_DEAL, PROPERTY_COLUMNS: COL } = require('../config/constants');
 const config = require('../config/env');
 const logger = require('../utils/logger');
 
@@ -83,7 +83,10 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
 
   // ── Step 1: Active only ────────────────────────────────────────────────────
   let results = allProperties.filter(
-    (p) => (p[COL.STATUS] || '').toLowerCase() === PROPERTY_STATUS_ACTIVE.toLowerCase()
+    (p) => {
+      const status = (p[COL.STATUS] || '').toLowerCase().trim();
+      return status === PROPERTY_STATUS_ACTIVE.toLowerCase() || status === PROPERTY_STATUS_HOT_DEAL.toLowerCase();
+    }
   );
 
   // ── Step 2: Property type filter ──────────────────────────────────────────
