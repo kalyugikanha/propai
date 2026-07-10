@@ -480,6 +480,140 @@
         font-weight: 500;
       }
 
+      /* ── Visit Scheduler ── */
+      .propai-scheduler {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+        border: 1.5px solid #e8eaf6;
+        overflow: hidden;
+        width: 100%;
+        max-width: 290px;
+        margin-top: 8px;
+        animation: propai-slide-in 0.3s ease;
+      }
+      .propai-scheduler-header {
+        background: ${GRADIENT};
+        color: white;
+        padding: 12px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      /* Calendar */
+      .propai-cal {
+        padding: 12px 12px 8px;
+      }
+      .propai-cal-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .propai-cal-nav span {
+        font-size: 13px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+      .propai-cal-nav button {
+        background: none;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        width: 28px; height: 28px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #64748b;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.15s;
+      }
+      .propai-cal-nav button:hover { background: #f1f5f9; border-color: ${cfg.primaryColor}; color: ${cfg.primaryColor}; }
+      .propai-cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+      .propai-cal-day-label {
+        text-align: center;
+        font-size: 10px;
+        font-weight: 600;
+        color: #94a3b8;
+        padding: 2px 0 6px;
+        text-transform: uppercase;
+      }
+      .propai-cal-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: #1e293b;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .propai-cal-day:hover:not(:disabled) { background: #ede9fe; color: ${cfg.primaryColor}; }
+      .propai-cal-day.selected { background: ${cfg.primaryColor}; color: white; font-weight: 700; }
+      .propai-cal-day.today { border: 1.5px solid ${cfg.primaryColor}; color: ${cfg.primaryColor}; font-weight: 600; }
+      .propai-cal-day.today.selected { border-color: transparent; color: white; }
+      .propai-cal-day:disabled { color: #cbd5e1; cursor: not-allowed; }
+      .propai-cal-day.empty { cursor: default; }
+      /* Time Slots */
+      .propai-time-section {
+        padding: 0 12px 12px;
+        border-top: 1px solid #f1f5f9;
+      }
+      .propai-time-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 10px 0 8px;
+      }
+      .propai-time-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+      .propai-time-slot {
+        padding: 7px 4px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 500;
+        color: #475569;
+        background: white;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .propai-time-slot:hover { border-color: ${cfg.primaryColor}; color: ${cfg.primaryColor}; background: #faf5ff; }
+      .propai-time-slot.selected { background: ${cfg.primaryColor}; color: white; border-color: ${cfg.primaryColor}; font-weight: 600; }
+      /* Confirm Button */
+      .propai-confirm-visit {
+        display: block;
+        width: calc(100% - 24px);
+        margin: 0 12px 12px;
+        padding: 10px;
+        background: ${GRADIENT};
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.15s, transform 0.15s;
+        font-family: inherit;
+      }
+      .propai-confirm-visit:hover { opacity: 0.9; transform: translateY(-1px); }
+      .propai-confirm-visit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
       /* ── Mobile ── */
       @media (max-width: 480px) {
         #propai-panel {
@@ -605,6 +739,185 @@
     els.panel.classList.remove('open');
   };
 
+  // ── Visit Scheduler State ─────────────────────────────────────────────────────
+  let _schedulerDate = null;
+  let _schedulerTime = null;
+  let _schedulerEl  = null;
+
+  // ── Calendar Builder ──────────────────────────────────────────────────────────
+  const buildCalendar = (year, month) => {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const monthName = new Date(year, month).toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+    const dayLabels = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+    let cells = '';
+    dayLabels.forEach(d => { cells += `<div class="propai-cal-day-label">${d}</div>`; });
+    for (let i = 0; i < firstDay; i++) cells += `<div class="propai-cal-day empty"></div>`;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(year, month, d);
+      const isPast = date < today;
+      const isToday = date.getTime() === today.getTime();
+      const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const isSelected = _schedulerDate === dateStr;
+      cells += `<button class="propai-cal-day${isToday?' today':''}${isSelected?' selected':''}" 
+        ${isPast ? 'disabled' : `data-date="${dateStr}"`}>${d}</button>`;
+    }
+    return { monthName, cells };
+  };
+
+  const TIME_SLOTS = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+
+  const buildTimePicker = () => {
+    if (!_schedulerDate) return '';
+    const slots = TIME_SLOTS.map(t => {
+      const sel = _schedulerTime === t ? ' selected' : '';
+      return `<button class="propai-time-slot${sel}" data-time="${t}">${t}</button>`;
+    }).join('');
+    return `
+      <div class="propai-time-section">
+        <div class="propai-time-label">🕐 Choose a time</div>
+        <div class="propai-time-grid">${slots}</div>
+      </div>`;
+  };
+
+  const buildScheduler = () => {
+    const now = new Date();
+    const yr  = now.getFullYear();
+    const mo  = now.getMonth();
+    const { monthName, cells } = buildCalendar(yr, mo);
+    const canConfirm = _schedulerDate && _schedulerTime;
+    return `
+      <div class="propai-scheduler" id="propai-scheduler">
+        <div class="propai-scheduler-header">📅 Schedule a Visit</div>
+        <div class="propai-cal" id="propai-cal" data-year="${yr}" data-month="${mo}">
+          <div class="propai-cal-nav">
+            <button id="propai-cal-prev">&#8249;</button>
+            <span>${monthName}</span>
+            <button id="propai-cal-next">&#8250;</button>
+          </div>
+          <div class="propai-cal-grid">${cells}</div>
+        </div>
+        ${buildTimePicker()}
+        <button class="propai-confirm-visit" id="propai-confirm-visit" ${canConfirm ? '' : 'disabled'}>
+          ${canConfirm ? `✅ Confirm — ${fmtDate(_schedulerDate)} at ${_schedulerTime}` : 'Select date & time to confirm'}
+        </button>
+      </div>`;
+  };
+
+  const fmtDate = (dateStr) => {
+    if (!dateStr) return '';
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+  };
+
+  const refreshScheduler = () => {
+    if (!_schedulerEl) return;
+    const calEl  = _schedulerEl.querySelector('#propai-cal');
+    const yr     = parseInt(calEl.dataset.year);
+    const mo     = parseInt(calEl.dataset.month);
+    const { monthName, cells } = buildCalendar(yr, mo);
+    calEl.querySelector('.propai-cal-grid').innerHTML = cells;
+    calEl.querySelector('.propai-cal-nav span').textContent = monthName;
+
+    // Time picker
+    const existingTime = _schedulerEl.querySelector('.propai-time-section');
+    if (existingTime) existingTime.remove();
+    if (_schedulerDate) {
+      calEl.insertAdjacentHTML('afterend', buildTimePicker());
+      attachTimeListeners();
+    }
+
+    // Confirm button
+    const btn = _schedulerEl.querySelector('#propai-confirm-visit');
+    const canConfirm = _schedulerDate && _schedulerTime;
+    btn.disabled = !canConfirm;
+    btn.textContent = canConfirm ? `✅ Confirm — ${fmtDate(_schedulerDate)} at ${_schedulerTime}` : 'Select date & time to confirm';
+  };
+
+  const attachTimeListeners = () => {
+    _schedulerEl.querySelectorAll('.propai-time-slot').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _schedulerTime = btn.dataset.time;
+        _schedulerEl.querySelectorAll('.propai-time-slot').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        refreshScheduler();
+      });
+    });
+  };
+
+  const injectScheduler = (containerEl) => {
+    _schedulerDate = null;
+    _schedulerTime = null;
+    containerEl.insertAdjacentHTML('beforeend', buildScheduler());
+    _schedulerEl = containerEl.querySelector('#propai-scheduler');
+
+    // Calendar day clicks
+    _schedulerEl.querySelector('.propai-cal-grid').addEventListener('click', e => {
+      const btn = e.target.closest('.propai-cal-day');
+      if (!btn || btn.disabled || btn.classList.contains('empty')) return;
+      _schedulerDate = btn.dataset.date;
+      _schedulerTime = null;
+      refreshScheduler();
+      attachDateListeners();
+    });
+
+    attachDateListeners();
+
+    // Nav buttons
+    _schedulerEl.querySelector('#propai-cal-prev').addEventListener('click', () => {
+      const calEl = _schedulerEl.querySelector('#propai-cal');
+      let yr = parseInt(calEl.dataset.year), mo = parseInt(calEl.dataset.month);
+      mo--; if (mo < 0) { mo = 11; yr--; }
+      calEl.dataset.year = yr; calEl.dataset.month = mo;
+      refreshScheduler();
+      attachDateListeners();
+    });
+    _schedulerEl.querySelector('#propai-cal-next').addEventListener('click', () => {
+      const calEl = _schedulerEl.querySelector('#propai-cal');
+      let yr = parseInt(calEl.dataset.year), mo = parseInt(calEl.dataset.month);
+      mo++; if (mo > 11) { mo = 0; yr++; }
+      calEl.dataset.year = yr; calEl.dataset.month = mo;
+      refreshScheduler();
+      attachDateListeners();
+    });
+
+    // Confirm
+    _schedulerEl.querySelector('#propai-confirm-visit').addEventListener('click', () => {
+      if (!_schedulerDate || !_schedulerTime) return;
+      const msg = `I want to visit on ${fmtDate(_schedulerDate)} at ${_schedulerTime}.`;
+      // Hide scheduler
+      _schedulerEl.remove();
+      _schedulerEl = null;
+      sendMessage(msg);
+    });
+  };
+
+  const attachDateListeners = () => {
+    if (!_schedulerEl) return;
+    _schedulerEl.querySelectorAll('.propai-cal-day:not([disabled]):not(.empty)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _schedulerDate = btn.dataset.date;
+        _schedulerTime = null;
+        refreshScheduler();
+        attachDateListeners();
+        attachTimeListeners();
+        scrollToBottom();
+      });
+    });
+  };
+
+  // Detect if AI message is asking for visit time
+  const isVisitAsk = (text) => {
+    const t = text.toLowerCase();
+    return t.includes('kab visit') || t.includes('visit karna hai') ||
+           t.includes('preferred date') || t.includes('schedule a visit') ||
+           t.includes('plan a visit') || t.includes('book a visit') ||
+           (t.includes('date') && t.includes('time') && (t.includes('visit') || t.includes('meet')));
+  };
+
   // ── Append Message ────────────────────────────────────────────────────────────
   const appendMessage = (text, role, properties = []) => {
     const msgEl = document.createElement('div');
@@ -632,7 +945,17 @@
 
     // Insert before typing indicator
     els.messages.insertBefore(msgEl, els.typing);
-    scrollToBottom();
+
+    // If bot is asking for visit time → inject scheduler
+    if (role === 'bot' && isVisitAsk(text)) {
+      const contentWrapper = msgEl.querySelector('div:last-child') || msgEl;
+      setTimeout(() => {
+        injectScheduler(contentWrapper);
+        scrollToBottom();
+      }, 120);
+    } else {
+      scrollToBottom();
+    }
   };
 
   const escHtml = (str) =>
