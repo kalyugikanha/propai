@@ -11,7 +11,7 @@
 
 const sheetsService = require('./sheetsService');
 const { parse: parseBudget, isWithinRange } = require('../utils/budgetParser');
-const { PROPERTY_STATUS_ACTIVE, PROPERTY_STATUS_HOT_DEAL, PROPERTY_COLUMNS: COL } = require('../config/constants');
+const { PROPERTY_ACTIVE_FLAG, PROPERTY_STATUS_HOT_DEAL, PROPERTY_STATUS_SOLD_OUT, PROPERTY_COLUMNS: COL } = require('../config/constants');
 const config = require('../config/env');
 const logger = require('../utils/logger');
 
@@ -81,13 +81,16 @@ const searchProperties = async ({ propertyType, location, budget, forceRefresh =
   // Resolve budget to a number
   const budgetAmount = typeof budget === 'number' ? budget : parseBudget(budget);
 
-  // ── Step 1: Active only ────────────────────────────────────────────────────
-  let results = allProperties.filter(
-    (p) => {
-      const status = (p[COL.STATUS] || '').toLowerCase().trim();
-      return status === PROPERTY_STATUS_ACTIVE.toLowerCase() || status === PROPERTY_STATUS_HOT_DEAL.toLowerCase();
-    }
-  );
+  // A property is searchable if:
+  //   (a) Column P (empty-header) = 'yes'  (standard active), OR
+  //   (b) Column O (Status) = 'Hot Deals'   (hot deal — also shown in search)
+  // A property is EXCLUDED if Status = 'Sold Out'
+  let results = allProperties.filter((p) => {
+    const activeFlag = (p[COL.ACTIVE_FLAG] || '').toLowerCase().trim();
+    const status     = (p[COL.STATUS]      || '').toLowerCase().trim();
+    if (status === PROPERTY_STATUS_SOLD_OUT.toLowerCase()) return false; // Always exclude Sold Out
+    return activeFlag === PROPERTY_ACTIVE_FLAG.toLowerCase() || status === PROPERTY_STATUS_HOT_DEAL.toLowerCase();
+  });
 
   // ── Step 2: Property type filter ──────────────────────────────────────────
   if (propertyType) {

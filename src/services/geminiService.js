@@ -233,27 +233,35 @@ const generateNoResultsResponse = async (session, userMessage = '', chatHistory 
     ? `\nPREVIOUS CHAT HISTORY:\n${chatHistory.map(m => `${m.role === 'user' ? 'User' : 'You'}: ${m.content}`).join('\n')}\n`
     : '';
 
+  // Count how many "no results" have already been given in this chat
+  const noResultsCount = chatHistory.filter(m => 
+    m.role === 'ai' && (m.content.includes('apologize') || m.content.includes('exact match') || m.content.includes('off-market'))
+  ).length;
+
   const prompt = `
 ${getSystemPrompt()}
 
 ---
 
-TASK: Write a warm response to the user. No matching properties were found for their exact criteria.
+TASK: Write a warm, human response. No matching properties found for their exact criteria.
 ${historyStr}
 USER'S LATEST MESSAGE: "${userMessage || 'Show me properties'}"
 
 THEIR REQUIREMENTS:
 - Property Type: ${session.propertyType}
 - Location: ${session.location}
-- Budget: ${session.budget?.raw || 'as mentioned'}
+- Budget: ${session.budget?.raw || 'any'}
 
-Write an empathetic English response that:
-- Addresses them as "${name}"
-- CRITICAL SCRIPT 1: If the USER'S LATEST MESSAGE is asking for a call, contact, or saying "yes" to a call, you MUST reply EXACTLY: "Thanks for sharing details, our team will call you in next 24 hours."
-- CRITICAL SCRIPT 2: If the USER'S LATEST MESSAGE is asking for a visit, you MUST ask: "Kab visit karna hai? Please let me know your preferred date and time."
-- CRITICAL SCRIPT 3: If the USER'S LATEST MESSAGE provides BOTH a date and time for a visit, you MUST reply EXACTLY: "Thanks for booking your visit, our expert will connect you in next 24 hours. Thanks."
-- If they aren't asking for a call or visit, genuinely apologize (1 sentence) for no exact matches, suggest exploring a slightly different area or budget, and say our Investment Manager has access to exclusive off-market properties. End by asking: "Would you like us to setup a call with an expert to discuss?"
-- Keep the response conversational, under 80 words, DO NOT use markdown.
+Number of times "no results" has already been told in this chat: ${noResultsCount}
+
+RULES (READ CAREFULLY):
+- CRITICAL SCRIPT 1: If user is asking for a call/contact or saying yes to a call → reply EXACTLY: "Thanks for sharing details, our team will call you in next 24 hours."
+- CRITICAL SCRIPT 2: If user is asking for a visit → ask: "Kab visit karna hai? Please let me know your preferred date and time."
+- CRITICAL SCRIPT 3: If user provides BOTH date and time for visit → reply EXACTLY: "Thanks for booking your visit, our expert will connect you in next 24 hours. Thanks."
+- If noResultsCount >= 2 (user has already been told "no match" multiple times), DO NOT apologize again. Instead sound genuinely helpful: suggest they connect directly with our expert who has access to off-market & exclusive listings, and confidently invite them to share a time for a callback.
+- If noResultsCount < 2, briefly apologize (1 sentence) and suggest slightly adjusting budget or area. Ask if they want a call with an expert who has exclusive listings.
+- NEVER repeat the exact same apology message twice. Sound like a real person, not a bot.
+- Under 70 words. No markdown.
 
 YOUR RESPONSE:
 `.trim();

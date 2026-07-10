@@ -111,7 +111,7 @@ const getProperties = async (forceRefresh = false) => {
 
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: config.googleSpreadsheetId,
-    range: `A1:Z`,  // Z covers up to 26 columns
+    range: `'${PROPERTIES_SHEET_NAME}'!A1:Z`,  // Quoted to handle spaces in tab name
   });
 
   const rows = response.data.values;

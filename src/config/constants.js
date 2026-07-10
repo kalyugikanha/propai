@@ -53,7 +53,7 @@ const BUDGET_QUICK_REPLIES = [
 ];
 
 // Google Sheets tab names
-const PROPERTIES_SHEET_NAME = 'Property';
+const PROPERTIES_SHEET_NAME = 'Property '; // Note: trailing space matches the actual Google Sheet tab name
 const LEADS_SHEET_NAME = 'Leads';
 
 // Leads sheet column order (must match the sheet's header row)
@@ -76,16 +76,21 @@ const PROPERTY_COLUMNS = {
   PROJECT_ID: "Builder's Name",
   PROJECT_NAME: 'Project Name',
   LOCATION: 'Project  Location', // Area like Jagatpura
-  BROCHURE_LINK: 'Brochure', // Contains the PDF
+  BROCHURE_LINK: 'Brochure',    // Column S — Google Drive URL
   PROPERTY_TYPE: 'Flats/ Villas',
-  BUDGET: "Budget's", // Replaces MIN/MAX budget
+  BUDGET: "Budget's",           // Replaces MIN/MAX budget
   SIZE_SQFT: 'AREA',
-  STATUS: 'Status', // Use 'Status' column for 'yes' or 'Hot Deal'
-  DESCRIPTION: 'Location', // Full address
+  STATUS: 'Status',              // Column O — 'Hot Deals', 'Sold Out', etc.
+  ACTIVE_FLAG: '',               // Column P — empty-header col with 'yes' for active
+  DESCRIPTION: 'Location',      // Full address
 };
 
-const PROPERTY_STATUS_ACTIVE   = 'yes';
-const PROPERTY_STATUS_HOT_DEAL = 'Hot Deal';
+// Status values used in Google Sheet (Column O)
+const PROPERTY_STATUS_HOT_DEAL = 'Hot Deals'; // Plural as in sheet
+const PROPERTY_STATUS_SOLD_OUT = 'Sold Out';
+
+// Active flag value in Column P (empty-header column)
+const PROPERTY_ACTIVE_FLAG = 'yes';
 
 // Session / cache TTLs
 const SESSION_TTL_MS = 2 * 60 * 60 * 1000; // 2 hours
@@ -104,8 +109,9 @@ module.exports = {
   LEADS_SHEET_NAME,
   LEADS_COLUMNS,
   PROPERTY_COLUMNS,
-  PROPERTY_STATUS_ACTIVE,
+  PROPERTY_ACTIVE_FLAG,
   PROPERTY_STATUS_HOT_DEAL,
+  PROPERTY_STATUS_SOLD_OUT,
   SESSION_TTL_MS,
   SHEETS_CACHE_TTL_MS,
   TOP_PROPERTIES_LIMIT,

@@ -13,7 +13,7 @@ const geminiService = require('../services/geminiService');
 const sheetsService = require('../services/sheetsService');
 const { generateSessionId, isValidIndianMobile, formatDateIN } = require('../utils/helpers');
 const { parse: parseBudget } = require('../utils/budgetParser');
-const { PROPERTY_TYPES, PROPERTY_COLUMNS: COL } = require('../config/constants');
+const { PROPERTY_TYPES, PROPERTY_COLUMNS: COL, PROPERTY_STATUS_HOT_DEAL } = require('../config/constants');
 const logger = require('../utils/logger');
 
 // ── Validation helper ─────────────────────────────────────────────────────────
@@ -147,9 +147,9 @@ router.get('/hot-deals', async (req, res, next) => {
 
     const allProperties = await sheetsService.getProperties(false);
 
-    // Filter where Status column (case-insensitive) = "hot deal"
+    // Filter where Status column = 'Hot Deals' (as stored in sheet)
     const hotDeals = allProperties.filter(
-      (p) => (p[COL.STATUS] || '').toLowerCase().trim() === 'hot deal'
+      (p) => (p[COL.STATUS] || '').trim() === PROPERTY_STATUS_HOT_DEAL
     );
 
     const formatted = hotDeals.map(propertyService.formatProperty);
@@ -222,7 +222,16 @@ JSON ONLY:`;
     let formattedProps = [];
     let aiReply = '';
 
-    if (intent === "search") {
+    // Detect if user wants 'anything available' - relax all filters
+    const relaxKeywords = ['koi bhi', 'any', 'anything', 'kuch bhi', 'jo bhi', 'all', 'sab', 'every', 'kisi bhi'];
+    const msgLower = message.toLowerCase();
+    const wantsAnything = relaxKeywords.some(k => msgLower.includes(k));
+    if (wantsAnything) {
+      updatedCriteria.budget = '';
+      updatedCriteria.area = 'any';
+    }
+
+    if (intent === "search" || wantsAnything) {
       // Search with updated criteria
       matchedProperties = await searchProperties({
         propertyType: updatedCriteria.propertyType,
