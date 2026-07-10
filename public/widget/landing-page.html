@@ -98,6 +98,140 @@
   @media (max-width: 600px) {
     .propiq-row { grid-template-columns: 1fr; gap: 12px; }
   }
+
+  /* ── Visit Scheduler ── */
+  .propiq-scheduler {
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #e2d9d9;
+    overflow: hidden;
+    margin-top: 12px;
+    max-width: 300px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    animation: propiqFadeIn 0.3s ease;
+  }
+  @keyframes propiqFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .propiq-sch-header {
+    background: #8B1C1C;
+    color: white;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  /* Calendar grid */
+  .propiq-cal {
+    padding: 12px 12px 8px;
+  }
+  .propiq-cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .propiq-cal-nav span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  .propiq-cal-nav button {
+    background: none;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 7px;
+    width: 26px; height: 26px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #666;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .propiq-cal-nav button:hover { border-color: #8B1C1C; color: #8B1C1C; background: #fdf5f5; }
+  .propiq-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .propiq-sch-day-lbl {
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: #aaa;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .propiq-sch-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #1a1a1a;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .propiq-sch-day:hover:not(:disabled) { background: #fbeaea; color: #8B1C1C; }
+  .propiq-sch-day.selected { background: #8B1C1C; color: #fff; font-weight: 700; }
+  .propiq-sch-day.today { border: 1.5px solid #8B1C1C; color: #8B1C1C; font-weight: 600; }
+  .propiq-sch-day.today.selected { border-color: transparent; color: #fff; }
+  .propiq-sch-day:disabled { color: #d0d0d0; cursor: not-allowed; }
+  .propiq-sch-day.empty { cursor: default; }
+  /* Time slots */
+  .propiq-time-sec {
+    border-top: 1px solid #f0eded;
+    padding: 10px 12px 10px;
+  }
+  .propiq-time-lbl {
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+  .propiq-time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+  .propiq-time-slot {
+    padding: 6px 4px;
+    border: 1.5px solid #e2e2e2;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #555;
+    background: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .propiq-time-slot:hover { border-color: #8B1C1C; color: #8B1C1C; background: #fdf5f5; }
+  .propiq-time-slot.selected { background: #8B1C1C; color: #fff; border-color: #8B1C1C; font-weight: 700; }
+  /* Confirm */
+  .propiq-sch-confirm {
+    display: block;
+    width: calc(100% - 24px);
+    margin: 0 12px 12px;
+    padding: 10px;
+    background: #8B1C1C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .propiq-sch-confirm:hover:not(:disabled) { opacity: 0.88; }
+  .propiq-sch-confirm:disabled { opacity: 0.35; cursor: not-allowed; }
 </style>
 
 <div id="propiq-main-widget">
@@ -236,11 +370,139 @@
   let propiqMobile = '';
   let propiqChatHistory = [];
 
+  /* ── Scheduler State ── */
+  let _piqDate = null, _piqTime = null, _piqSchEl = null;
+  const PROPIQ_TIMES = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+
+  function piqFmtDate(ds) {
+    if (!ds) return '';
+    return new Date(ds + 'T00:00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+  }
+
+  function piqBuildCal(yr, mo) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const firstDay = new Date(yr, mo, 1).getDay();
+    const days = new Date(yr, mo + 1, 0).getDate();
+    const mName = new Date(yr, mo).toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+    const labels = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+    let cells = labels.map(l => `<div class="propiq-sch-day-lbl">${l}</div>`).join('');
+    for (let i = 0; i < firstDay; i++) cells += `<div class="propiq-sch-day empty"></div>`;
+    for (let d = 1; d <= days; d++) {
+      const dt = new Date(yr, mo, d);
+      const isPast = dt < today;
+      const isTd = dt.getTime() === today.getTime();
+      const ds = `${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const sel = _piqDate === ds;
+      cells += `<button class="propiq-sch-day${isTd?' today':''}${sel?' selected':''}" ${isPast?'disabled':`data-date="${ds}"`}>${d}</button>`;
+    }
+    return { mName, cells };
+  }
+
+  function piqBuildTimePicker() {
+    if (!_piqDate) return '';
+    const slots = PROPIQ_TIMES.map(t => `<button class="propiq-time-slot${_piqTime===t?' selected':''}" data-time="${t}">${t}</button>`).join('');
+    return `<div class="propiq-time-sec"><div class="propiq-time-lbl">🕐 Choose a time</div><div class="propiq-time-grid">${slots}</div></div>`;
+  }
+
+  function piqRefreshScheduler() {
+    if (!_piqSchEl) return;
+    const calEl = _piqSchEl.querySelector('.propiq-cal');
+    const yr = +calEl.dataset.year, mo = +calEl.dataset.month;
+    const { mName, cells } = piqBuildCal(yr, mo);
+    calEl.querySelector('.propiq-cal-grid').innerHTML = cells;
+    calEl.querySelector('.propiq-cal-nav span').textContent = mName;
+    // time picker
+    const oldTime = _piqSchEl.querySelector('.propiq-time-sec');
+    if (oldTime) oldTime.remove();
+    if (_piqDate) { calEl.insertAdjacentHTML('afterend', piqBuildTimePicker()); piqAttachTimes(); }
+    // confirm btn
+    const btn = _piqSchEl.querySelector('.propiq-sch-confirm');
+    const ok = _piqDate && _piqTime;
+    btn.disabled = !ok;
+    btn.textContent = ok ? `✅ Confirm — ${piqFmtDate(_piqDate)} at ${_piqTime}` : 'Select date & time to confirm';
+  }
+
+  function piqAttachDays() {
+    if (!_piqSchEl) return;
+    _piqSchEl.querySelectorAll('.propiq-sch-day:not([disabled]):not(.empty)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _piqDate = btn.dataset.date; _piqTime = null;
+        piqRefreshScheduler(); piqAttachDays(); piqAttachTimes();
+        const cb = document.getElementById('propiq-chat-box'); if(cb) cb.scrollTop = cb.scrollHeight;
+      });
+    });
+  }
+
+  function piqAttachTimes() {
+    if (!_piqSchEl) return;
+    _piqSchEl.querySelectorAll('.propiq-time-slot').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _piqTime = btn.dataset.time;
+        _piqSchEl.querySelectorAll('.propiq-time-slot').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        piqRefreshScheduler();
+      });
+    });
+  }
+
+  function piqInjectScheduler(containerEl) {
+    _piqDate = null; _piqTime = null;
+    const now = new Date(); const yr = now.getFullYear(), mo = now.getMonth();
+    const { mName, cells } = piqBuildCal(yr, mo);
+    containerEl.insertAdjacentHTML('beforeend', `
+      <div class="propiq-scheduler">
+        <div class="propiq-sch-header">📅 Schedule a Visit</div>
+        <div class="propiq-cal" data-year="${yr}" data-month="${mo}">
+          <div class="propiq-cal-nav">
+            <button class="piq-cal-prev">&#8249;</button>
+            <span>${mName}</span>
+            <button class="piq-cal-next">&#8250;</button>
+          </div>
+          <div class="propiq-cal-grid">${cells}</div>
+        </div>
+        <button class="propiq-sch-confirm" disabled>Select date & time to confirm</button>
+      </div>`);
+    _piqSchEl = containerEl.querySelector('.propiq-scheduler');
+    // nav
+    _piqSchEl.querySelector('.piq-cal-prev').addEventListener('click', () => {
+      const c = _piqSchEl.querySelector('.propiq-cal');
+      let y=+c.dataset.year, m=+c.dataset.month; m--; if(m<0){m=11;y--;} c.dataset.year=y; c.dataset.month=m;
+      piqRefreshScheduler(); piqAttachDays();
+    });
+    _piqSchEl.querySelector('.piq-cal-next').addEventListener('click', () => {
+      const c = _piqSchEl.querySelector('.propiq-cal');
+      let y=+c.dataset.year, m=+c.dataset.month; m++; if(m>11){m=0;y++;} c.dataset.year=y; c.dataset.month=m;
+      piqRefreshScheduler(); piqAttachDays();
+    });
+    piqAttachDays();
+    // confirm
+    _piqSchEl.querySelector('.propiq-sch-confirm').addEventListener('click', () => {
+      if (!_piqDate || !_piqTime) return;
+      const msg = `I want to visit on ${piqFmtDate(_piqDate)} at ${_piqTime}.`;
+      _piqSchEl.closest('.propiq-scheduler') && _piqSchEl.remove();
+      _piqSchEl = null;
+      // send as user message
+      appendChatMsg('user', msg);
+      propiqChatHistory.push({ role: 'user', content: msg });
+      showTyping();
+      handlePropIQChatSend(msg);
+    });
+  }
+
+  function piqIsVisitAsk(text) {
+    const t = (text || '').toLowerCase();
+    return t.includes('kab visit') || t.includes('visit karna hai') ||
+           t.includes('preferred date') || t.includes('schedule a visit') ||
+           t.includes('plan a visit') || t.includes('book a visit') ||
+           t.includes('share a specific date') ||
+           t.includes('specific date and time') ||
+           (t.includes('date') && t.includes('time') && (t.includes('visit') || t.includes('meet')));
+  }
+
   function appendChatMsg(role, text, propertiesHTML = '') {
     const chatBox = document.getElementById('propiq-chat-box');
     const msgDiv = document.createElement('div');
     msgDiv.className = 'propiq-chat-msg ' + (role === 'user' ? 'propiq-chat-user' : 'propiq-chat-ai');
-    
     let html = `<div>${text.replace(/\n/g, '<br>')}</div>`;
     if (propertiesHTML) {
       html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 12px;">${propertiesHTML}</div>`;
@@ -248,6 +510,10 @@
     msgDiv.innerHTML = html;
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
+    // Inject visit scheduler if AI is asking for date/time
+    if (role === 'ai' && piqIsVisitAsk(text)) {
+      setTimeout(() => { piqInjectScheduler(msgDiv); chatBox.scrollTop = chatBox.scrollHeight; }, 150);
+    }
   }
 
   function showTyping() {
@@ -434,7 +700,34 @@
     }
   }
 
+  // Called by scheduler confirm button (message already added to chat)
+  async function handlePropIQChatSend(msg) {
+    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
+    try {
+      const res = await fetch(`${API_BASE}/api/refine-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: msg,
+          currentCriteria: propiqCurrentCriteria,
+          fullName: propiqFullName,
+          chatHistory: propiqChatHistory
+        })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Failed.');
+      if (data.updatedCriteria) propiqCurrentCriteria = data.updatedCriteria;
+      hideTyping();
+      if (data.reply) propiqChatHistory.push({ role: 'ai', content: data.reply });
+      appendChatMsg('ai', data.reply || 'Got it!');
+    } catch (err) {
+      hideTyping();
+      appendChatMsg('ai', '⚠️ ' + err.message);
+    }
+  }
+
   async function handlePropIQChat() {
+
     const API_BASE = 'https://propai-production-d1cd.up.railway.app';
     const input = document.getElementById('propiq-chat-input');
     const btn = document.getElementById('propiq-chat-btn');
