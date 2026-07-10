@@ -915,7 +915,6 @@
     return t.includes('kab visit') || t.includes('visit karna hai') ||
            t.includes('preferred date') || t.includes('schedule a visit') ||
            t.includes('plan a visit') || t.includes('book a visit') ||
-           t.includes('planning for a visit') || t.includes('would you like to visit') ||
            (t.includes('date') && t.includes('time') && (t.includes('visit') || t.includes('meet')));
   };
 
