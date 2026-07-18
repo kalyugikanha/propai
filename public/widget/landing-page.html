@@ -18,7 +18,7 @@
 
   /* Header */
   .propiq-header {
-    background: #8B1C1C;
+    background: #2A5A17;
     padding: 16px 24px;
     display: flex;
     align-items: center;
@@ -27,7 +27,7 @@
   .propiq-logo-wrap { display: flex; align-items: center; gap: 12px; }
   .propiq-logo-icon {
     background: white;
-    color: #8B1C1C;
+    color: #2A5A17;
     font-weight: 800;
     font-size: 13px;
     padding: 6px 8px;
@@ -46,7 +46,7 @@
   
   .propiq-intro { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
   .propiq-intro-icon {
-    width: 44px; height: 44px; background: #f9eaea; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #8B1C1C; flex-shrink: 0; border: 1px solid rgba(139,28,28,0.1);
+    width: 44px; height: 44px; background: #eef5ec; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #2A5A17; flex-shrink: 0; border: 1px solid rgba(42,90,23,0.1);
   }
   .propiq-intro h2 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0 0 8px; letter-spacing: -0.5px; }
   .propiq-intro p { font-size: 14px; color: #444; margin: 0; line-height: 1.5; }
@@ -54,7 +54,7 @@
   /* Badges */
   .propiq-badges { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
   .propiq-badge {
-    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #8B1C1C;
+    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #2A5A17;
   }
   
   /* Inner Card */
@@ -75,7 +75,7 @@
   .propiq-input, .propiq-select {
     width: 100%; height: 44px; border: 1px solid #d1ccc5; border-radius: 6px; padding: 0 14px; font-size: 14px; font-family: 'Inter', sans-serif; color: #1a1a1a; background: #fdfaf7; outline: none; transition: border-color 0.2s;
   }
-  .propiq-input:focus, .propiq-select:focus { border-color: #8B1C1C; background: #fff; }
+  .propiq-input:focus, .propiq-select:focus { border-color: #2A5A17; background: #fff; }
   .propiq-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 14px; }
   
   /* Button */
@@ -91,7 +91,7 @@
   .propiq-chat-box { max-height: 380px; overflow-y: auto; padding: 12px 4px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
   .propiq-chat-msg { max-width: 90%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
   .propiq-chat-ai { align-self: flex-start; background: #fff; color: #333; border: 1px solid #e2e2e2; border-bottom-left-radius: 4px; }
-  .propiq-chat-user { align-self: flex-end; background: #8B1C1C; color: white; border-bottom-right-radius: 4px; }
+  .propiq-chat-user { align-self: flex-end; background: #2A5A17; color: white; border-bottom-right-radius: 4px; }
 
   @keyframes propiqSpin { 100% { transform: rotate(360deg); } }
   
@@ -112,7 +112,7 @@
   }
   @keyframes propiqFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   .propiq-sch-header {
-    background: #8B1C1C;
+    background: #2A5A17;
     color: white;
     padding: 10px 14px;
     font-size: 13px;
@@ -147,7 +147,7 @@
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
   }
-  .propiq-cal-nav button:hover { border-color: #8B1C1C; color: #8B1C1C; background: #fdf5f5; }
+  .propiq-cal-nav button:hover { border-color: #2A5A17; color: #2A5A17; background: #f2f9f1; }
   .propiq-cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -175,9 +175,9 @@
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .propiq-sch-day:hover:not(:disabled) { background: #fbeaea; color: #8B1C1C; }
-  .propiq-sch-day.selected { background: #8B1C1C; color: #fff; font-weight: 700; }
-  .propiq-sch-day.today { border: 1.5px solid #8B1C1C; color: #8B1C1C; font-weight: 600; }
+  .propiq-sch-day:hover:not(:disabled) { background: #eef5ec; color: #2A5A17; }
+  .propiq-sch-day.selected { background: #2A5A17; color: #fff; font-weight: 700; }
+  .propiq-sch-day.today { border: 1.5px solid #2A5A17; color: #2A5A17; font-weight: 600; }
   .propiq-sch-day.today.selected { border-color: transparent; color: #fff; }
   .propiq-sch-day:disabled { color: #d0d0d0; cursor: not-allowed; }
   .propiq-sch-day.empty { cursor: default; }
@@ -212,15 +212,15 @@
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .propiq-time-slot:hover { border-color: #8B1C1C; color: #8B1C1C; background: #fdf5f5; }
-  .propiq-time-slot.selected { background: #8B1C1C; color: #fff; border-color: #8B1C1C; font-weight: 700; }
+  .propiq-time-slot:hover { border-color: #2A5A17; color: #2A5A17; background: #f2f9f1; }
+  .propiq-time-slot.selected { background: #2A5A17; color: #fff; border-color: #2A5A17; font-weight: 700; }
   /* Confirm */
   .propiq-sch-confirm {
     display: block;
     width: calc(100% - 24px);
     margin: 0 12px 12px;
     padding: 10px;
-    background: #8B1C1C;
+    background: #2A5A17;
     color: white;
     border: none;
     border-radius: 8px;
@@ -265,7 +265,7 @@
     </div>
 
     <div class="propiq-form-card">
-      <h3><span style="color:#8B1C1C">🎯</span> Quick start — we'll find your match</h3>
+      <h3><span style="color:#2A5A17">🎯</span> Quick start — we'll find your match</h3>
       
       <form id="propiqForm" onsubmit="event.preventDefault(); handlePropIQSearch();">
         <div class="propiq-row">
@@ -301,10 +301,19 @@
             <option value="Mansarovar">Mansarovar</option>
             <option value="Vaishali Nagar">Vaishali Nagar</option>
             <option value="Malviya Nagar">Malviya Nagar</option>
+            <option value="C-Scheme">C-Scheme</option>
+            <option value="Bani Park">Bani Park</option>
+            <option value="Civil Lines">Civil Lines</option>
+            <option value="Bapu Nagar">Bapu Nagar</option>
+            <option value="Raja Park">Raja Park</option>
             <option value="Tonk Road">Tonk Road</option>
             <option value="Ajmer Road">Ajmer Road</option>
             <option value="Sirsi Road">Sirsi Road</option>
             <option value="Kalwar Road">Kalwar Road</option>
+            <option value="Shyam Nagar">Shyam Nagar</option>
+            <option value="Vidyadhar Nagar">Vidyadhar Nagar</option>
+            <option value="Pratap Nagar">Pratap Nagar</option>
+            <option value="Sitapura">Sitapura</option>
             <option value="Any Area">Any Area in Jaipur</option>
           </select>
         </div>
@@ -321,14 +330,14 @@
       </form>
 
       <div id="propiq-spinner" style="display: none; text-align: center; padding: 20px;">
-        <div style="width: 24px; height: 24px; border: 2.5px solid rgba(139,28,28,0.2); border-top-color: #8B1C1C; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
+        <div style="width: 24px; height: 24px; border: 2.5px solid rgba(42,90,23,0.2); border-top-color: #2A5A17; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
         <p style="color: #666; font-size: 13px;">AI is finding matches...</p>
       </div>
 
       <div id="propiq-results" class="propiq-results" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 8px; margin-bottom: 8px;">
           <h3 style="margin:0; font-size: 15px; color: #1a1a1a;">Chat with Priya</h3>
-          <span id="propiq-result-count" style="background: #8B1C1C; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; display: none;">0</span>
+          <span id="propiq-result-count" style="background: #2A5A17; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; display: none;">0</span>
         </div>
         
         <div id="propiq-chat-box" class="propiq-chat-box"></div>
@@ -336,7 +345,7 @@
         <!-- AI Chat Input Box for Refine Search -->
         <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid #eaeaea; padding-top: 16px; align-items: center;">
           <input type="text" id="propiq-chat-input" placeholder="Type your message to Priya..." required style="flex: 1; height: 48px; border: 1px solid #d1ccc5; border-radius: 24px; padding: 0 20px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; background: #fff;" />
-          <button type="submit" id="propiq-chat-btn" style="width: 48px; height: 48px; background: #8B1C1C; color: white; border: none; border-radius: 50%; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s;">
+          <button type="submit" id="propiq-chat-btn" style="width: 48px; height: 48px; background: #2A5A17; color: white; border: none; border-radius: 50%; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s;">
             ➤
           </button>
         </form>
@@ -345,13 +354,13 @@
     
     <!-- Hot Deals -->
     <div style="border-top: 1px solid #ddd; padding-top: 16px; margin-top: 24px;">
-      <button type="button" onclick="togglePropIQHotDeals()" style="width: 100%; background: transparent; border: 1px dashed #8B1C1C; color: #8B1C1C; padding: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;">
+      <button type="button" onclick="togglePropIQHotDeals()" style="width: 100%; background: transparent; border: 1px dashed #2A5A17; color: #2A5A17; padding: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;">
         🔥 <span id="propiq-deals-btn-text">View Hot Deals in Jaipur</span> <span id="propiq-deals-btn-arrow">▾</span>
       </button>
 
       <div id="propiq-hot-deals-content" style="display: none; margin-top: 16px;">
         <div id="propiq-deals-spinner" style="display: none; text-align: center; padding: 20px;">
-          <div style="width: 24px; height: 24px; border: 2.5px solid rgba(139,28,28,0.2); border-top-color: #8B1C1C; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
+          <div style="width: 24px; height: 24px; border: 2.5px solid rgba(42,90,23,0.2); border-top-color: #2A5A17; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
           <p style="color: #666; font-size: 13px;">Loading exclusive deals...</p>
         </div>
         <div id="propiq-deals-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px;"></div>
@@ -521,7 +530,7 @@
     const msgDiv = document.createElement('div');
     msgDiv.id = 'propiq-typing';
     msgDiv.className = 'propiq-chat-msg propiq-chat-ai';
-    msgDiv.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(139,28,28,0.2);border-top-color:#8B1C1C;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is typing...</div>';
+    msgDiv.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(42,90,23,0.2);border-top-color:#2A5A17;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is typing...</div>';
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
   }
@@ -603,10 +612,10 @@
             const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('The brochure link is missing in the Google Sheet. Please add a valid Drive URL.'); return false;`;
             btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
-          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
+          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #2A5A17; border-radius: 6px; padding: 10px;">
             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
             <div style="font-size: 11px; color: #666; margin-bottom: 4px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 13px; font-weight: 700; color: #8B1C1C;">${p.budget || ''}</div>
+            <div style="font-size: 13px; font-weight: 700; color: #2A5A17;">${p.budget || ''}</div>
             ${btnHtml}
           </div>`;
         });
@@ -681,10 +690,10 @@
 
         dealsGrid.innerHTML += `
           <div class="propiq-prop-card" style="position:relative; overflow:hidden;">
-            <div style="position:absolute; top:-1px; right:-1px; background:#DC2626; color:white; font-size:10px; font-weight:700; padding:4px 8px; border-bottom-left-radius:8px;">HOT DEAL</div>
+            <div style="position:absolute; top:-1px; right:-1px; background:#D4A017; color:white; font-size:10px; font-weight:700; padding:4px 8px; border-bottom-left-radius:8px;">HOT DEAL</div>
             <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px; padding-right:60px;">${p.name || 'Property'}</div>
             <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 14px; font-weight: 700; color: #8B1C1C; margin-bottom: 12px;">${escBudg}</div>
+            <div style="font-size: 14px; font-weight: 700; color: #2A5A17; margin-bottom: 12px;">${escBudg}</div>
             <button type="button" id="propiq-hd-btn-${pId.replace(/[^a-zA-Z0-9]/g,'')}" onclick="handlePropIQHotDealInterest(this, '${pId}', '${escName}', '${escLoc}', '${escBudg}')" style="width: 100%; background: #1a1a1a; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;">
               I'm interested
             </button>
@@ -787,10 +796,10 @@
             const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('The brochure link is missing in the Google Sheet. Please add a valid Drive URL.'); return false;`;
             btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
           }
-          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #8B1C1C; border-radius: 6px; padding: 10px;">
+          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #2A5A17; border-radius: 6px; padding: 10px;">
             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
             <div style="font-size: 11px; color: #666; margin-bottom: 4px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 13px; font-weight: 700; color: #8B1C1C;">${p.budget || ''}</div>
+            <div style="font-size: 13px; font-weight: 700; color: #2A5A17;">${p.budget || ''}</div>
             ${btnHtml}
           </div>`;
         });
@@ -894,3 +903,4 @@
     });
   }
 </script>
+
