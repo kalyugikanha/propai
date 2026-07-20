@@ -720,6 +720,7 @@
           message: msg,
           currentCriteria: propiqCurrentCriteria,
           fullName: propiqFullName,
+          mobile: propiqMobile,
           chatHistory: propiqChatHistory
         })
       });
@@ -763,6 +764,7 @@
           message: msg,
           currentCriteria: propiqCurrentCriteria,
           fullName: propiqFullName,
+          mobile: propiqMobile,
           chatHistory: propiqChatHistory
         })
       });
@@ -819,10 +821,45 @@
     }
   }
 
+  // Called when user fills mini-form on hot deal card (no main form submitted yet)
+  async function handlePropIQHotDealSubmit(submitBtn, pId, pName, pLoc, pBudg) {
+    const safeId = pId.replace(/[^a-zA-Z0-9]/g,'');
+    const nameEl   = document.getElementById('hd-mini-name-' + safeId);
+    const mobEl    = document.getElementById('hd-mini-mobile-' + safeId);
+    const name  = (nameEl ? nameEl.value.trim() : '') || propiqFullName;
+    const mob   = (mobEl  ? mobEl.value.trim()  : '') || propiqMobile;
+    if (!name || mob.replace(/\D/g,'').length < 10) {
+      alert('Please enter your name and a valid 10-digit mobile number.');
+      return;
+    }
+    propiqFullName = name;
+    propiqMobile   = mob;
+    // Find the original button and trigger the actual submission
+    const card = submitBtn.closest('.propiq-prop-card');
+    const origBtn = card.querySelector('button[id^="propiq-hd-btn-"]');
+    if (origBtn) {
+      delete origBtn.dataset.miniFormShown;
+      origBtn.disabled = false;
+      await handlePropIQHotDealInterest(origBtn, pId, pName, pLoc, pBudg);
+    }
+  }
+
   async function handlePropIQHotDealInterest(btnElement, pId, pName, pLoc, pBudg) {
+
+    // If name/mobile not filled via main form, show inline mini-form
     if (!propiqFullName || !propiqMobile) {
-      alert("Please fill your Name and Mobile in the top form first so we can contact you!");
-      document.getElementById('propiq-name').focus();
+      // Only show mini-form once per card
+      if (btnElement.dataset.miniFormShown) return;
+      btnElement.dataset.miniFormShown = '1';
+      const card = btnElement.closest('.propiq-prop-card');
+      const miniForm = document.createElement('div');
+      miniForm.style.cssText = 'margin-top:10px;display:flex;flex-direction:column;gap:6px;';
+      miniForm.innerHTML = `
+        <input id="hd-mini-name-${pId.replace(/[^a-zA-Z0-9]/g,'')}" type="text" placeholder="Your Name *" style="border:1px solid #ddd;border-radius:6px;padding:7px 10px;font-size:12px;width:100%;box-sizing:border-box;">
+        <input id="hd-mini-mobile-${pId.replace(/[^a-zA-Z0-9]/g,'')}" type="tel" placeholder="Mobile Number *" style="border:1px solid #ddd;border-radius:6px;padding:7px 10px;font-size:12px;width:100%;box-sizing:border-box;">
+        <button onclick="handlePropIQHotDealSubmit(this, '${pId}', '${pName}', '${pLoc}', '${pBudg}')" style="background:#2A5A17;color:white;border:none;padding:8px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">Submit Interest</button>
+      `;
+      card.appendChild(miniForm);
       return;
     }
 

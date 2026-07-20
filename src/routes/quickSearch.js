@@ -276,6 +276,28 @@ JSON ONLY:`;
       });
     }
 
+    // Detect if user is confirming a visit and save to sheet
+    const isVisitMsg = /want to visit on|schedule.*visit|visit.*on|i want to visit/i.test(message);
+    if (isVisitMsg && fullName) {
+      const { formatDateIN, generateSessionId } = require('../utils/helpers');
+      const date = formatDateIN(new Date());
+      const visitRow = [
+        date,
+        fullName,
+        req.body.mobile || '',
+        req.body.email || '',
+        updatedCriteria.propertyType || '',
+        updatedCriteria.area || '',
+        updatedCriteria.budget || '',
+        '',
+        'Visit Scheduled',
+        `Visit Booking: ${message}`,
+      ];
+      sheetsService.appendLead(visitRow).catch((err) => {
+        logger.error('Visit lead save failed:', err.message);
+      });
+    }
+
     return res.json({
       success: true,
       reply: aiReply,
