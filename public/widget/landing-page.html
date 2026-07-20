@@ -846,7 +846,17 @@
 
   async function handlePropIQHotDealInterest(btnElement, pId, pName, pLoc, pBudg) {
 
-    // If name/mobile not filled via main form, show inline mini-form
+    // Auto-fill from form inputs if user typed but didn't submit yet
+    if (!propiqFullName) {
+      const nameEl = document.getElementById('propiq-name');
+      if (nameEl && nameEl.value.trim()) propiqFullName = nameEl.value.trim();
+    }
+    if (!propiqMobile) {
+      const mobEl = document.getElementById('propiq-mobile');
+      if (mobEl && mobEl.value.trim()) propiqMobile = mobEl.value.trim();
+    }
+
+    // If name/mobile still not available, show inline mini-form
     if (!propiqFullName || !propiqMobile) {
       // Only show mini-form once per card
       if (btnElement.dataset.miniFormShown) return;
