@@ -66,6 +66,14 @@ app.use(
   })
 );
 
+// ── URL Normalization (prevents //api 404s) ──────────────────────────────────
+app.use((req, res, next) => {
+  if (req.url.startsWith('//')) {
+    req.url = req.url.replace(/^\/+/, '/');
+  }
+  next();
+});
+
 // ── Body Parsing ──────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));

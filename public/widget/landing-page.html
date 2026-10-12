@@ -1,25 +1,26 @@
 <!-- PropAI AskAI — WordPress/Elementor Direct Embed -->
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- GrowInsight Solutions LLP · RERA Registered · Jaipur -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
   /* Base & Reset */
   #propiq-main-widget * { box-sizing: border-box; }
   #propiq-main-widget {
     max-width: 1000px;
-    margin: 40px auto;
-    background: #f2efeb;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin: 30px auto;
+    background: #f8faf6;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(43,90,0,0.08);
     overflow: hidden;
-    border: 1px solid #eaeaea;
+    border: 1px solid #dfe8d7;
     font-family: 'Inter', sans-serif;
     color: #1a1a1a;
   }
 
   /* Header */
   .propiq-header {
-    background: #2A5A17;
-    padding: 16px 24px;
+    background: linear-gradient(135deg, #2B5A00 0%, #1E3F00 100%);
+    padding: 18px 26px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -27,71 +28,74 @@
   .propiq-logo-wrap { display: flex; align-items: center; gap: 12px; }
   .propiq-logo-icon {
     background: white;
-    color: #2A5A17;
-    font-weight: 800;
-    font-size: 13px;
-    padding: 6px 8px;
+    color: #2B5A00;
+    font-weight: 900;
+    font-size: 14px;
+    padding: 6px 10px;
     border-radius: 8px;
     font-family: 'Outfit', sans-serif;
     line-height: 1.1;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
-  .propiq-logo-text h1 { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; color: white; margin: 0; }
-  .propiq-logo-text p { font-size: 12px; color: rgba(255,255,255,0.7); margin: 0; }
-  .propiq-live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.9); font-weight: 500; }
-  .propiq-live-dot { width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; box-shadow: 0 0 6px #4ADE80; }
+  .propiq-logo-text h1 { font-family: 'Outfit', sans-serif; font-size: 19px; font-weight: 700; color: white; margin: 0; }
+  .propiq-logo-text p { font-size: 12px; color: rgba(255,255,255,0.85); margin: 2px 0 0; }
+  .propiq-live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.95); font-weight: 600; background: rgba(255,255,255,0.12); padding: 4px 10px; border-radius: 20px; }
+  .propiq-live-dot { width: 7px; height: 7px; background: #4ADE80; border-radius: 50%; box-shadow: 0 0 8px #4ADE80; }
 
   /* Body Content */
-  .propiq-body { padding: 30px 24px 20px; }
+  .propiq-body { padding: 28px 24px 20px; }
   
-  .propiq-intro { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
+  .propiq-intro { display: flex; gap: 16px; margin-bottom: 22px; align-items: flex-start; }
   .propiq-intro-icon {
-    width: 44px; height: 44px; background: #eef5ec; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #2A5A17; flex-shrink: 0; border: 1px solid rgba(42,90,23,0.1);
+    width: 48px; height: 48px; background: #eef6e6; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #2B5A00; flex-shrink: 0; border: 1px solid rgba(43,90,0,0.15);
   }
-  .propiq-intro h2 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0 0 8px; letter-spacing: -0.5px; }
-  .propiq-intro p { font-size: 14px; color: #444; margin: 0; line-height: 1.5; }
+  .propiq-intro h2 { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 700; color: #1a1a1a; margin: 0 0 6px; letter-spacing: -0.3px; }
+  .propiq-intro p { font-size: 14px; color: #4a4a4a; margin: 0; line-height: 1.5; }
 
   /* Badges */
-  .propiq-badges { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+  .propiq-badges { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
   .propiq-badge {
-    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #2A5A17;
+    display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #2B5A00; background: #eef6e6; padding: 5px 10px; border-radius: 6px; border: 1px solid rgba(43,90,0,0.1);
   }
   
   /* Inner Card */
   .propiq-form-card {
-    background: #e9e5df;
+    background: #f1f7ec;
     padding: 24px;
-    border-radius: 12px;
+    border-radius: 14px;
     margin-bottom: 16px;
+    border: 1px solid #dfe8d7;
   }
   .propiq-form-card h3 {
-    font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px; display: flex; align-items: center; gap: 8px;
+    font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: #1a1a1a; margin: 0 0 16px; display: flex; align-items: center; gap: 8px;
   }
 
   /* Form */
-  .propiq-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .propiq-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   .propiq-full-row { grid-column: 1 / -1; }
   
   .propiq-input, .propiq-select {
-    width: 100%; height: 44px; border: 1px solid #d1ccc5; border-radius: 6px; padding: 0 14px; font-size: 14px; font-family: 'Inter', sans-serif; color: #1a1a1a; background: #fdfaf7; outline: none; transition: border-color 0.2s;
+    width: 100%; height: 46px; border: 1.5px solid #d1dbca; border-radius: 8px; padding: 0 14px; font-size: 14px; font-family: 'Inter', sans-serif; color: #1a1a1a; background: #fff; outline: none; transition: all 0.2s;
   }
-  .propiq-input:focus, .propiq-select:focus { border-color: #2A5A17; background: #fff; }
-  .propiq-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 14px; }
+  .propiq-input:focus, .propiq-select:focus { border-color: #2B5A00; box-shadow: 0 0 0 3px rgba(43,90,0,0.12); }
+  .propiq-select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232B5A00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 14px center; background-size: 14px; cursor: pointer; }
   
   /* Button */
   .propiq-btn {
-    width: 100%; height: 44px; background: transparent; border: 1px solid #555; border-radius: 6px; color: #1a1a1a; font-size: 14px; font-weight: 500; display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; margin-top: 4px;
+    width: 100%; height: 48px; background: linear-gradient(135deg, #2B5A00 0%, #3D7A04 100%); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: 700; display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s; margin-top: 6px; box-shadow: 0 4px 14px rgba(43,90,0,0.25);
   }
-  .propiq-btn:hover { background: rgba(0,0,0,0.03); }
+  .propiq-btn:hover { background: linear-gradient(135deg, #1E3F00 0%, #2B5A00 100%); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(43,90,0,0.35); }
 
   /* Micro Footer */
-  .propiq-card-footer { font-size: 11px; color: #666; text-align: center; margin-top: 16px; line-height: 1.5; }
-  .propiq-main-footer { font-size: 11px; color: #777; text-align: center; margin-top: 10px; }
+  .propiq-card-footer { font-size: 12px; color: #666; text-align: center; margin-top: 14px; line-height: 1.5; }
+  .propiq-main-footer { font-size: 12px; color: #666; text-align: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid #dfe8d7; }
 
-  .propiq-chat-box { max-height: 380px; overflow-y: auto; padding: 12px 4px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
-  .propiq-chat-msg { max-width: 90%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
-  .propiq-chat-ai { align-self: flex-start; background: #fff; color: #333; border: 1px solid #e2e2e2; border-bottom-left-radius: 4px; }
-  .propiq-chat-user { align-self: flex-end; background: #2A5A17; color: white; border-bottom-right-radius: 4px; }
+  /* Chat Box */
+  .propiq-chat-box { max-height: 420px; overflow-y: auto; padding: 12px 4px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+  .propiq-chat-msg { max-width: 90%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+  .propiq-chat-ai { align-self: flex-start; background: #fff; color: #333; border: 1px solid #dfe8d7; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .propiq-chat-user { align-self: flex-end; background: #2B5A00; color: white; border-bottom-right-radius: 4px; }
 
   @keyframes propiqSpin { 100% { transform: rotate(360deg); } }
   
@@ -103,61 +107,55 @@
   .propiq-scheduler {
     background: #fff;
     border-radius: 14px;
-    border: 1.5px solid #e2d9d9;
+    border: 1.5px solid #dfe8d7;
     overflow: hidden;
     margin-top: 12px;
-    max-width: 300px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    max-width: 320px;
+    box-shadow: 0 6px 22px rgba(43,90,0,0.1);
     animation: propiqFadeIn 0.3s ease;
   }
   @keyframes propiqFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
   .propiq-sch-header {
-    background: #2A5A17;
+    background: #2B5A00;
     color: white;
     padding: 10px 14px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 6px;
   }
   /* Calendar grid */
-  .propiq-cal {
-    padding: 12px 12px 8px;
-  }
+  .propiq-cal { padding: 12px 12px 8px; }
   .propiq-cal-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 8px;
   }
-  .propiq-cal-nav span {
-    font-size: 13px;
-    font-weight: 600;
-    color: #1a1a1a;
-  }
+  .propiq-cal-nav span { font-size: 13px; font-weight: 700; color: #1a1a1a; }
   .propiq-cal-nav button {
     background: none;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid #d1dbca;
     border-radius: 7px;
-    width: 26px; height: 26px;
+    width: 28px; height: 28px;
     cursor: pointer;
     font-size: 15px;
-    color: #666;
+    color: #2B5A00;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
   }
-  .propiq-cal-nav button:hover { border-color: #2A5A17; color: #2A5A17; background: #f2f9f1; }
+  .propiq-cal-nav button:hover { border-color: #2B5A00; background: #eef6e6; }
   .propiq-cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+    gap: 3px;
   }
   .propiq-sch-day-lbl {
     text-align: center;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
-    color: #aaa;
+    color: #888;
     padding-bottom: 5px;
     text-transform: uppercase;
   }
@@ -175,21 +173,19 @@
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .propiq-sch-day:hover:not(:disabled) { background: #eef5ec; color: #2A5A17; }
-  .propiq-sch-day.selected { background: #2A5A17; color: #fff; font-weight: 700; }
-  .propiq-sch-day.today { border: 1.5px solid #2A5A17; color: #2A5A17; font-weight: 600; }
+  .propiq-sch-day:hover:not(:disabled) { background: #eef6e6; color: #2B5A00; font-weight: 700; }
+  .propiq-sch-day.selected { background: #2B5A00; color: #fff; font-weight: 700; }
+  .propiq-sch-day.today { border: 1.5px solid #2B5A00; color: #2B5A00; font-weight: 700; }
   .propiq-sch-day.today.selected { border-color: transparent; color: #fff; }
-  .propiq-sch-day:disabled { color: #d0d0d0; cursor: not-allowed; }
+  .propiq-sch-day:disabled { color: #ccc; cursor: not-allowed; }
   .propiq-sch-day.empty { cursor: default; }
+
   /* Time slots */
-  .propiq-time-sec {
-    border-top: 1px solid #f0eded;
-    padding: 10px 12px 10px;
-  }
+  .propiq-time-sec { border-top: 1px solid #f0eded; padding: 10px 12px; }
   .propiq-time-lbl {
     font-size: 11px;
-    font-weight: 600;
-    color: #999;
+    font-weight: 700;
+    color: #666;
     text-transform: uppercase;
     letter-spacing: 0.4px;
     margin-bottom: 8px;
@@ -197,41 +193,42 @@
   .propiq-time-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 6px;
   }
   .propiq-time-slot {
-    padding: 6px 4px;
-    border: 1.5px solid #e2e2e2;
+    padding: 7px 4px;
+    border: 1.5px solid #dfe8d7;
     border-radius: 7px;
     font-size: 11px;
-    font-weight: 500;
-    color: #555;
+    font-weight: 600;
+    color: #444;
     background: #fff;
     cursor: pointer;
     text-align: center;
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .propiq-time-slot:hover { border-color: #2A5A17; color: #2A5A17; background: #f2f9f1; }
-  .propiq-time-slot.selected { background: #2A5A17; color: #fff; border-color: #2A5A17; font-weight: 700; }
+  .propiq-time-slot:hover { border-color: #2B5A00; color: #2B5A00; background: #eef6e6; }
+  .propiq-time-slot.selected { background: #2B5A00; color: #fff; border-color: #2B5A00; font-weight: 700; }
+
   /* Confirm */
   .propiq-sch-confirm {
     display: block;
     width: calc(100% - 24px);
     margin: 0 12px 12px;
-    padding: 10px;
-    background: #2A5A17;
+    padding: 11px;
+    background: #2B5A00;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
-  .propiq-sch-confirm:hover:not(:disabled) { opacity: 0.88; }
-  .propiq-sch-confirm:disabled { opacity: 0.35; cursor: not-allowed; }
+  .propiq-sch-confirm:hover:not(:disabled) { background: #1E3F00; }
+  .propiq-sch-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
 </style>
 
 <div id="propiq-main-widget">
@@ -240,11 +237,11 @@
       <div class="propiq-logo-icon">JP<br>IQ</div>
       <div class="propiq-logo-text">
         <h1>JaipurPropIQ</h1>
-        <p>Jaipur's Smartest Property Advisor</p>
+        <p>Jaipur's Smartest Property Advisor · GrowInsight</p>
       </div>
     </div>
     <div class="propiq-live-badge">
-      <div class="propiq-live-dot"></div> Live
+      <div class="propiq-live-dot"></div> Live Advisor
     </div>
   </div>
 
@@ -253,19 +250,19 @@
       <div class="propiq-intro-icon">🏢</div>
       <div>
         <h2>Find your perfect property in Jaipur</h2>
-        <p>Tell me your budget — I'll match you with the best apartments, villas, plots & commercial spaces across Jaipur instantly.</p>
+        <p>Tell me your budget & requirements — I'll match you with verified apartments, villas, plots & commercial spaces across Jaipur instantly.</p>
       </div>
     </div>
 
     <div class="propiq-badges">
       <span class="propiq-badge">🛡️ RERA Registered</span>
-      <span class="propiq-badge">🏗️ 300+ Projects</span>
-      <span class="propiq-badge">⏱️ 24hr Callback</span>
-      <span class="propiq-badge">📍 Jaipur Specialist</span>
+      <span class="propiq-badge">🏗️ 300+ Verified Projects</span>
+      <span class="propiq-badge">⏱️ Free Expert Advisory</span>
+      <span class="propiq-badge">📍 Jaipur Specialists</span>
     </div>
 
     <div class="propiq-form-card">
-      <h3><span style="color:#2A5A17">🎯</span> Quick start — we'll find your match</h3>
+      <h3><span style="color:#2B5A00">🎯</span> Quick start — we'll find your match</h3>
       
       <form id="propiqForm" onsubmit="event.preventDefault(); handlePropIQSearch();">
         <div class="propiq-row">
@@ -274,22 +271,22 @@
         </div>
         
         <div class="propiq-row">
-          <input type="email" id="propiq-email" class="propiq-input propiq-full-row" placeholder="Email ID" style="grid-column: 1 / -1;" />
+          <input type="email" id="propiq-email" class="propiq-input propiq-full-row" placeholder="Email ID (optional for brochures)" style="grid-column: 1 / -1;" />
         </div>
         
         <div class="propiq-row">
           <select id="propiq-type" class="propiq-select" required>
             <option value="" disabled selected>Property type *</option>
-            <option value="Villa">Villa</option>
-            <option value="Apartment">Apartment</option>
-            <option value="Plot">Plot</option>
-            <option value="Commercial">Commercial</option>
+            <option value="Villa">🏡 Villa</option>
+            <option value="Apartment">🏢 Apartment</option>
+            <option value="Plot">📐 Plot</option>
+            <option value="Commercial">🏬 Commercial</option>
           </select>
           <select id="propiq-budget" class="propiq-select" required>
             <option value="" disabled selected>Your budget *</option>
-            <option value="Below 1Cr">Below 1Cr</option>
-            <option value="1Cr +">1Cr +</option>
-            <option value="2 Cr +">2 Cr +</option>
+            <option value="Below 1Cr">Below 1 Cr</option>
+            <option value="1Cr +">1 Cr – 2 Cr</option>
+            <option value="2 Cr +">2 Cr – 5 Cr</option>
             <option value="Above 5 Cr">Above 5 Cr</option>
           </select>
         </div>
@@ -297,6 +294,7 @@
         <div class="propiq-row">
           <select id="propiq-area" class="propiq-select propiq-full-row" required style="grid-column: 1 / -1;">
             <option value="" disabled selected>Preferred Area in Jaipur *</option>
+            <option value="Any Area">📍 Any Area in Jaipur (Show all best)</option>
             <option value="Jagatpura">Jagatpura</option>
             <option value="Mansarovar">Mansarovar</option>
             <option value="Vaishali Nagar">Vaishali Nagar</option>
@@ -314,69 +312,76 @@
             <option value="Vidyadhar Nagar">Vidyadhar Nagar</option>
             <option value="Pratap Nagar">Pratap Nagar</option>
             <option value="Sitapura">Sitapura</option>
-            <option value="Any Area">Any Area in Jaipur</option>
           </select>
         </div>
 
-        <div id="propiq-form-error" style="display: none; color: #DC2626; font-size: 13px; margin-bottom: 12px; font-weight: 500;"></div>
+        <div id="propiq-form-error" style="display: none; color: #DC2626; font-size: 13px; margin-bottom: 12px; font-weight: 600;"></div>
 
         <button type="submit" id="propiq-search-btn" class="propiq-btn">
           ✨ Find my property now
         </button>
 
         <div class="propiq-card-footer">
-          Free advisory · No spam · Expert callback within 24 hours · Powered by GrowInsight Solutions LLP
+          Free advisory · No spam · Instant verified matches · Powered by GrowInsight Solutions LLP
         </div>
       </form>
 
-      <div id="propiq-spinner" style="display: none; text-align: center; padding: 20px;">
-        <div style="width: 24px; height: 24px; border: 2.5px solid rgba(42,90,23,0.2); border-top-color: #2A5A17; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
-        <p style="color: #666; font-size: 13px;">AI is finding matches...</p>
+      <div id="propiq-spinner" style="display: none; text-align: center; padding: 24px;">
+        <div style="width: 28px; height: 28px; border: 3px solid rgba(43,90,0,0.2); border-top-color: #2B5A00; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
+        <p style="color: #2B5A00; font-size: 14px; font-weight: 600;">Priya is finding your perfect matches...</p>
       </div>
 
       <div id="propiq-results" class="propiq-results" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 8px; margin-bottom: 8px;">
-          <h3 style="margin:0; font-size: 15px; color: #1a1a1a;">Chat with Priya</h3>
-          <span id="propiq-result-count" style="background: #2A5A17; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; display: none;">0</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dfe8d7; padding-bottom: 10px; margin-bottom: 10px;">
+          <h3 style="margin:0; font-size: 16px; color: #1a1a1a; font-family:'Outfit',sans-serif;">💬 Chat with Priya (Property Advisor)</h3>
+          <span id="propiq-result-count" style="background: #2B5A00; color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; display: none;">0 Matches</span>
         </div>
         
+        <!-- Live Chat with Priya -->
         <div id="propiq-chat-box" class="propiq-chat-box"></div>
         
-        <!-- AI Chat Input Box for Refine Search -->
-        <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid #eaeaea; padding-top: 16px; align-items: center;">
-          <input type="text" id="propiq-chat-input" placeholder="Type your message to Priya..." required style="flex: 1; height: 48px; border: 1px solid #d1ccc5; border-radius: 24px; padding: 0 20px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; background: #fff;" />
-          <button type="submit" id="propiq-chat-btn" style="width: 48px; height: 48px; background: #2A5A17; color: white; border: none; border-radius: 50%; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s;">
+        <!-- AI Chat Input Box for Refine Search & Chat -->
+        <form id="propiq-chat-form" onsubmit="event.preventDefault(); handlePropIQChat();" style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid #dfe8d7; padding-top: 16px; align-items: center;">
+          <input type="text" id="propiq-chat-input" placeholder="Ask Priya anything (e.g. show 3BHK in Jagatpura, schedule visit...)" required style="flex: 1; height: 46px; border: 1.5px solid #d1dbca; border-radius: 24px; padding: 0 20px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; background: #fff;" />
+          <button type="submit" id="propiq-chat-btn" style="width: 46px; height: 46px; background: #2B5A00; color: white; border: none; border-radius: 50%; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 17px; transition: background 0.2s; box-shadow:0 3px 10px rgba(43,90,0,0.25);">
             ➤
           </button>
         </form>
       </div>
     </div>
     
-    <!-- Hot Deals -->
-    <div style="border-top: 1px solid #ddd; padding-top: 16px; margin-top: 24px;">
-      <button type="button" onclick="togglePropIQHotDeals()" style="width: 100%; background: transparent; border: 1px dashed #2A5A17; color: #2A5A17; padding: 12px; font-weight: 600; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;">
+    <!-- Hot Deals Section -->
+    <div style="border-top: 1px solid #dfe8d7; padding-top: 16px; margin-top: 24px;">
+      <button type="button" onclick="togglePropIQHotDeals()" style="width: 100%; background: #fff; border: 1.5px solid #2B5A00; color: #2B5A00; padding: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: all 0.2s; font-size: 14px;">
         🔥 <span id="propiq-deals-btn-text">View Hot Deals in Jaipur</span> <span id="propiq-deals-btn-arrow">▾</span>
       </button>
 
       <div id="propiq-hot-deals-content" style="display: none; margin-top: 16px;">
         <div id="propiq-deals-spinner" style="display: none; text-align: center; padding: 20px;">
-          <div style="width: 24px; height: 24px; border: 2.5px solid rgba(42,90,23,0.2); border-top-color: #2A5A17; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
+          <div style="width: 26px; height: 26px; border: 3px solid rgba(43,90,0,0.2); border-top-color: #2B5A00; border-radius: 50%; animation: propiqSpin 0.8s linear infinite; margin: 0 auto 10px;"></div>
           <p style="color: #666; font-size: 13px;">Loading exclusive deals...</p>
         </div>
-        <div id="propiq-deals-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px;"></div>
+        <div id="propiq-deals-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;"></div>
       </div>
     </div>
     
     <div class="propiq-main-footer">
-      Powered by GrowInsight Solutions LLP · RERA Registered · Jaipur
+      Powered by <strong>GrowInsight Solutions LLP</strong> · RERA Registered · Jaipur
     </div>
   </div>
 </div>
 
 <script>
+(function() {
+  'use strict';
+
+  // ── Unified Backend URL ───────────────────────────────────────────────────
+  const API_BASE = ('https://api.growinsight.co.in').replace(/\/+$/, '');
+
   let propiqCurrentCriteria = null;
   let propiqFullName = '';
   let propiqMobile = '';
+  let propiqEmail = '';
   let propiqChatHistory = [];
 
   /* ── Scheduler State ── */
@@ -410,7 +415,7 @@
   function piqBuildTimePicker() {
     if (!_piqDate) return '';
     const slots = PROPIQ_TIMES.map(t => `<button class="propiq-time-slot${_piqTime===t?' selected':''}" data-time="${t}">${t}</button>`).join('');
-    return `<div class="propiq-time-sec"><div class="propiq-time-lbl">🕐 Choose a time</div><div class="propiq-time-grid">${slots}</div></div>`;
+    return `<div class="propiq-time-sec"><div class="propiq-time-lbl">🕐 Choose a visit time</div><div class="propiq-time-grid">${slots}</div></div>`;
   }
 
   function piqRefreshScheduler() {
@@ -420,24 +425,33 @@
     const { mName, cells } = piqBuildCal(yr, mo);
     calEl.querySelector('.propiq-cal-grid').innerHTML = cells;
     calEl.querySelector('.propiq-cal-nav span').textContent = mName;
+    
     // time picker
     const oldTime = _piqSchEl.querySelector('.propiq-time-sec');
     if (oldTime) oldTime.remove();
-    if (_piqDate) { calEl.insertAdjacentHTML('afterend', piqBuildTimePicker()); piqAttachTimes(); }
+    if (_piqDate) { 
+      calEl.insertAdjacentHTML('afterend', piqBuildTimePicker()); 
+      piqAttachTimes(); 
+    }
+    
     // confirm btn
     const btn = _piqSchEl.querySelector('.propiq-sch-confirm');
     const ok = _piqDate && _piqTime;
     btn.disabled = !ok;
-    btn.textContent = ok ? `✅ Confirm — ${piqFmtDate(_piqDate)} at ${_piqTime}` : 'Select date & time to confirm';
+    btn.textContent = ok ? `✅ Confirm Visit — ${piqFmtDate(_piqDate)} at ${_piqTime}` : 'Select date & time to confirm';
   }
 
   function piqAttachDays() {
     if (!_piqSchEl) return;
     _piqSchEl.querySelectorAll('.propiq-sch-day:not([disabled]):not(.empty)').forEach(btn => {
       btn.addEventListener('click', () => {
-        _piqDate = btn.dataset.date; _piqTime = null;
-        piqRefreshScheduler(); piqAttachDays(); piqAttachTimes();
-        const cb = document.getElementById('propiq-chat-box'); if(cb) cb.scrollTop = cb.scrollHeight;
+        _piqDate = btn.dataset.date; 
+        _piqTime = null;
+        piqRefreshScheduler(); 
+        piqAttachDays(); 
+        piqAttachTimes();
+        const cb = document.getElementById('propiq-chat-box'); 
+        if(cb) cb.scrollTop = cb.scrollHeight;
       });
     });
   }
@@ -460,7 +474,7 @@
     const { mName, cells } = piqBuildCal(yr, mo);
     containerEl.insertAdjacentHTML('beforeend', `
       <div class="propiq-scheduler">
-        <div class="propiq-sch-header">📅 Schedule a Visit</div>
+        <div class="propiq-sch-header">📅 Schedule a Site Visit</div>
         <div class="propiq-cal" data-year="${yr}" data-month="${mo}">
           <div class="propiq-cal-nav">
             <button class="piq-cal-prev">&#8249;</button>
@@ -472,18 +486,21 @@
         <button class="propiq-sch-confirm" disabled>Select date & time to confirm</button>
       </div>`);
     _piqSchEl = containerEl.querySelector('.propiq-scheduler');
-    // nav
+    
+    // nav prev
     _piqSchEl.querySelector('.piq-cal-prev').addEventListener('click', () => {
       const c = _piqSchEl.querySelector('.propiq-cal');
       let y=+c.dataset.year, m=+c.dataset.month; m--; if(m<0){m=11;y--;} c.dataset.year=y; c.dataset.month=m;
       piqRefreshScheduler(); piqAttachDays();
     });
+    // nav next
     _piqSchEl.querySelector('.piq-cal-next').addEventListener('click', () => {
       const c = _piqSchEl.querySelector('.propiq-cal');
       let y=+c.dataset.year, m=+c.dataset.month; m++; if(m>11){m=0;y++;} c.dataset.year=y; c.dataset.month=m;
       piqRefreshScheduler(); piqAttachDays();
     });
     piqAttachDays();
+    
     // confirm
     _piqSchEl.querySelector('.propiq-sch-confirm').addEventListener('click', () => {
       if (!_piqDate || !_piqTime) return;
@@ -510,27 +527,33 @@
 
   function appendChatMsg(role, text, propertiesHTML = '') {
     const chatBox = document.getElementById('propiq-chat-box');
+    if (!chatBox) return;
     const msgDiv = document.createElement('div');
     msgDiv.className = 'propiq-chat-msg ' + (role === 'user' ? 'propiq-chat-user' : 'propiq-chat-ai');
     let html = `<div>${text.replace(/\n/g, '<br>')}</div>`;
     if (propertiesHTML) {
-      html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 12px;">${propertiesHTML}</div>`;
+      html += `<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 14px;">${propertiesHTML}</div>`;
     }
     msgDiv.innerHTML = html;
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
+    
     // Inject visit scheduler if AI is asking for date/time
     if (role === 'ai' && piqIsVisitAsk(text)) {
-      setTimeout(() => { piqInjectScheduler(msgDiv); chatBox.scrollTop = chatBox.scrollHeight; }, 150);
+      setTimeout(() => { 
+        piqInjectScheduler(msgDiv); 
+        chatBox.scrollTop = chatBox.scrollHeight; 
+      }, 150);
     }
   }
 
   function showTyping() {
     const chatBox = document.getElementById('propiq-chat-box');
+    if (!chatBox) return;
     const msgDiv = document.createElement('div');
     msgDiv.id = 'propiq-typing';
     msgDiv.className = 'propiq-chat-msg propiq-chat-ai';
-    msgDiv.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#666;"><div style="width:16px;height:16px;border:2px solid rgba(42,90,23,0.2);border-top-color:#2A5A17;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is typing...</div>';
+    msgDiv.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#2B5A00;font-weight:600;"><div style="width:16px;height:16px;border:2.5px solid rgba(43,90,0,0.2);border-top-color:#2B5A00;border-radius:50%;animation:propiqSpin 0.8s linear infinite;"></div> Priya is typing...</div>';
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
   }
@@ -540,8 +563,38 @@
     if (el) el.remove();
   }
 
-  async function handlePropIQSearch() {
-    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
+  
+  function escHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderPropertyCard(p) {
+    const rawName = p.name || 'Property';
+    const escName = escHtml(rawName);
+    const rawUrl = (p.brochureLink || '').trim();
+    const isUrl = rawUrl.startsWith('http') || rawUrl.startsWith('www.') || rawUrl.includes('drive.google.com');
+    
+    let btnHtml = '';
+    if (isUrl) {
+      btnHtml = `<button type="button" class="propiq-dl-btn" data-url="${escHtml(rawUrl)}" data-name="${escName}" onclick="triggerBrochureDownload(this)" style="display:block; width:100%; margin-top: 10px; text-align: center; background: #eef6e6; color: #2B5A00; padding: 9px 12px; border-radius: 6px; font-size: 13px; font-weight: 700; border: 1.5px solid rgba(43,90,0,0.25); cursor: pointer; transition: all 0.2s;">📄 Download Brochure</button>`;
+    } else {
+      btnHtml = `<button type="button" class="propiq-dl-btn" data-url="" data-name="${escName}" onclick="triggerBrochureDownload(this)" style="display:block; width:100%; margin-top: 10px; text-align: center; background: #fdfaf0; color: #b45309; padding: 9px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; border: 1.5px solid #fde68a; cursor: pointer;">📄 Request Brochure (WhatsApp)</button>`;
+    }
+    
+    return `<div style="background: #fff; border: 1.5px solid #dfe8d7; border-left: 4px solid #2B5A00; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+      <div style="font-weight: 700; font-size: 14px; color: #1a1a1a; margin-bottom: 3px;">${escName}</div>
+      <div style="font-size: 12px; color: #666; margin-bottom: 5px;">📍 ${escHtml(p.location || '')} · 🏷️ ${escHtml(p.type || '')}</div>
+      <div style="font-size: 14px; font-weight: 800; color: #2B5A00;">💰 ${escHtml(p.budget || '')}</div>
+      ${btnHtml}
+    </div>`;
+  }
+
+  window.handlePropIQSearch = async function() {
     const errorDiv = document.getElementById('propiq-form-error');
     const form = document.getElementById('propiqForm');
     const spinner = document.getElementById('propiq-spinner');
@@ -550,12 +603,13 @@
     errorDiv.style.display = 'none';
     
     propiqFullName = document.getElementById('propiq-name').value.trim();
-    propiqMobile = document.getElementById('propiq-mobile').value.trim();
+    propiqMobile   = document.getElementById('propiq-mobile').value.trim();
+    propiqEmail    = document.getElementById('propiq-email').value.trim();
 
     const payload = {
       fullName: propiqFullName,
       mobile: propiqMobile,
-      email: document.getElementById('propiq-email').value.trim(),
+      email: propiqEmail,
       propertyType: document.getElementById('propiq-type').value,
       budget: document.getElementById('propiq-budget').value,
       area: document.getElementById('propiq-area').value
@@ -584,9 +638,9 @@
       });
       const data = await res.json();
       
-      if (!data.success) throw new Error(data.error || 'Failed to search.');
+      if (!data.success) throw new Error(data.error || 'Failed to search properties.');
       
-      document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
+      document.getElementById('propiq-result-count').textContent = (data.properties || []).length + ' Matches';
       document.getElementById('propiq-result-count').style.display = 'inline-block';
       
       propiqChatHistory = [];
@@ -597,51 +651,110 @@
       document.getElementById('propiq-chat-box').innerHTML = ''; // Clear chat box
       
       let propsHTML = '';
-      if (!data.properties || data.properties.length === 0) {
-        // No properties
-      } else {
+      if (data.properties && data.properties.length > 0) {
         data.properties.forEach(p => {
-          let btnHtml = '';
-          if (p.brochureLink) {
-            const escName = (p.name || 'Property').replace(/'/g, "\\'");
-            const linkStr = String(p.brochureLink).toLowerCase();
-            const isUrl = linkStr.startsWith('http') || linkStr.startsWith('www.') || linkStr.includes('drive.google.com');
-            let href = p.brochureLink;
-            if (isUrl && !linkStr.startsWith('http')) href = 'https://' + href;
-            if (!isUrl) href = '#';
-            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('The brochure link is missing in the Google Sheet. Please add a valid Drive URL.'); return false;`;
-            btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
-          }
-          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #2A5A17; border-radius: 6px; padding: 10px;">
-            <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
-            <div style="font-size: 11px; color: #666; margin-bottom: 4px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 13px; font-weight: 700; color: #2A5A17;">${p.budget || ''}</div>
-            ${btnHtml}
-          </div>`;
+          propsHTML += renderPropertyCard(p);
         });
       }
-      
-      appendChatMsg('ai', data.reply || 'Here are some suggestions:', propsHTML);
-      
+
+      appendChatMsg('ai', data.reply || 'Here are the best matching properties for you:', propsHTML);
+
+      // Hide spinner and display results & chat section
       spinner.style.display = 'none';
       resultsDiv.style.display = 'block';
 
     } catch (err) {
       spinner.style.display = 'none';
       form.style.display = 'block';
-      errorDiv.textContent = '⚠️ ' + err.message;
+      errorDiv.textContent = '⚠️ ' + (err.message || 'Something went wrong. Please try again.');
       errorDiv.style.display = 'block';
+    }
+  };
+
+  // ── AI Chat Functionality ─────────────────────────────────────────────────
+  window.handlePropIQChat = async function() {
+    const input = document.getElementById('propiq-chat-input');
+    const btn = document.getElementById('propiq-chat-btn');
+    const msg = (input ? input.value : '').trim();
+    if (!msg) return;
+
+    if (input) input.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    }
+
+    appendChatMsg('user', msg);
+    propiqChatHistory.push({ role: 'user', content: msg });
+    if (input) input.value = '';
+    showTyping();
+
+    try {
+      await handlePropIQChatSend(msg);
+    } finally {
+      if (input) {
+        input.disabled = false;
+        input.focus();
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+      }
+    }
+  };
+
+  async function handlePropIQChatSend(msg) {
+    try {
+      const res = await fetch(`${API_BASE}/api/refine-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: msg,
+          currentCriteria: propiqCurrentCriteria || {},
+          fullName: propiqFullName,
+          mobile: propiqMobile,
+          email: propiqEmail,
+          chatHistory: propiqChatHistory
+        })
+      });
+      const data = await res.json();
+
+      hideTyping();
+      if (!data.success) throw new Error(data.error || 'Failed to refine search.');
+
+      if (data.updatedCriteria) propiqCurrentCriteria = data.updatedCriteria;
+
+      if (data.properties && data.properties.length > 0) {
+        document.getElementById('propiq-result-count').textContent = data.properties.length + ' Matches';
+      }
+
+      if (data.reply) {
+        propiqChatHistory.push({ role: 'ai', content: data.reply });
+      }
+
+      let propsHTML = '';
+      if (data.properties && data.properties.length > 0) {
+        data.properties.forEach(p => {
+          propsHTML += renderPropertyCard(p);
+        });
+      }
+
+      appendChatMsg('ai', data.reply || 'Here are some matches:', propsHTML);
+
+    } catch (err) {
+      hideTyping();
+      appendChatMsg('ai', '⚠️ ' + err.message);
     }
   }
 
+  // ── Hot Deals Functionality ───────────────────────────────────────────────
   let propiqHotDealsLoaded = false;
   let propiqHotDealsOpen   = false;
 
-  async function togglePropIQHotDeals() {
-    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
-    const content   = document.getElementById('propiq-hot-deals-content');
-    const btnText   = document.getElementById('propiq-deals-btn-text');
-    const btnArrow  = document.getElementById('propiq-deals-btn-arrow');
+  window.togglePropIQHotDeals = async function() {
+    const content  = document.getElementById('propiq-hot-deals-content');
+    const btnText  = document.getElementById('propiq-deals-btn-text');
+    const btnArrow = document.getElementById('propiq-deals-btn-arrow');
 
     propiqHotDealsOpen = !propiqHotDealsOpen;
 
@@ -651,7 +764,7 @@
       btnArrow.textContent = '▴';
 
       if (!propiqHotDealsLoaded) {
-        await loadPropIQHotDeals(API_BASE);
+        await loadPropIQHotDeals();
         propiqHotDealsLoaded = true;
       }
     } else {
@@ -659,9 +772,9 @@
       btnText.textContent  = 'View Hot Deals in Jaipur';
       btnArrow.textContent = '▾';
     }
-  }
+  };
 
-  async function loadPropIQHotDeals(API_BASE) {
+  async function loadPropIQHotDeals() {
     const dealsSpinner = document.getElementById('propiq-deals-spinner');
     const dealsGrid    = document.getElementById('propiq-deals-grid');
 
@@ -683,20 +796,27 @@
       }
 
       data.properties.forEach(p => {
-        const pId = p.id || p.name;
-        const escName = (p.name || 'Property').replace(/'/g, "\\'");
-        const escLoc = (p.location || '').replace(/'/g, "\\'");
-        const escBudg = (p.minBudget ? 'From ₹' + (p.minBudget >= 10000000 ? (p.minBudget/10000000).toFixed(1) + ' Cr' : (p.minBudget/100000).toFixed(1) + ' L') : '').replace(/'/g, "\\'");
+        const pName = p.name || 'Exclusive Property';
+        const escPName = escHtml(pName);
+        const pId = p.id || pName;
+        const rawUrl = (p.brochureLink || '').trim();
+        const isUrl = rawUrl.startsWith('http') || rawUrl.startsWith('www.') || rawUrl.includes('drive.google.com');
+
+        let brochureBtn = '';
+        if (isUrl) {
+          brochureBtn = `<button type="button" class="propiq-dl-btn" data-url="${escHtml(rawUrl)}" data-name="${escPName}" onclick="triggerBrochureDownload(this)" style="display:block; width:100%; margin-top: 8px; text-align: center; background: #eef6e6; color: #2B5A00; padding: 7px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; border: 1px solid rgba(43,90,0,0.25); cursor: pointer;">📄 Download Brochure</button>`;
+        }
 
         dealsGrid.innerHTML += `
-          <div class="propiq-prop-card" style="position:relative; overflow:hidden;">
-            <div style="position:absolute; top:-1px; right:-1px; background:#D4A017; color:white; font-size:10px; font-weight:700; padding:4px 8px; border-bottom-left-radius:8px;">HOT DEAL</div>
-            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px; padding-right:60px;">${p.name || 'Property'}</div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 6px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 14px; font-weight: 700; color: #2A5A17; margin-bottom: 12px;">${escBudg}</div>
-            <button type="button" id="propiq-hd-btn-${pId.replace(/[^a-zA-Z0-9]/g,'')}" onclick="handlePropIQHotDealInterest(this, '${pId}', '${escName}', '${escLoc}', '${escBudg}')" style="width: 100%; background: #1a1a1a; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;">
-              I'm interested
+          <div class="propiq-prop-card" style="background:#fff; border:1.5px solid #dfe8d7; border-left:4px solid #E6B80B; border-radius:8px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,0.03); position:relative; overflow:hidden;">
+            <div style="position:absolute; top:0; right:0; background:#E6B80B; color:#1a1a1a; font-size:10px; font-weight:800; padding:3px 8px; border-bottom-left-radius:8px;">🔥 HOT DEAL</div>
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 3px; padding-right:60px; color:#1a1a1a;">${escPName}</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">📍 ${escHtml(p.location || 'Jaipur')} · 🏷️ ${escHtml(p.type || 'Property')}</div>
+            <div style="font-size: 14px; font-weight: 800; color: #2B5A00; margin-bottom: 8px;">💰 ${escHtml(p.budget || (p.minBudget ? '₹' + p.minBudget : 'Price on Request'))}</div>
+            <button id="propiq-hd-btn-${pId.replace(/[^a-zA-Z0-9]/g,'')}" onclick="handlePropIQHotDealInterest(this, '${escHtml(pId)}', '${escPName}', '${escHtml(p.location || '')}', '${escHtml(p.budget || '')}')" style="width:100%; background:#2B5A00; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; transition:all 0.2s;">
+              🔥 I'm Interested
             </button>
+            ${brochureBtn}
           </div>`;
       });
 
@@ -707,146 +827,31 @@
           ⚠️ Could not load hot deals. Please try again later.
         </div>`;
     }
-  }
+  };
 
-  // Called by scheduler confirm button (message already added to chat)
-  async function handlePropIQChatSend(msg) {
-    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
-    try {
-      const res = await fetch(`${API_BASE}/api/refine-search`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: msg,
-          currentCriteria: propiqCurrentCriteria,
-          fullName: propiqFullName,
-          mobile: propiqMobile,
-          chatHistory: propiqChatHistory
-        })
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error || 'Failed.');
-      if (data.updatedCriteria) propiqCurrentCriteria = data.updatedCriteria;
-      hideTyping();
-      if (data.reply) propiqChatHistory.push({ role: 'ai', content: data.reply });
-      appendChatMsg('ai', data.reply || 'Got it!');
-    } catch (err) {
-      hideTyping();
-      appendChatMsg('ai', '⚠️ ' + err.message);
-    }
-  }
-
-  async function handlePropIQChat() {
-
-    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
-    const input = document.getElementById('propiq-chat-input');
-    const btn = document.getElementById('propiq-chat-btn');
-    const msg = input.value.trim();
-    if (!msg) return;
-
-    // Show loading state
-    input.disabled = true;
-    btn.disabled = true;
-    btn.style.opacity = '0.7';
-    
-    // We append user message to chat
-    appendChatMsg('user', msg);
-    propiqChatHistory.push({ role: 'user', content: msg });
-    
-    input.value = '';
-    showTyping();
-
-    try {
-      const res = await fetch(`${API_BASE}/api/refine-search`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: msg,
-          currentCriteria: propiqCurrentCriteria,
-          fullName: propiqFullName,
-          mobile: propiqMobile,
-          chatHistory: propiqChatHistory
-        })
-      });
-      const data = await res.json();
-      
-      if (!data.success) throw new Error(data.error || 'Failed to refine search.');
-      
-      // Update state
-      if (data.updatedCriteria) propiqCurrentCriteria = data.updatedCriteria;
-
-      hideTyping();
-      document.getElementById('propiq-result-count').textContent = (data.properties || []).length;
-      
-      if (data.reply) {
-        propiqChatHistory.push({ role: 'ai', content: data.reply });
-      }
-
-      let propsHTML = '';
-      if (!data.properties || data.properties.length === 0) {
-        // No matches
-      } else {
-        data.properties.forEach(p => {
-          let btnHtml = '';
-          if (p.brochureLink) {
-            const escName = (p.name || 'Property').replace(/'/g, "\\'");
-            const linkStr = String(p.brochureLink).toLowerCase();
-            const isUrl = linkStr.startsWith('http') || linkStr.startsWith('www.') || linkStr.includes('drive.google.com');
-            let href = p.brochureLink;
-            if (isUrl && !linkStr.startsWith('http')) href = 'https://' + href;
-            if (!isUrl) href = '#';
-            const clickHandler = isUrl ? `handleBrochureDownload('${escName}')` : `alert('The brochure link is missing in the Google Sheet. Please add a valid Drive URL.'); return false;`;
-            btnHtml = `<a href="${href}" ${isUrl ? 'target="_blank"' : ''} onclick="${clickHandler}" style="display:block; margin-top: 8px; text-align: center; background: #e9e5df; color: #1a1a1a; padding: 6px; border-radius: 4px; font-size: 12px; text-decoration: none; font-weight: 600;">📄 Download Brochure</a>`;
-          }
-          propsHTML += `<div style="background: #fafafa; border: 1px solid #eaeaea; border-left: 3px solid #2A5A17; border-radius: 6px; padding: 10px;">
-            <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${p.name || 'Property'}</div>
-            <div style="font-size: 11px; color: #666; margin-bottom: 4px;">${p.location || ''} · ${p.type || ''}</div>
-            <div style="font-size: 13px; font-weight: 700; color: #2A5A17;">${p.budget || ''}</div>
-            ${btnHtml}
-          </div>`;
-        });
-      }
-
-      appendChatMsg('ai', data.reply || 'Here are some matches:', propsHTML);
-
-    } catch (err) {
-      hideTyping();
-      propiqChatHistory.pop(); // Remove user message if failed
-      appendChatMsg('ai', '⚠️ ' + err.message);
-    } finally {
-      input.disabled = false;
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      input.focus();
-    }
-  }
-
-  // Called when user fills mini-form on hot deal card (no main form submitted yet)
-  async function handlePropIQHotDealSubmit(submitBtn, pId, pName, pLoc, pBudg) {
+  window.handlePropIQHotDealSubmit = async function(submitBtn, pId, pName, pLoc, pBudg) {
     const safeId = pId.replace(/[^a-zA-Z0-9]/g,'');
-    const nameEl   = document.getElementById('hd-mini-name-' + safeId);
-    const mobEl    = document.getElementById('hd-mini-mobile-' + safeId);
-    const name  = (nameEl ? nameEl.value.trim() : '') || propiqFullName;
-    const mob   = (mobEl  ? mobEl.value.trim()  : '') || propiqMobile;
+    const nameEl = document.getElementById('hd-mini-name-' + safeId);
+    const mobEl  = document.getElementById('hd-mini-mobile-' + safeId);
+    const name   = (nameEl ? nameEl.value.trim() : '') || propiqFullName;
+    const mob    = (mobEl  ? mobEl.value.trim()  : '') || propiqMobile;
     if (!name || mob.replace(/\D/g,'').length < 10) {
       alert('Please enter your name and a valid 10-digit mobile number.');
       return;
     }
     propiqFullName = name;
     propiqMobile   = mob;
-    // Find the original button and trigger the actual submission
+    
     const card = submitBtn.closest('.propiq-prop-card');
     const origBtn = card.querySelector('button[id^="propiq-hd-btn-"]');
     if (origBtn) {
       delete origBtn.dataset.miniFormShown;
       origBtn.disabled = false;
-      await handlePropIQHotDealInterest(origBtn, pId, pName, pLoc, pBudg);
+      await window.handlePropIQHotDealInterest(origBtn, pId, pName, pLoc, pBudg);
     }
-  }
+  };
 
-  async function handlePropIQHotDealInterest(btnElement, pId, pName, pLoc, pBudg) {
-
-    // Auto-fill from form inputs if user typed but didn't submit yet
+  window.handlePropIQHotDealInterest = async function(btnElement, pId, pName, pLoc, pBudg) {
     if (!propiqFullName) {
       const nameEl = document.getElementById('propiq-name');
       if (nameEl && nameEl.value.trim()) propiqFullName = nameEl.value.trim();
@@ -856,27 +861,24 @@
       if (mobEl && mobEl.value.trim()) propiqMobile = mobEl.value.trim();
     }
 
-    // If name/mobile still not available, show inline mini-form
     if (!propiqFullName || !propiqMobile) {
-      // Only show mini-form once per card
       if (btnElement.dataset.miniFormShown) return;
       btnElement.dataset.miniFormShown = '1';
       const card = btnElement.closest('.propiq-prop-card');
       const miniForm = document.createElement('div');
       miniForm.style.cssText = 'margin-top:10px;display:flex;flex-direction:column;gap:6px;';
       miniForm.innerHTML = `
-        <input id="hd-mini-name-${pId.replace(/[^a-zA-Z0-9]/g,'')}" type="text" placeholder="Your Name *" style="border:1px solid #ddd;border-radius:6px;padding:7px 10px;font-size:12px;width:100%;box-sizing:border-box;">
-        <input id="hd-mini-mobile-${pId.replace(/[^a-zA-Z0-9]/g,'')}" type="tel" placeholder="Mobile Number *" style="border:1px solid #ddd;border-radius:6px;padding:7px 10px;font-size:12px;width:100%;box-sizing:border-box;">
-        <button onclick="handlePropIQHotDealSubmit(this, '${pId}', '${pName}', '${pLoc}', '${pBudg}')" style="background:#2A5A17;color:white;border:none;padding:8px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">Submit Interest</button>
+        <input id="hd-mini-name-${pId.replace(/[^a-zA-Z0-9]/g,'')}" type="text" placeholder="Your Name *" style="border:1.5px solid #dfe8d7;border-radius:6px;padding:7px 10px;font-size:12px;width:100%;box-sizing:border-box;outline:none;">
+        <input id="hd-mini-mobile-${pId.replace(/[^a-zA-Z0-9]/g,'')}" type="tel" placeholder="Mobile Number *" maxlength="10" style="border:1.5px solid #dfe8d7;border-radius:6px;padding:7px 10px;font-size:12px;width:100%;box-sizing:border-box;outline:none;">
+        <button onclick="handlePropIQHotDealSubmit(this, '${pId}', '${pName}', '${pLoc}', '${pBudg}')" style="background:#2B5A00;color:white;border:none;padding:8px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">Submit Interest</button>
       `;
       card.appendChild(miniForm);
       return;
     }
 
-    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
     const originalText = btnElement.textContent;
     btnElement.disabled = true;
-    btnElement.textContent = 'Sending...';
+    btnElement.textContent = 'Registering...';
     btnElement.style.opacity = '0.8';
 
     try {
@@ -901,14 +903,8 @@
       btnElement.style.color = '#1a1a1a';
       
       setTimeout(() => {
-        // Show AI reply dynamically at the top!
-        const replyBox = document.getElementById('propiq-ai-reply');
-        if (replyBox) {
-          replyBox.textContent = data.reply || 'Our expert will call you shortly about this property.';
-        } else {
-          alert(data.reply || 'Our expert will call you shortly about this property.');
-        }
-      }, 1000);
+        alert(data.reply || 'Thank you! Our property expert will call you shortly regarding ' + pName + '.');
+      }, 500);
 
     } catch (err) {
       alert('⚠️ ' + err.message);
@@ -916,17 +912,41 @@
       btnElement.textContent = originalText;
       btnElement.style.opacity = '1';
     }
-  }
+  };
 
-  function handleBrochureDownload(propertyName) {
-    // Send a hidden message to AI to trigger a response
-    const msg = `I downloaded the brochure for ${propertyName}.`;
-    
-    // We do not append this to UI, but we send it to backend to trigger the AI response
+  window.triggerBrochureDownload = function(btn) {
+    const rawUrl = (btn.dataset.url || '').trim();
+    const name = btn.dataset.name || 'Property';
+
+    if (!rawUrl || rawUrl === '#' || (!rawUrl.startsWith('http') && !rawUrl.includes('drive.google.com'))) {
+      const mob = propiqMobile || 'registered mobile';
+      alert('Brochure for "' + name + '" requested! Our advisor will share the verified brochure directly on your WhatsApp (' + mob + ').');
+      notifyBrochureAction(name, 'requested');
+      return;
+    }
+
+    let targetUrl = rawUrl;
+    if (!targetUrl.startsWith('http')) targetUrl = 'https://' + targetUrl;
+
+    const driveMatch = targetUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (driveMatch) {
+      const fileId = driveMatch[1];
+      const downloadUrl = 'https://drive.google.com/uc?export=download&id=' + fileId;
+      window.open(downloadUrl, '_blank');
+    } else {
+      window.open(targetUrl, '_blank');
+    }
+
+    notifyBrochureAction(name, 'downloaded');
+  };
+
+  function notifyBrochureAction(propertyName, action) {
+    const msg = action === 'downloaded'
+      ? `I downloaded the brochure for ${propertyName}.`
+      : `Please share the brochure for ${propertyName} on my WhatsApp.`;
     propiqChatHistory.push({ role: 'user', content: msg });
     showTyping();
 
-    const API_BASE = 'https://propai-production-d1cd.up.railway.app';
     fetch(`${API_BASE}/api/refine-search`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -934,6 +954,8 @@
         message: msg,
         currentCriteria: propiqCurrentCriteria || {},
         fullName: propiqFullName,
+        mobile: propiqMobile,
+        email: propiqEmail,
         chatHistory: propiqChatHistory
       })
     })
@@ -945,9 +967,10 @@
         appendChatMsg('ai', data.reply);
       }
     })
-    .catch(err => {
+    .catch(() => {
       hideTyping();
     });
   }
-</script>
 
+})();
+</script>

@@ -46,16 +46,24 @@ const getFirstName = (fullName) => {
 };
 
 /**
- * Format a Date object to dd/mm/yyyy string (Indian format).
+ * Format a Date object to dd/mm/yyyy hh:mm a string in IST (Indian format).
  * @param {Date} date
  * @returns {string}
  */
 const formatDateIN = (date = new Date()) => {
-  return date.toLocaleDateString('en-IN', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  });
+  try {
+    return date.toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  } catch (err) {
+    return new Date().toISOString();
+  }
 };
 
 /**

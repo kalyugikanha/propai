@@ -145,11 +145,12 @@ router.get('/hot-deals', async (req, res, next) => {
   try {
     logger.info('GET /hot-deals');
 
-    const allProperties = await sheetsService.getProperties(false);
+    const forceRefresh = req.query.refresh === 'true';
+    const allProperties = await sheetsService.getProperties(forceRefresh);
 
-    // Filter where Status column = 'Hot Deals' (as stored in sheet)
+    // Filter where Status column contains 'hot deal' (case-insensitive: 'Hot Deals' or 'Hot Deal')
     const hotDeals = allProperties.filter(
-      (p) => (p[COL.STATUS] || '').trim() === PROPERTY_STATUS_HOT_DEAL
+      (p) => (p[COL.STATUS] || '').trim().toLowerCase().includes('hot deal')
     );
 
     const formatted = hotDeals.map(propertyService.formatProperty);
